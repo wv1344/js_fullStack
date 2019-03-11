@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>送花-代理模式</title>
+</head>
+<body>
+    <script>
+
+        //作业：cst想送什么花呢？ 玫瑰？丁香？。。。class new  打印出来，小美收到了什么花
+
+
+        // {} json 对象字面量 
+        const wjd={
+            //属性
+            name:"吴",
+            hometown:"赣",
+            single:false,
+            room:"1315",
+        };
+        
+        // js是个极具表现力的语言
+        // 对象字面量
+        const cst={
+            //属性
+           name:"陈",
+           class:"玫瑰",
+           single:true,
+           hometown:"高安",
+           hobbies:["桌球","下棋","游戏"],
+           yz:75,
+
+           send_flower(target){            //target 形参
+                target.receiveFlower(cst);
+           }
+
+        }
+
+        const xiaomei={
+            name:"小美",
+
+            receiveFlower(sender){
+                console.log("收到了花");
+                if(sender.yz<85){
+                    console.log(sender.name);
+                    console.log("gg");
+                }else{
+                    console.log("*^*");
+                    console.log(sender.class);
+                }
+            },  
+
+            listenGoodMood(fn){
+                console.log("心情不好");
+                setTimeout(function(){
+                    cst.yz=88;
+                    console.log("心情现在不错！");
+                   // console.log(sender.class);
+                    fn();
+                },3000);
+            }
+
+        }
+
+        const xiaohong={
+            name:"小红",
+            hometown:"高安",
+            sex:"女",
+
+           
+            receiveFlower(sender){
+                //代理对象，实现复杂需求，
+                //监听小美的心情，
+                xiaomei.listenGoodMood(function(){
+                    // sender.send_flower();
+                    xiaomei.receiveFlower(sender);
+                });
+                //xiaomei.receiveFlower(sender);
+                // if (sender.name=="陈"){
+                     
+                // }else{
+                //     console.log("你怕是活在梦里哦！");  
+                // }
+            }
+
+
+        }
+
+    </script>
+</body>
+</html>
