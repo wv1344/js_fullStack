@@ -78,19 +78,56 @@ html,body{
     position: relative;
     text-align: center;
     width:100%;
-    background-color: pink;
+    background-color: white;
     height: 3.25rem;
+}
+.wechat_pay{
+    /* position: relative; */
+    /* text-align: center; */
+    width:100%;
+    background-color: white;
+    height: 3.25rem;
+
 }
 
 .line{
     margin: 0 auto;
     position: relative;
     width:92%;
-    background-color: yellow;
+    background-color:#fff;
+    border-bottom:0.1rem solid black;
+    height: 3.25rem;
 }
+
 .suger_img{
     position: relative;
-    height: 3.25rem;
+    /* left: -20px; */
+    height: 3rem;
+    
     width: 3.25rem;
-    background-color: #ccc;
+    background-color: yellow;
+    float: left;
+}
+
+.wechat_img{
+    float: left;
+    overflow: hidden;
+}
+.suger_word{
+    float: left;
+}
+
+img{
+    height: 3rem;
+    
+}
+.word3{
+    line-height: 3.25rem;
+}
+
+.img2{
+    margin-left: 0.64rem;
+}
+span{
+    background-color: #666;
 }

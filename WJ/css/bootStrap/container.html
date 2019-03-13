@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .demo-container {
+      height: 100vh;
+      background-color: #666;
+    }
+    .row-demo {
+      border: 1px solid #000;
+      height: 200px;
+    }
+    .col-demo {
+      border: 1px solid #000;
+      height: 50px;
+    }
+  </style>
+</head>
+
+<body>
+     
+  <div class="container-fluid demo-container">      <!-- justify-content-center居中 -->
+    <div class="row row-demo ">     <!--justify-content-end 靠右对齐-->
+      <div class="col-6 col-demo col-sm-12">      <!-- offset-2居中 -->
+        1
+      </div>
+      <div class="col-6 col-demo col-sm-12 "><!-- order-1排列顺序 -->
+        2
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
