@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Otaku(){
+            this.age = age;
+            this.name=name;
+        }
+        var obj= new Object();
+        // obj.name=name; name局部 不能用
+        // 手动指定函数运行时的this
+        // Otaku.call(obj,'liwei',18);
+        Otaku.apply(obj,['liwei',18]);
+    </script>
+</body>
+</html>
