@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>array find</title>
+</head>
+<body>
+    <script>
+        const ages =[
+            {
+                 name:'李雷',age:18
+            },
+            {
+                name:'李雷1',age:30
+            },
+            {
+                name:'韩梅梅',age:18
+            },
+            {
+                name:'韩梅梅1',age :30
+            }
+           
+        ];
+
+        //20 返回值
+        // const this_age=ages.find((age)=>age>20);
+        // 返回多个
+        // const this_age_filter=ages.filter((age)=>age>20);
+        // 1 返回索引
+        // const this_ages_index=ages.findIndex((age)=>age>20);
+        // console.log(this_age,this_age_filter,this_ages_index)
+
+            const this_age=ages.filter((ages)=>ages.age>18);
+
+            const this_age_find=ages.find((ages)=>ages.age>18);
+
+            const this_ages_index=ages.findIndex((ages)=>ages.age>18);
+            // every 每一项大于18
+            const this_ages_every=ages.every((ages)=>ages.age>18);
+
+            const this_ages_some=ages.some((ages)=>{
+                return ages.age>18;
+            });
+
+            console.log(this_age,this_age_find,this_ages_index,this_ages_every)
+            console.log(this_ages_every)
+            console.log(this_ages_some)
+
+
+    </script>
+</body>
+</html>
