@@ -1,0 +1,23 @@
+.weui-btn {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14px;
+  padding-right: 14px;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+}
+.weui-btn_primary {
+  background-color: #179816;
+}
+.weui-btn_primary:not(.weui-btn_disabled):visited {
+  color: #fff;
+}
+.weui-btn_primary:not(.weui-btn_disabled):active {
+  color: rgba(255,255,255,0.6);
+  background-color: #179816;
+}
