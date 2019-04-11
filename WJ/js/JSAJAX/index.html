@@ -13,22 +13,22 @@
         if(window.XMLHttpRequest) {
             xhr = new XMLHttpRequest();
         }else{
-            xhr = new ActiveXObject("Microsoft.XMLHTTP")
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
         }
-        xhr.open("get","./mock.json",true) 
+        xhr.open("get","./mock.json",true);
+        // console.log(xhr.readyState);
+        xhr.setRequestHeader("Content-type","application/x-www-urlencoded");
         // console.log(xhr.readyState)
-        xhr.setRequestHeader("Content-type","application/x-www-urlencoded")
-        // console.log(xhr.readyState)
-        xhr.send()
+        xhr.send();
         // console.log(xhr.responseText)
         // console.log(xhr.readyState,xhr.status)
         xhr.onreadystatechange = function(){
             if(xhr.readyState == 4 && xhr.status == 200){
-                console.log(xhr.responseText)
-                // console.log('666')
+                console.log(xhr.responseText);
+                
             }
         }
-        
+        console.log('666');
     </script>
 </body>
 </html>
