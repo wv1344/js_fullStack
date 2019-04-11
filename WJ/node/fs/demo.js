@@ -27,6 +27,7 @@ const fileAPromise = new Promise((resolve,reject) => {
     }
   })
 });
+
 const fileBPromise = new Promise((resolve,reject) => {
   fs.readFile('b.txt','utf8',(err,data) => {
     if(err){
