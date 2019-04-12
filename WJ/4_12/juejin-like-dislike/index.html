@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- <div class="item" data-flag="0">
+      <img src="https://b-gold-cdn.xitu.io/v3/static/img/zan.e9d7698.svg" alt="">
+      <span class="count">99</span>
+    </div>
+    <div class="item" data-flag="0">
+      <img src="https://b-gold-cdn.xitu.io/v3/static/img/zan.e9d7698.svg" alt="">
+      <span class="count">99</span>
+    </div>
+    <div class="item" data-flag="0">
+      <img src="https://b-gold-cdn.xitu.io/v3/static/img/zan.e9d7698.svg" alt="">
+      <span class="count">99</span>
+    </div>
+    <div class="item" data-flag="0">
+      <img src="https://b-gold-cdn.xitu.io/v3/static/img/zan.e9d7698.svg" alt="">
+      <span class="count">99</span>
+    </div>
+    <div class="item" data-flag="0">
+      <img src="https://b-gold-cdn.xitu.io/v3/static/img/zan.e9d7698.svg" alt="">
+      <span class="count">99</span>
+    </div>
+    <div class="item" data-flag="0">
+      <img src="https://b-gold-cdn.xitu.io/v3/static/img/zan.e9d7698.svg" alt="">
+      <span class="count">99</span>
+    </div> -->
+  </div>
+
+  <script>
+    const like = 'https://b-gold-cdn.xitu.io/v3/static/img/zan-active.930baa2.svg';
+    const dislike = 'https://b-gold-cdn.xitu.io/v3/static/img/zan.e9d7698.svg';
+
+    // let flag = false;
+    const container = document.querySelector('.container');
+
+    let defaultArr = [{
+        count: 80,
+        flag: '0'
+      },
+      {
+        count: 90,
+        flag: '1'
+      },
+      {
+        count: 1000,
+        flag: '0'
+      }
+    ]
+    const juejinLikeStr = localStorage.getItem('juejinLike');
+    if (juejinLikeStr){
+      defaultArr = JSON.parse(juejinLikeStr);
+    }
+    // defaultArr
+
+    const htmlContentArr = defaultArr.map(function (likeItem,index) {
+      const {count,flag} = likeItem;
+      return `
+      <div class="item" data-flag="${flag}" data-index="${index}" data-click="able">
+        <img src="${flag === '0' ? dislike :like}" alt="" class = "icon" data-click="able">
+        <span class="count ${flag === '0' ? '' : 'active'}" data-click="able">${count}</span>
+      </div>
+      `
+    });
+    container.innerHTML = htmlContentArr.join('');
+
+    container.addEventListener('click',function(event){
+      // 点哪个节点 event.target 就是谁
+      console.log(event.target);
+      const clickAble = event.target.dataset.click;
+      if (clickAble){
+        console.log('点赞');
+        const itemContainer = event.target.dataset.flag ? event.target : event.target.parentNode;
+
+        let flag = itemContainer.dataset.flag;
+        // console.log(flag);
+        const img = itemContainer.querySelector('img');
+        const count = itemContainer.querySelector('.count');
+        let countNumber = count.innerHTML;
+        countNumber = parseInt(countNumber);
+
+        if (flag === '0') {
+          countNumber += 1;
+          img.src = like;
+          count.classList.add('active');
+          flag = '1';
+        } else {
+          countNumber -= 1;
+          img.src = dislike;
+          count.classList.remove('active');
+          flag = '0';
+        }
+
+        itemContainer.dataset.flag = flag;
+        count.innerHTML = countNumber;
+
+        // 本地存储
+        // localStorage.setItem
+        // localStorage.getItem
+        let index = itemContainer.dataset.index;
+        index = parseInt(index);
+        defaultArr[index] = {
+          flag:flag,
+          count:countNumber
+        }
+        localStorage.setItem('juejinLike',JSON.stringify(defaultArr))
+
+      }
+    })
+
+
+
+    // const items = document.querySelectorAll('.item');
+    // for (let i = 0; i < items.length; i++) {
+    //   items[i].addEventListener('click', function () {
+
+    //     let flag = items[i].dataset.flag;
+    //     // console.log(flag);
+
+    //     const img = items[i].querySelector('img');
+    //     const count = items[i].querySelector('.count');
+    //     let countNumber = count.innerHTML;
+    //     countNumber = parseInt(countNumber);
+
+    //     if (flag === '0') {
+    //       countNumber += 1;
+    //       img.src = like;
+    //       count.classList.add('active');
+    //       flag = '1';
+    //     } else {
+    //       countNumber -= 1;
+    //       img.src = dislike;
+    //       count.classList.remove('active');
+    //       flag = '0';
+    //     }
+
+    //     items[i].dataset.flag = flag;
+    //     count.innerHTML = countNumber;
+
+    //   })
+    // }
+
+
+
+
+    // const item = document.querySelector('.item');
+
+    // item.addEventListener('click',function(){
+    //   const img = item.querySelector('img');
+    //   const count = item.querySelector('.count');
+    //   let countNumber = count.innerHTML;
+    //   // console.log(countNumber);
+    //   countNumber = parseInt(countNumber);
+    //   // debugger;
+    //   // console.log(countNumber);
+
+    //   if (!flag){
+    //     countNumber += 1;
+    //     img.src = like;
+    //     count.classList.add('active');
+    //   }else{
+    //     countNumber -= 1;
+    //     img.src = dislike;
+    //     count.classList.remove('active');
+    //   }
+    //   flag = !flag;
+
+    //   // countNumber += 1;
+    //   count.innerHTML = countNumber;
+    //   // count.classList.add('active');
+
+
+    // })
+  </script>
+</body>
+
+</html>
