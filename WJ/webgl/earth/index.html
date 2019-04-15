@@ -9,8 +9,10 @@
 <body>
     <!-- 画布 webgl 的容器 -->
     <canvas id="webglcanvas"></canvas>
+
     <script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script> 
     <script>
+
         var canvas, /* 幕布 */
         camera, /* 摄像机 */
         scene, /* 场景 */
@@ -20,6 +22,7 @@
         var mouseX = 0,mouseY = 0;
         var windowHalfX = window.innerWidth / 2;
         var windowHalfY = window.innerHeight / 2;
+        console.log(window.innerWidth)
 
         //准备
         init();
@@ -62,7 +65,7 @@
                 var material = new THREE.MeshBasicMaterial({map:textrue});
 
                 var mesh = new THREE.Mesh(geometry,material);
-
+                console.log(textrue)
                 group.add(mesh);
             }); 
 
@@ -75,6 +78,7 @@
             document.addEventListener('mousemove',onDocumentMouseMove,false);
             window.addEventListener('resize',onWindowResize,false);
         }
+
         function onWindowResize(event){
             // console.log('resize')
             windowHalfX = window.innerWidth / 2;

@@ -1,12 +1,12 @@
 (function () {
-  function list(){
+  function list() {
     $.ajax({
-    url: './test.json',
-    type: 'GET',
-    success: function (res) {
-      console.log(res);
-      for(let n of res.data.lists){
-        $('#lesson').append(`
+      url: './test.json',
+      type: 'GET',
+      success: function (res) {
+        console.log(res);
+        for (let n of res.data.lists) {
+          $('#lesson').append(`
         <li class="span4 mix">
           <div class="thumbnail">
             <a href="#" title="${n.title}">
@@ -25,14 +25,16 @@
           </div>
         </li>
         `)
+        }
+
       }
-      
-    }
     })
   }
+
   list()
 
-  $('#load-more').click(function(){
+  $('#load-more').click(function () {
     list()
+    // return false
   })
 })()
