@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="cn">
 
@@ -11,10 +10,13 @@
   <link rel="stylesheet" href="./loading.css">
 </head>
 
+
+
 <body>
   <section class="swiper-container loading">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" style="background-image:url(http://por49vy6d.bkt.clouddn.com/f37rwpdmon4-patrick-tomasso.jpg)">
+      <div class="swiper-slide"
+        style="background-image:url(http://por49vy6d.bkt.clouddn.com/f37rwpdmon4-patrick-tomasso.jpg)">
         <img src="(http://por49vy6d.bkt.clouddn.com/f37rwpdmon4-patrick-tomasso.jpg" class="image" alt="">
 
         <div class="content">
@@ -102,10 +104,10 @@
         // updateImage:true;
         //事件监听
         on: {
-            imagesReady: function(){
-                console.log('imagesReady');
-                this.el.classList.remove('loading');
-            }, 
+          imagesReady: function () {
+            console.log('imagesReady');
+            this.el.classList.remove('loading');
+          },
         },
       };
     var mySwiper = new Swiper(sliderSelector, options);
