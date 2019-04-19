@@ -4,3 +4,7 @@
     <text>{{legend.name}} {{legend.title}}</text>
   </block>
 </view>
+<view wx:for="{{array}}" wx:for-index="idx" wx:for-item="itemName">
+  {{idx}}: {{itemName.message}}
+</view>
+<switch wx:for="{{objectArray}}" wx:key="unique" style="display: block;"> {{objectArray.id}} </switch>
