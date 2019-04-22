@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let arr = [1,2,3,4,5];
+    function res(num) {
+      let s = num.toString();
+      let a = [];
+      for(let i = 0;i<s.length;i++){
+        // s[i] 
+        a.unshift(s[i]);
+      }
+      // console.log(a);
+      return a.join(' ');
+    }
+    // console.log(arr);
+    console.log(res(arr));
+    console.log(res('a,b,c'));
+  </script>
+</body>
+</html>
