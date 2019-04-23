@@ -6,7 +6,7 @@ Page({
   data: {
     latitude:39.9908860,
     longitude:116.397390,
-    scale:18  ,
+    scale:18,
     markers:[
       {}
     ]
