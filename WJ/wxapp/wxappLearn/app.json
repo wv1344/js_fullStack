@@ -10,7 +10,6 @@
     "navigationBarTitleText": "旅梦开发团",
     "navigationBarTextStyle": "white"
   },
-  "sitemapLocation": "sitemap.json",
 
   "tabBar":{
     "color":"#515151",
@@ -35,5 +34,6 @@
         "selectedIconPath":"images/hover-mine.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
