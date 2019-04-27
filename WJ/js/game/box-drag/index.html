@@ -29,7 +29,7 @@
       for (var i = 0;i<5;i++){
         // 精灵，走来走去
         var blockSprite = game.add.sprite(150 + i * 125,300 - i *50,'block');
-        game.physics.box2d.enable(blockSprite);  
+        game.physics.box2d.enable(blockSprite);
         blockSprite.body.angle = 30;
       }
       game.input.onDown.add(mouseDragStart,this);
