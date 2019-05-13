@@ -1,2 +1,10 @@
 <!--pages/mine/mine.wxml-->
-<text>pages/mine/mine.wxml</text>
+<!-- <text>pages/mine/mine.wxml</text> -->
+<view class="header">
+  <view class="left">拉钩用户1234</view>
+  <view class="right">
+    <image src="../../images/touxiang.png" />
+  </view>
+</view>
+<van-cell title="单元格" is-link url="/pages/dashboard/index" link-type="navigateTo" />
+<van-cell title="单元格" is-link url="/pages/dashboard/index" link-type="navigateTo" />

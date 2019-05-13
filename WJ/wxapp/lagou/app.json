@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/mine/mine",
     "pages/index/index",
-    "pages/rank/rank",
-    "pages/mine/mine"
+    "pages/rank/rank"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -37,5 +38,9 @@
       }
     ]
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "van-cell": "./dist/cell/index",
+    "van-cell-group": "./dist/cell-group/index"
+  }
 }
