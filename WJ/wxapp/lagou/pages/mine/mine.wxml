@@ -12,9 +12,9 @@
     </view>
   </view>
   <view class="content">
-    <van-cell title="单元格" is-link url="/pages/dashboard/index" link-type="navigateTo" />
-    <van-cell title="单元格" is-link url="/pages/dashboard/index" link-type="navigateTo" />
-    <van-cell title="单元格" is-link url="/pages/dashboard/index" link-type="navigateTo" />
-    <van-cell title="单元格" is-link url="/pages/dashboard/index" link-type="navigateTo" />
+    <van-cell title="单元格" icon="location-o" />
+    <van-cell title="单元格" icon="location-o" />
+    <van-cell title="单元格" icon="location-o" />
+    <van-cell title="单元格" icon="location-o" />
   </view>
 </view>
