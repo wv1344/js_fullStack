@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "mocha":"mocha tests/"
+    "mocha": "mocha tests/"
   },
   "keywords": [],
   "author": "",
