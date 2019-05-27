@@ -27,6 +27,7 @@ var addTwoNumbers = function(l1,l2){
     newL2 = newL2.next;
   }
   a.reverse();
+  b.reverse();
   console.log(a);
   console.log(b);
 
@@ -62,15 +63,15 @@ var addTwoNumbers = function(l1,l2){
 }
 
 // 链表初始化 
-let a1 = new LinkedNode(3),
-a2 = new LinkedNode(8),
-a3 = new LinkedNode(6);
+let a1 = new LinkedNode(2),
+a2 = new LinkedNode(4),
+a3 = new LinkedNode(3);
 a1.next = a2;
 a2.next = a3;
 
-let b1 = new LinkedNode(1),
-b2 = new LinkedNode(2),
-b3 = new LinkedNode(8);
+let b1 = new LinkedNode(5),
+b2 = new LinkedNode(6),
+b3 = new LinkedNode(4);
 b1.next = b2;
 b2.next = b3;
 // 386 128
