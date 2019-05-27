@@ -10,3 +10,14 @@ queryString parse()
 
 ## writeHead 写响应信息
 ## createServer 创建一个 http 服务
+
+
+## 请求头
+一次 http 事务 有啥：
+- 请求
+请求头 空行 求情体
+Content-Type：规定我们向服务端发送请求体的格式
+  
+- 响应头 空行 响应体
+Content-Type:
+通用首部：请求/响应
