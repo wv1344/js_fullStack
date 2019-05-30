@@ -49,7 +49,7 @@ var addTwoNumbers = function(l1,l2){
   }
 
   carry && (ans.push(carry));
-  ans = ans.reverse(); // 反过来
+  // ans = ans.reverse(); // 反过来
 
   // 返回的应该也是一个节点，头节点
   let ret = [];
