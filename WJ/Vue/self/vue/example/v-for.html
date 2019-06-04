@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="../assets/js/vue.js"></script>
+  <title>HelloWorld</title>
+</head>
+
+<body>
+  <h1>HelloWorld</h1>
+  <hr>
+  <div id="app">
+    <ul>
+      <li v-for="item in newitems">{{item}}</li>
+    </ul>
+    <hr>
+    <ul>
+      <li v-for="(stud,index) in student">{{index+1}}:{{stud.name}}---{{stud.age}}</li>
+    </ul>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        items: [78, 2, 43, 42, 6, 8, 9],
+        student:[
+          {name:'jj',age:33},
+          {name:'gg',age:23},
+          {name:'hh',age:13},
+        ]
+      },
+      computed:{
+        newitems:function(){
+          return this.items.sort(sortNumber);
+        }
+      }
+    });
+    function sortNumber(a,b){
+      return a-b;
+    }
+  </script>
+</body>
+
+</html>

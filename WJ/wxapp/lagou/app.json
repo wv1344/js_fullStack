@@ -41,6 +41,7 @@
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
     "van-cell": "./dist/cell/index",
-    "van-cell-group": "./dist/cell-group/index"
+    "van-cell-group": "./dist/cell-group/index",
+    "van-icon": "./dist/icon/index"
   }
 }
