@@ -21,7 +21,9 @@ app.use(async (ctx) => {
   ctx.body = `
   <strong>tj np</strong>
   `;
+  console.log(ctx);
 });
+
 // http.listen 语法糖
 app.listen(8080,() => {
   console.log('server is running 8080');
