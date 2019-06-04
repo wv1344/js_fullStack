@@ -24,7 +24,7 @@ const postsDetail = [
   },
   {
     id:1,
-    content:'哦哦哦哦哦哦哦哦哦'
+    content:'<strong>哦哦哦哦哦哦哦哦哦</strong>'
   }
 ]
 
