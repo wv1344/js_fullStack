@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="../assets/js/vue.js"></script>
+  <title>example02</title>
+</head>
+
+<body>
+  <h1>example02</h1>
+  <hr>
+  <div id="app">
+  </div>
+  <p><button onclick="destroy()">desatory</button></p>
+  <p><button onclick="reload()">reload</button></p>
+
+  <script>
+    var jspang = Vue.extend({
+      template:`<p>{{message}}</p>`,
+      data:function(){
+        return{
+          message:'Hello World!'
+        }
+      },
+      mounted:function(){
+        console.log('mounted being created')
+      },
+      destroyed:function(){
+        console.log('destory!!')
+      },
+      updated:function(){
+        console.log('updated')
+      }
+    })
+
+    var vm = new jspang().$mount('#app');
+
+    function destroy(){
+      vm.$destroy();
+    }
+    function reload(){
+      vm.$forceUpdate()
+    }
+  </script>
+</body>
+
+</html>
