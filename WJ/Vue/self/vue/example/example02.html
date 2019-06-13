@@ -16,6 +16,7 @@
   </div>
   <p><button onclick="destroy()">desatory</button></p>
   <p><button onclick="reload()">reload</button></p>
+  <p><button onclick="tick()">tick</button></p>
 
   <script>
     var jspang = Vue.extend({
@@ -43,6 +44,12 @@
     }
     function reload(){
       vm.$forceUpdate()
+    }
+    function tick(){
+      vm.message='update message info'
+      vm.$nextTick(function(){
+        console.log('message更新完后被调用')
+      })
     }
   </script>
 </body>
