@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function comeTo (a,b,c) {
+      console.log(a,b);
+      var msg = `找${a}吃鸡,${b}`;
+      c(msg);
+    }
+
+    comeTo('强哥','城区刚枪',(msg) => {
+      console.log(msg);
+    })
+    
+  </script>
+</body>
+</html>
