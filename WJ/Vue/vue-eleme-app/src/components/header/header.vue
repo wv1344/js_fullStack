@@ -280,7 +280,7 @@ export default {
                 height 16px
                 vertical-align top
                 margin-right 6px
-                background-size 16px
+                background-size 16px 16px
                 background-repeat no-repeat
 
                 &.decrease

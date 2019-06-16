@@ -1,53 +1,52 @@
 <template>
-  <div class="cartcontrol">
-    <transition name="move">
-      <div class="cart-decrease" v-show="food.count > 0" @click.stop.prevent="decreaseCart">
-        <span class="inner icon-remove_circle_outline"></span>
-      </div>
-    </transition>
-    <div class="cart-count" v-show="food.count > 0">{{food.count}}</div>
-    <div class="cart-add icon-add_circle" @click.stop.prevent="addCart"></div>
-  </div>
+    <div class="cartcontrol">
+        <transition name="move">
+            <div class="cart-decrease" v-show="food.count > 0" @click.stop.prevent="decreaseCart">
+                <span class="inner icon-remove_circle_outline"></span>
+            </div>
+        </transition>
+        <div class="cart-count" v-show="food.count > 0" >{{food.count}}</div>
+        <div class="cart-add icon-add_circle" @click.stop.prevent="addCart"></div>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "cartcontrol",
-  props:{
-    food:{
-      type:Object
-    }
-  },
-  data() {
-    return {
+    name:"cartcontrol",
+    data(){
+        return {
 
-    };
-  },
-  methods: {
-      addCart (event){
-        if(!event._constructed){     // 如果不存在这个属性，则为原生点击事件，
-            return 
         }
-        if (!this.food.count){
-          this.$set(this.food,'count',1)
+    },
+    props:{
+      food:{
+        type:Object,
+
+      }
+    },
+    methods:{
+      addCart(event){
+        // console.log(event)
+        // 如果不存在这个属性，则为原生点击事件，不执行下面的函数
+        // vue在事件对象中添加了_constructed属性，来表示是vue本身组件产生的事件
+        if(!event._constructed){
+          return
+        }
+        if(!this.food.count){
+          this.$set(this.food,"count",1)
         }else{
           this.food.count++
         }
-        this.$emit('add',event.target)
+        this.$emit("add",event.target)
       },
-      decreaseCart(event){
-        if(!event._constructed){     // 如果不存在这个属性，则为原生点击事件，
-            return 
+      decreaseCart(){
+        if(!event._constructed){
+          return
         }
-        if(this.food.count){
-          this.food.count--
-        }
+        this.food.count--;
       }
-  }
-  // created() {
-  //   console.log(this.food)
-  // },
-};
+    }
+}
 </script>
 
 <style lang="stylus">
