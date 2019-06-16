@@ -30,7 +30,8 @@ const actions = {
     }, 3000);
     console.log('我比reduce先执行')
   },
-  reduceAction({commit}){
+
+  000({commit}){
     commit('reduce')
   }
 }
