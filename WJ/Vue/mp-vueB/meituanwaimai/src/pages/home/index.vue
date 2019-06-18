@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <search>
-    </search>
+    <search></search>
     <recommand></recommand>
 
     <scroll-view>

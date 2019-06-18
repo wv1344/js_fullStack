@@ -16,33 +16,32 @@
     <van-cell  title="投递记录" icon="clock-o" is-link />
     <van-cell  title="职位收藏" icon="star-o" is-link />
     <van-cell  title="意见反馈" icon="chat-o" is-link /> -->
-
     <view class="item">
-      <image src="../../images/1.png" mode='aspectFill'/>
+      <image src="../../images/p1.png" mode='aspectFill'/>
       <text >简历</text> 
-      <span class="right">></span>
+      <span class="">></span>
     </view>
-        <view class="item">
-      <image src="../../images/2.png" mode='aspectFill'/>
+    <view class="item">
+      <image src="../../images/p2.png" mode='aspectFill'/>
       <text >投递记录</text> 
-      <span class="right">></span>
+      <span class="">></span>
     </view>
-        <view class="item">
-      <image src="../../images/3.png" mode='aspectFill'/>
+    <view class="item">
+      <image src="../../images/p3.png" mode='aspectFill'/>
       <text >职位收藏</text> 
-      <span class="right">></span>
+      <span class="">></span>
     </view>
-        <view class="item">
-      <image src="../../images/4.png" mode='aspectFill'/>
+    <view class="item">
+      <image src="../../images/p4.png" mode='aspectFill'/>
       <text >意见反馈</text> 
-      <span class="right">></span>
+      <span class="">></span>
     </view>
   </view>
   <view class="foot">
     <view class="qiehuan">
-      <text class="" selectable="false" space="false" decode="false">
+      <span>
         切换至我要招人
-      </text>
+      </span>
     </view>
   </view>
 </view>

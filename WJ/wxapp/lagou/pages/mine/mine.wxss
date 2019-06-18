@@ -20,7 +20,6 @@
   display: inline-block;
   height:60px;
   line-height: 60px;
-  /* vertical-align: middle; */
 }
 .right{
   float: right;
@@ -31,28 +30,37 @@
 }
 .content{
   margin-top: 10px;
-  height: 100%;
   background-color: #fff;
 }
-.item{
+.content .item{
   height: 65px;
-  width: 100%;
+  border-bottom: 1px solid #eee;
   position: relative;
-  display: flex;
-  justify-items: center;
-  align-items: center;
+  line-height: 65px;
 }
-.item text{
-  width: 80%;
+.content text{
+  padding-left: 35px;
 }
-.item image{
-  width: 35px;
-  height: 35px;
+.content .item image{
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: 50%;
+  margin-top: -13px;
+  padding-left: 5px;
+}
+.content .item span{
+  float: right;
+  padding-right: 10px;
 }
 
-.foot{
-  background-color: #fff;
+
+.qiehuan{
+  background-color: red;
   margin-top: 10px;
   text-align: center;
   height: 65px;
+}
+.qiehuan span{
+  line-height: 65px;
 }

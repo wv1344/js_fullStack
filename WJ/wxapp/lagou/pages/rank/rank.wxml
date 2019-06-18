@@ -1,2 +1,8 @@
-<!--pages/rank/rank.wxml-->
-<text>pages/rank/rank.wxml</text>
+<view class="page" >
+  <view class="header">
+    <image src="../../images/bg.jpg" />
+    <p>
+    <span>以下是前100名的招聘官，榜单实时更新  <a href="">如何上榜？</a></span>
+    </p>
+  </view>
+</view>
