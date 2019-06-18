@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <title>pipe</title>
+</head>
+<body>
+  
+
+<script src="https://cdn.bootcss.com/underscore.js/1.9.1/underscore-min.js"></script>
+<script>
+  // string
+  // 1.转为小写
+  // 2.拼接一个字符串
+  // 3.split 为一个数组
+  const loCase = (str) => str.toLowerCase();
+  const add = str => `${str} hello world`;
+  const splitStr = str => str.split(' ');
+
+  // compose 从后往前执行
+  const combineFun = _.compose(splitStr,add,loCase);
+
+  console.log(combineFun('HEXO'))
+  // 函数式编程
+  // ["hexo", "hello", "world"]
+
+  function pipe(...fns){
+    return fns.reduce((prev,next) => {
+      // loCase add  add(loCase())
+      // add(loCase()) splitStr  splitStr(add(loCase()))
+      // pipeFun = splitStr(add(loCase()))
+      return (...arg) => next(prev(...arg))
+    })
+  }
+
+  function compose(...fns){
+    return fns.reduce((prev,next) => {
+      return (...arg) => prev(next(...arg))
+    })
+  }
+  const composeFun = compose(splitStr,add,loCase);
+  console.log(composeFun('HEXO'))
+
+  const pipeFun = pipe(loCase,add,splitStr);
+  console.log(pipeFun('HEXO'))
+  // 组合
+  // pipe 管道
+
+</script>
+
+</body>
+</html>
