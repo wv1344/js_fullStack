@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="header">
+    <view class="img">
+      <image src="../../images/logo.png" mode="aspectFit|aspectFill|widthFix"></image>
+    </view>
+    <view class="search">
+      <icon class="icon" type="search" size="23" color="#cdcdcd"></icon>
+      <input  name="" type="button" class="btn"value="搜索公司/职位" />
+    </view>
+  </view>
+  <view class="content">
+    <view class="select">
+      <span>WEB前端 ></span>
+    </view>
+    <ul>
+      <li>
+        <view class="con">
+          <view class="left">
+            <image class="sb" src="http://img4.imgtn.bdimg.com/it/u=3335337347,3342162141&fm=26&gp=0.jpg" mode="widthFix"></image>
+          </view>
+          <view class="center">
+            <h3>前端开发工程师</h3>
+            <view class="company">简数科技</view>
+            <view class="desc">杭州 | 1-3年 | 本科</view>
+          </view>
+          <view class="right">
+            <view class="pay">10K-12K</view>
+            <view class="date">06月03日</view>
+          </view>
+          
+        </view>
+      </li>
+    </ul>
+    
+  </view>
+</view>
