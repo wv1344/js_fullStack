@@ -1,6 +1,6 @@
 <template>
   <div class="star" ref="star">
-      <p v-show="false">{{sc}}|{{sendscore}}</p>
+    <p v-show="false">{{sc}}|{{sendscore}}</p>
     <img class="img" :src="off1" alt="">
     <img class="img" :src="off1" alt="">
     <img class="img" :src="off1" alt="">

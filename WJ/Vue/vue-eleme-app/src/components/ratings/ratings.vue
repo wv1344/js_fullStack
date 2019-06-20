@@ -34,8 +34,23 @@
         <div class="sayyes">满意18</div>
         <div class="sayno">不满意6</div>
       </div>
-      <div class="showCon">
-        
+      <div class="showCon" >
+        <img class="yes0" src="./yes0.png" alt="">
+        <span>只看有内容的评价</span>
+      </div>
+      <div class="discuss" v-for="(item,index) in discuss" :key="index">
+        <div class="upup">
+          <div class="avatar">
+            <img :src="item.avatar" alt="" width="30px" height="30px">
+          </div>
+          <span class="username">{{item.username}}</span>
+          <star :sendscore="item.score"></star>
+          <!-- <span class="time">{{rTime}}</span> -->
+        </div>
+        <div class="downdown">
+          <p class="text">{{text}}</p>
+
+        </div>
       </div>
     </div> 
   </div>
@@ -46,11 +61,17 @@ import star from '@/components/star/star'
 export default {
   data(){
     return{
-      rating:[]
+      rating:[],
+      discuss:[]
     }
   },
   components: {
     star
+  },
+  computed: {
+    // rtime(){
+    //   return new Date(1469271264000);
+    // }
   },
   created () {
     this.$http
@@ -59,10 +80,18 @@ export default {
         if (res.data.errno === 0) {
           this.rating = res.data.data;
         }
-      });
+    });
+    this.$http
+      .get("https://www.easy-mock.com/mock/5d00b0810507eb134409028f/vue/vue-eleme-rating")
+      .then(res => {
+        if (res.data.errno === 0) {
+          this.discuss = res.data.data;
+        }
+    });
   },
-  updated() {
-    console.log(this.rating.foodScore)
+  beforeDestroy() {
+    console.log(this.rtime)
+    console.log(this.rating)
   },
 }
 </script>
@@ -164,4 +193,14 @@ export default {
         line-height 35px
         text-align center
         margin-left 20px
+    .showCon
+      height 56px
+      line-height 56px
+      border-bottom 2px solid #F1F1F1
+      .yes0
+        display inline-block
+        vertical-align middle
+        margin-left 30px
+        width 28px
+        height 28px
 </style>
