@@ -10,6 +10,7 @@ axios.defaults.baseURL = 'http://localhost:3000'
 // 返回状态判断
 axios.interceptors.response.use((res) => {
   if(res.data.code !== 200){
+    Toast('你好哇！')
     vue.$toast('网络异常')
     vue.$hideLoading()
     return Promise.reject(res)

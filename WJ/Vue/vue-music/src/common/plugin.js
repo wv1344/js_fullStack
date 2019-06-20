@@ -1,5 +1,5 @@
 let Toast = {}
-Toase.install = function(Vue,options){
+Toast.install = function(Vue,options){
   let opt = {
     defaultType:'center', // 默认显示的位置
     duration:'1500' // 持续的时间 
@@ -28,4 +28,29 @@ Toase.install = function(Vue,options){
       return Vue.prototype.$toast(tips,type)
     }
   })
+}
+
+let Loading = {}
+Loading.install = function(Vue){
+  let tpl;
+  Vue.prototype.$showLoading = () => {
+    if(document.getElementsByClassName('vue-loading').length){
+      return;
+    }
+    let LoadingTpl = Vue.extend({
+      template:'<div class="vue-loading"></div>'
+    })
+    tpl = new LoadingTpl.$mount().$el
+    document.body.appendChild(tpl)
+  }
+  Vue.prototype.$hideLoading = () => {
+    if(document.getElementsByClassName('vue-loading').length){
+      document.body.removeChild(tpl)
+    }
+  }
+}
+
+export {
+  Toast,
+  Loading
 }
