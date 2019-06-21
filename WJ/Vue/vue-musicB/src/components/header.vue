@@ -1,7 +1,7 @@
 <template>
   <div class="header">
-    <div class="header-icon" @click="leftEvent">
-      <slot name="left-icon"></slot>
+    <div class="header-icon" @click="_showbar" >
+      <slot name="left-icon" ></slot>
     </div>
     <div class="header-cont">
       <slot name="content"></slot>
@@ -14,13 +14,16 @@
 </template>
 
 <script>
+
 export default {
   name: 'hd',
   data () {
     return {}
   },
   methods: {
-    leftEvent () {}
+    _showbar(){
+      this.$store.dispatch('setShowSidebar',true)
+    },
   }
 }
 </script>

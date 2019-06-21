@@ -45,11 +45,11 @@
           </div>
           <span class="username">{{item.username}}</span>
           <star :sendscore="item.score"></star>
-          <!-- <span class="time">{{rTime}}</span> -->
+          <span class="time">{{item.rateTime}}</span>
         </div>
         <div class="downdown">
-          <p class="text">{{text}}</p>
-
+          <p class="text">{{item.text}}</p>
+          <recommend :sendrecommend="item.recommend"></recommend>
         </div>
       </div>
     </div> 
@@ -58,6 +58,7 @@
 
 <script>
 import star from '@/components/star/star'
+import recommend from '@/components/recommend/recommend'
 export default {
   data(){
     return{
@@ -66,13 +67,10 @@ export default {
     }
   },
   components: {
-    star
+    star,
+    recommend
   },
-  computed: {
-    // rtime(){
-    //   return new Date(1469271264000);
-    // }
-  },
+
   created () {
     this.$http
       .get("https://www.easy-mock.com/mock/5d00b0810507eb134409028f/vue/vue-eleme-seller")
@@ -87,11 +85,26 @@ export default {
         if (res.data.errno === 0) {
           this.discuss = res.data.data;
         }
+        this.discuss.forEach(time => {
+          time.rateTime = new Date(time.rateTime)
+          let Y = time.rateTime.getFullYear() + '-';
+          let M = (time.rateTime.getMonth()+1 < 10 ? '0'+(time.rateTime.getMonth()+1) : time.rateTime.getMonth()+1) + '-';
+          let D = time.rateTime.getDate() + ' ';
+          let h = time.rateTime.getHours() + ':';
+          let m = time.rateTime.getMinutes();
+          time.rateTime = Y + M + D + h + m
+        })
+        
     });
+    
   },
   beforeDestroy() {
+    this.discuss.forEach(time => {
+      console.log(time.rateTime);
+    })
     console.log(this.rtime)
     console.log(this.rating)
+    console.log(this.discuss)
   },
 }
 </script>
