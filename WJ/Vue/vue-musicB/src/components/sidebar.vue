@@ -1,6 +1,6 @@
 <template>
   <!-- showSidebar存在加showSidebar类名 -->
-  <div class="sidebar" :class="{showSidebar:showSidebar}">
+  <div class="sidebar"  :class="{showSidebar:showSidebar}">
     <div class="sidebar-con" :class="{showbar:showSidebar}">
       <div class="head">
         <div class="avatar">
@@ -11,7 +11,7 @@
       </div>
       <div class="menu">
         <ul>
-          <li>
+          <li @click="_hidebar">
             <router-link to="/user" @click="_hidebar">
               <i class="icon">&#xe63c;</i>
               <span>个人中心</span>
@@ -50,19 +50,23 @@
         </ul>
       </div>
     </div>
+    <div class="sidebar_mask" @click="_hidebar" v-show="showSidebar"></div>
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   data(){
     return {
-      showSidebar:true
+      // showSidebar:true
     }
   },
+  computed: mapGetters(['showSidebar']),
+
   methods: {
     _hidebar(){
-
+      this.$store.dispatch('setShowSidebar',false)
     }
   },
 }

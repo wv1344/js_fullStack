@@ -30,7 +30,7 @@ export default {
   components: {
     'v-header': header,
     'v-tab':tab,
-    'v-paly':play,
+    'v-play':play,
     'v-sidebar':sidebar
   }
 }
