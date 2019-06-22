@@ -6,7 +6,7 @@
     <img class="img" :src="off1" alt="">
     <img class="img" :src="off1" alt="">
     <img class="img" :src="off1" alt=""> -->
-    <span class="star-bg" v-for="(item, index) in stars" :key="index" :class="item"></span>
+    <span class="star-bg"  v-for="(item, index) in stars" :key="index" :class="item"></span>
   </div>
 </template>
 
@@ -17,7 +17,8 @@ import half from './star24_half@2x.png'
 
 export default {
   props: [
-    'sendscore'
+    'sendscore',
+    'size'
   ],
   data(){
     return {

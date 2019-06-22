@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page" ref="page">
     <div class="header">
       <div class="left">
         <div class="border">
@@ -18,7 +18,7 @@
         </div>
         <div class="food-score">
           <span class="title">商品评分</span>
-          <star :sendscore="rating.foodScore"></star>
+          <star :sendscore="rating.foodScore" :size="16"></star>
           <span class="rscore">{{rating.foodScore}}</span>
         </div>
         <div class="delivery-time">
@@ -43,13 +43,15 @@
           <div class="avatar">
             <img :src="item.avatar" alt="" width="30px" height="30px">
           </div>
-          <span class="username">{{item.username}}</span>
-          <star :sendscore="item.score"></star>
+          <div class="na_st">
+            <span class="username">{{item.username}}</span>
+            <star :sendscore="item.score" :size="10"></star>
+          </div>
           <span class="time">{{item.rateTime}}</span>
         </div>
         <div class="downdown">
           <p class="text">{{item.text}}</p>
-          <recommend :sendrecommend="item.recommend"></recommend>
+          <recommend :sendrecommend="item.recommend" class="recommend"></recommend>
         </div>
       </div>
     </div> 
@@ -70,6 +72,14 @@ export default {
     star,
     recommend
   },
+  methods: {
+    _initScroll(){
+      this.scroll = new BScroll(this.$refs.page,{
+        click:true,
+        probeType:3
+      })
+    }
+  },
 
   created () {
     this.$http
@@ -84,6 +94,10 @@ export default {
       .then(res => {
         if (res.data.errno === 0) {
           this.discuss = res.data.data;
+          this.$nextTick(() => {
+            //在页面渲染完成才会执行
+            this._initScroll();
+          });
         }
         this.discuss.forEach(time => {
           time.rateTime = new Date(time.rateTime)
@@ -216,4 +230,36 @@ export default {
         margin-left 30px
         width 28px
         height 28px
+    .discuss
+      border-bottom 1px solid #EFEFEE
+      .upup
+        height 40px
+        width 100%
+        margin-top 15px
+        .avatar
+          display inline-block
+          margin-left 10px
+          img
+            border-radius 50%
+        .na_st
+          margin-left 10px
+          display inline-block 
+          .username
+            display inline-block
+            padding-bottom 3px
+        .time
+          float right
+          color #A7A8AB
+          font-size 14px
+          margin-right 5px
+      .downdown
+        margin-left 50px
+        margin-top 5px
+        margin-right 10px
+        .text
+          font-size 14px
+        .recommend
+          margin-top 8px
+          margin-bottom 15px
+          width 80%
 </style>
