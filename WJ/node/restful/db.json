@@ -1,0 +1,29 @@
+{
+  "posts": [
+    {
+      "body": "hello world",
+      "postId": "1",
+      "id": 1
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "学习",
+      "postId": "1"
+    },
+    {
+      "body": "给你们",
+      "id": 2,
+      "postId": "1"
+    },
+    {
+      "body": "你好",
+      "postId": "1",
+      "id": 3
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
