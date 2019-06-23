@@ -25,22 +25,7 @@ export default {
       // sc:this.sendscore
     }
   },
-    // updated() {
-    //   console.log( this.$refs.star)
-    //   this.$refs.star.querySelectorAll('.img').forEach( ii => ii.src = off1)
 
-    //   let num = String(this.sendscore);
-    //   let s = parseInt(num);
-    //   let a =num.split(".");
-    //   let x = a[1];
-    //   console.log(x);
-    //   for(let i = 0;i<s;i++){
-    //     this.$refs.star.querySelectorAll('.img')[i].src = on;
-    //   }
-    //   if(x>=5){
-    //     this.$refs.star.querySelectorAll('.img')[s].src = half;
-    //   }
-    // },
   computed: {
     stars () {
       // let num = String(this.sendscore);
