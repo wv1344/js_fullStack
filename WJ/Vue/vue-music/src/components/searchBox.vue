@@ -6,7 +6,8 @@
   </div>
 </template>
 
-<script>
+<script>  
+import {debounce} from '@/common/util'
 export default {
   data(){
     return {
@@ -14,10 +15,10 @@ export default {
     }
   },
   props:{
-   placeholder:{
-     type:String,
-     default:'搜索歌曲、歌手'
-   } 
+    placeholder:{
+      type:String,
+      default:'搜索歌曲、歌手'
+    } 
   },
   methods: {
     clear(){
@@ -29,7 +30,12 @@ export default {
     blur(){
       this.$refs.query.blur()
     }
-  }
+  },
+  created () {
+    this.$watch('query',debounce((newQuery) => {
+      this.$emit('query',newQuery)
+    }))
+  },
 }
 </script>
 
