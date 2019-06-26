@@ -2,7 +2,7 @@
   <div class="search">
     <div class="search-box-wrapper">
       <!-- 搜索框 -->
-      <v-search-box @query="onQueryChange"></v-search-box>
+      <v-search-box @query="onQueryChange" ></v-search-box>
     </div>
     
     <div class="shortcut-wrapper" ref="shortcutWrapper" v-show="!query">
@@ -26,61 +26,37 @@
           <div class="serach-history" v-show="searchHistory">
             <h1 class="title">
               <span class="text">搜索历史</span>
-              <span class="clear" @click="showConfirm">
+              <span class="clear" >
                 <i class="icon ">&#xe612;</i>
               </span>
             </h1>
             <!-- 搜索历史列表 -->
-            <!-- <v-search-list></v-search-list> -->
+            <v-search-list :searches="searchHistory"></v-search-list>
           </div>
         </div>
       </v-scroll>
     </div>
     <!-- 搜索结果 -->
     <div class="search-result" v-show="query" ref="searchResult">
-      <v-suggest :query="query"></v-suggest>
+      <v-suggest :query="query" @listScroll="blurInput" @select="saveSearch" ref="suggest"></v-suggest>
     </div>
   </div>
 </template>
 
 <script>
+import api from '@/api'
 import search from '@/components/searchBox'
 import scroll from '@/components/scroll'
 import searchlist from '@/components/searchList'
 import suggest from '@/components/suggest'
+import {mapGetters} from 'vuex'
 export default {
   data(){
     return{
       query:'',
       refreshDelay:10,
       shortcut:[],
-      searchHistory:['1'],
-      hotKey:[
-        {
-          first:'许嵩'
-        },
-        {
-          first:'朴树'
-        },
-        {
-          first:'张学友'
-        },
-        {
-          first:'张国荣'
-        },
-        {
-          first:'许嵩'
-        },
-        {
-          first:'朴树'
-        },
-        {
-          first:'张学友'
-        },
-        {
-          first:'张国荣'
-        }
-      ]
+      hotKey:[]
     }
   },
   components: {
@@ -90,13 +66,32 @@ export default {
     'v-suggest':suggest,
   },
   methods: {
-    showConfirm(){
-
+    saveSearch(data){
+      console.log(data)
+      // this.$store.dispatch('addSearchHistory',this.query)
+    },
+    _getHotKey(){
+      api.HotSearchKey().then(res => {
+        if(res.code === 200){
+          console.log(res)
+          this.hotKey = res.result.hots.slice(0,10)
+        }
+      })
+    },
+    blurInput(){
+     
     },
     onQueryChange(query){
       // console.log(query)
       this.query = query
     }
+  },
+  computed: {
+    ...mapGetters(['searchHistory'])
+  },
+  created() {
+    this._getHotKey();
+    // this.$store.dispatch('addSearchHistory',this.query)
   },
 }
 </script>
