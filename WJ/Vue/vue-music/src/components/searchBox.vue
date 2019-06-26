@@ -1,7 +1,7 @@
 <template>
   <div class="search-box">
     <i class="icon icon-search">&#xe638;</i>
-    <input type="text" ref="query" v-model="query" class="box" :placeholder="placeholder">
+    <input type="text"  ref="query" v-model="query" class="box" :placeholder="placeholder">
     <i class="icon icon-dismiss" v-show="query.length" @click="clear"></i>
   </div>
 </template>
@@ -21,6 +21,9 @@ export default {
     } 
   },
   methods: {
+    // addSH(){
+      // this.$store.dispatch('setShowSidebar',false)
+    // },
     clear(){
       this.query = '';
     },
