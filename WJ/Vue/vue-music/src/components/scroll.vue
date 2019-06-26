@@ -138,16 +138,17 @@ export default {
       // 代理better-scroll的scrollToElement方法
       this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
     },
-    watch:{
+    
+
+  },
+  watch:{
       // 监听数据的变化,延时refreshDelay的时间后调用refresh，保证滚动效果正常
       data(){
         setTimeout(()=>{
           this.refresh()
         },this.refreshDelay)
       }
-    }
-
-  },
+    },
   mounted() {
     setTimeout(() => {
       this._initScroll()
