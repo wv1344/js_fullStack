@@ -20,6 +20,7 @@
     var b = a.fn;
     b.call(a,1,2,3);
 
+
     var c = b.bind(a,1);
     c(2,3);
 
@@ -28,6 +29,20 @@
     a.fn(1234,1234);
     b.call()
 
+    // call方法的实现
+    Function.prototype._call = function (){
+      let [thisArg,...args] = [...arguments]
+      if(!thisArg){
+        thisArg = typeof window === 'undefind' ? global : window
+      }
+      // this 的指向是当前函数 func.call
+      thisArg.func = this
+      // 执行函数
+      let result = thisArg.func(...args)
+      delete thisArg.func  // thisArg 上并没有func属性 ，因此需要移除
+      return result
+    }
+    b._call()
   </script>
 </body>
 </html>
