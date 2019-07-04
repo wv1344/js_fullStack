@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // [1,2,3,2,3,5] uniq
+    const arr = [1,2,3,2,3,5]
+
+    // Set 方法
+    // function uniq (array) {
+    //   return [...new Set(array)]
+    // }
+    
+    // indexof 方法
+    // function uniq(array){
+    //   let result = [];
+    //   for (let i = 0;i<array.length;i++){
+    //     if(result.indexOf(arr[i]) === -1){  // = -1 不存在
+    //       result.push(arr[i])
+    //     }
+    //   }
+    //   return result
+    // }
+
+    // includes 方法
+    // function uniq(array){
+    //   let result = [];
+    //   for (let i = 0;i<array.length;i++){
+    //     if(!result.includes(arr[i])){  
+    //       result.push(arr[i])
+    //     }
+    //   }
+    //   return result
+    // }
+
+    // map() 遍历数组方法
+    // function uniq (array) {
+    //   let map = new Map()
+    //   let result = new Array()
+    //   for(let i = 0;i<array.length;i++){
+    //     if(map.has(array[i])){
+    //       map.set(array[i],true)
+    //     }else{
+    //       map.set(array[i],false)
+    //       result.push(array[i])
+    //     }
+    //   }
+    //   console.log(map)
+    //   return result
+    // }
+
+    // reduce() 方法
+    function uniq(array){
+      return array.reduce(function(prev,cur,index){
+        console.log(prev, cur, index);
+        prev.includes(cur) ? prev : [...prev,cur]
+
+      },[])
+    }
+
+    console.log(uniq(arr))
+  </script>
+</body>
+</html>
