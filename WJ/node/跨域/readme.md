@@ -1,0 +1,31 @@
+## 跨域
+  是浏览器的安全策略
+  同源策略： 同协议 域名 端口
+  同源 不存在跨域
+  不同源 跨域
+
+## cors 
+  规定了一组 http 的头部字段作用是：
+    允许哪些网站通过浏览器有访问的权限
+
+  1. access-X
+  2. cookie
+  3. 浏览器会先以 OPTIONS 请求方法发起一个预检（prefight）请求，
+    获取一下允不允许当前的的域请求，服务器允许之后才会发起正式请求
+
+## 代理
+  1. nginx
+    反向代理 http://localhost:9999/api
+    不知道 请求的是哪个服务器
+
+## iframe + postMessage
+  1. 前端页面 通过 iframe 引入一个后端目录下面的 html 
+  2. iframe 不受同源策略限制
+  3. postMessage 用于在两个窗口之间传递数据
+  4. 前端页面通过 postMessage 想后端目录下的 html 传递接口需要的请求参数
+  5. 后端页面 通过 postMessage 向前端页面传递 接口结果
+
+## ifame + window.name
+  iframe 共享 window.name
+
+## jsonp 
