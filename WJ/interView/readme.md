@@ -59,4 +59,4 @@
   __proto__ 是每一个实例都有的属性，可以访问 prototype 属性
   [prototype] 属性，实例的__proto__与其构造函数的prototype指向的是同一个对象
 
-# q8. 
+# q8. ['1','2','3'].map(parseInt)
