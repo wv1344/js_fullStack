@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // ['1','2','3'].map(parseInt)
+    ['1','2','3'].map(callback)
+
+    parseInt('1',0)
+    parseInt('2',1)
+    parseInt('3',2)
+
+
+    var str = '123'  
+    var numberStr = parseInt(str);
+    console.log(numberStr)
+
+    var get = new Promise((resolve,reject) => {
+      setTimeout(() => {
+        resolve(666)
+      },1000)
+    })
+    // get.then((res) => {
+    //   console.log(res)
+    // })
+
+    // get.then(console.log)
+
+    function callback (a,b,c) {
+      console.log(a,b,c)
+    }
+
+    // get.then(callback)
+
+  </script>
+</body>
+</html>
