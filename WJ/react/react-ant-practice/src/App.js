@@ -11,8 +11,11 @@ class App extends Component{
     super(props);
     this.functionRef = null;
     this.objectRef = React.createRef();
+    this.inputRef = React.createRef();
   }
-  state ={}
+  state ={
+    value:''
+  }
   componentDidMount(){
     // 组件 挂载到页面
     // 通过原生 js 操作 dom
@@ -22,6 +25,19 @@ class App extends Component{
     // this.functionRef.addEventListener('click',()=> {
     //   console.log('functionRef clicked')
     // })
+  }
+  handlePrint1=()=>{
+    console.log(this.inputRef.current.value)
+  }
+  handlePrint2=()=>{
+    
+  }
+  handleInputChange = (e) => {
+    const value = e.target.value
+    // value = value.slice(0,10)
+    this.setState({
+      value
+    })
   }
   render(){
     return(
@@ -75,7 +91,13 @@ class App extends Component{
           this.functionRef = node;
         }}></h1>
         <h1 ref={this.objectRef}></h1>
-        <input type="text" ></input>
+        {/* 非受控 */}
+        <button onClick={this.handlePrint1}>btn1</button>
+        <input type="text" ref={this.inputRef}></input>
+        {/* 受控 */}
+        <button onClick={this.handlePrint2}>btn2</button>
+        <input type="text"  onChange={this.handleInputChange} value={this.state.value}></input>
+        <p>{this.state.value}</p>
       </div>
     )
   }
