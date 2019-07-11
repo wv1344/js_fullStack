@@ -3,6 +3,9 @@
   同源策略： 同协议 域名 端口
   同源 不存在跨域
   不同源 跨域
+  1. cors
+  2. jsonp
+  3. iframe
 
 ## cors 
   规定了一组 http 的头部字段作用是：
@@ -29,3 +32,15 @@
   iframe 共享 window.name
 
 ## jsonp 
+  1. 定义一个回调
+  2. 将回调函数的名字 告诉后端 后端会返回
+  ```js
+  回调（res）
+  ```
+  3. script 标签 加载过后 执行 返回的内容
+
+  写一个 jsonp 的函数，以 promise 的方式调用
+  json(url)
+  .then(res => {
+    
+  })

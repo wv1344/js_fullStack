@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jsonp</title>
+</head>
+<body>
+  <div>
+    jsonp
+  </div>
+  <!-- CDN.com/a.js?v=3.0 -->
+  <script>
+    // function callback(res){
+    //   console.log(res)
+    // }
+    
+  </script>
+  <!-- <script src="http://localhost:9999/api/jsonp?callback=callback"></script> -->
+  <script>
+    const jsonp = function(url){
+      return new Promise((resolve,reject) => {
+        const callbackName = 'callback'
+        window[callbackName] = function(res) {
+          resolve(res)
+        }
+        const scriptNode = document.createElement('script')
+        scriptNode.src = `${url}?callback=${callbackName}`
+        document.body.appendChild(scriptNode)
+        scriptNode.addEventListener('error',function(){
+          delete window[callbackName];
+          document.body.removeChild(scriptNode)
+          reject('js加载失败')
+        })
+      })
+    }
+    jsonp('http://localhost:9999/api/jsonp').then(res => {
+      console.log(res);
+    })
+  </script>
+</body>
+</html>
