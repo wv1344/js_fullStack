@@ -8,13 +8,19 @@
         <i class="icon">&#xe63c;</i>
       </router-link>
     </v-header>
+
+
     <!-- tab -->
     <v-tab></v-tab>
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+
+
     <!-- play -->
     <v-play></v-play>
+
+    
     <!-- sidebar -->
     <v-sidebar></v-sidebar>
   </div>
