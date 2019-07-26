@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <title>getAllHTMLTag</title>
+</head>
+<body>
+  <div>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <script>
+    function getAllHTMLTag(){
+      let tags = [...document.querySelectorAll('*')]
+      .map(dom => dom.tagName)
+      // 统计出现的频率
+      const mapper = {};
+      for(let i = 0;i<tags.length;i++){
+        const tag = tags[i];
+        console.log(mapper)
+        if(mapper[tag] === void 0){
+          mapper[tag] = 1;
+        }else{
+          mapper[tag] +=1;
+        }
+      }
+      console.log(mapper)
+      // 对象(Object) => 变成数组的(es6) => sort a.tag-b.tag
+      // console.log(Object.entries(mapper))
+      let a = Object.entries(mapper).sort((a,b) => 
+        b[1]-a[1]
+      ).map(q => q[0])
+      return a
+    }
+    console.log(getAllHTMLTag())
+  </script>
+</body>
+</html>
