@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>q10</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" id="txt">
+    <p id="show-text"></p>
+  </div>
+<script>
+  var obj = {
+    text:''
+  }
+  function inner(){
+    document.getElementById('show-text').innerText = obj.text;
+  }
+  
+  document.addEventListener('keyup',function(e){
+    let iText = document.getElementById('txt').value
+    // Object.keys(obj).map(key => {
+      // let a = obj.text
+      Object.defineProperty(obj,'text',{
+        get(){
+          // console.log('获取')
+          return a
+        },
+        set(newT){
+          // a = newT;
+          // inner();
+          newT = document.getElementById('txt').value;
+          document.getElementById('show-text').innerText = newT
+        }
+      })
+    // })
+    obj.text = iText;
+  })
+</script>
+</body>
+</html>
