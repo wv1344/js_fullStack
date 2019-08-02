@@ -4,14 +4,14 @@
 // 递归
 
 function quickSort(arr){
-  if(arr.length <= 1) {return arr.concat([222])}
+  if(arr.length <= 1) {return arr}
   var left = [],
-  right = [],
-  baseDot = Math.round(arr.length / 2),
-  // round 四舍五入
-  // ceil  向上取整
-  // floor 向下取整
-  base = arr.splice(baseDot,1)[0];
+    right = [],
+    baseDot = Math.round(arr.length / 2),
+    // round 四舍五入
+    // ceil  向上取整
+    // floor 向下取整
+    base = arr.splice(baseDot,1)[0];
 
   for(var i = 0;i<arr.length;i++){
     if(arr[i]<base){
@@ -26,7 +26,7 @@ function quickSort(arr){
   // left a
   // base b 中间值
   // right c
-  return quickSort(left).concat([base],[33333],quickSort(right))
+  return quickSort(left).concat([base],quickSort(right))
 }
 
 const arr = [2,5,14,6,9,7,3]
