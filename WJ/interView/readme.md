@@ -1,4 +1,8 @@
 
+new 实现  promise 实现
+
+# index.js 腾讯面试  
+
 # 对 es6 的理解
   es6 相对于 es5  ECMAScript 的第六次修订 ES2015 随着 Babel webpack 构建工具的成熟，
   es6 已成为 js 编程的事实标准，
@@ -170,7 +174,29 @@
 
 # q16 js拖拽功能的实现
 
+# q17 类的创建和继承
+
+# q18 click 在 ios 手机上有 300ms 延迟，原因及解决方法
+
+  原因双击缩放
+  1. <meta name="viewport" content="width=device-width, initial-scale=no">
+    initial-scale=no 禁止缩放
+
+  2. FastClick,其原理是检测到 touchend 事件后，立刻发出模拟 click 事件，
+    并把浏览器 300ms 之后真实发出的事件阻断
+
+# q19 cookie sessionStorage localStorage 的区别
+
+  - cookie
+      数据始终在同源的 http 请求中携带（即使不需要），即 cookie 在浏览器和服务器之间来回传递，
+      而 sessionStorage 和 localStorage 不会自动把数据发给服务器，仅在本地保存。
+      cookie 还有路径（path）的概念，可以限制 cookie 只属于某个路径下，存储大小只有 4k 左右。
   
+  - sessionStorage 
+      仅在当前浏览器窗口关闭前有效，不能长久保存
 
-# index.js 腾讯面试
+  - localStorage
+      在所有的同源窗口都是共享的，cookie 也是在所有同源窗口中都是共享的，
+      localStorage的大小在 5M 左右
 
+# 
