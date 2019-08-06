@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>监测数组</title>
+</head>
+<body>
+
+<script>
+  Array.prototype.$push = function(...arg){
+    console.log('数组发生变化');
+    return this.push(...arg)
+  }  
+  var arr = [1,4,5]
+  arr.$push(4)
+  
+  var originPop = Array.prototype.pop;
+  Array.prototype.pop = function(...arg){
+    console.log('pop')
+    originPop.apply(this,arguments);
+  }
+  arr.pop()
+
+  var arrMethods = ['push','pop','shift','unshift','splice'];
+  arrMethods.forEach((methodName) => {
+    let originMethod = Array.prototype[methodName];
+    Array.prototype[methodName] = function(){
+      console.log('改变了');
+      return originMethod.apply(this,arguments)
+    }
+  })
+
+  arr.shift('9')
+  arr.push(7)
+</script>
+</body>
+</html>
