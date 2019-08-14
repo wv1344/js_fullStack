@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>eventListener</title>
+</head>
+<body>
+  <ul class="items">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+  </ul>
+  <a href="javascript:;" id="addBtn">Add One</a>
+
+  <script>
+    let items = document.querySelectorAll('.items li');
+    const ul = document.querySelector('.items');
+    // for(let i=0;i<items.length;i++){
+    //   items[i].addEventListener('click',function(){
+    //     alert(this.innerText)
+    //   })
+    // }
+    console.log(items.length)
+    console.log(ul.childNodes)
+    console.log(ul.childNodes[0].nodeType)
+    console.log(ul.childNodes[1].nodeType)
+    console.log(ul.childNodes[2].nodeType)
+    // const linum = ul.childNodes.filter
+
+    document.getElementById('addBtn').addEventListener('click',function(){
+      const newli = document.createElement('li');
+      newli.innerText = Array.from(ul.childNodes)
+      .filter(item => item.nodeType === 1 && item.nodeName === 'LI').length + 1;
+      document.querySelector('.items').appendChild(newli);
+      
+    })
+
+    ul.addEventListener('click',function(){
+      oli = ul.getElementsByTagName('li');
+      for(let i=0;i<oli.length;i++){
+        oli[i].onclick = function(){
+          console.log(this.innerText)
+          alert(this.innerText)
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -199,4 +199,36 @@ new 实现  promise 实现
       在所有的同源窗口都是共享的，cookie 也是在所有同源窗口中都是共享的，
       localStorage的大小在 5M 左右
 
+# q20 js 任务列表 （event loop）
+
+  - narcotask(宏观任务) :
+      setTimeout
+      setInterval
+      requestAnimationFrame
+      HTML 的解析
+      js 的主线程
+      页面加载
+      用户交互
+
+  - mircotask(微观任务)：
+      promise
+      mutation.oberver
+      process.nextTick
+  
+  script 主程序代码  ---> process.nextTick ---> promise ---> setTimeout  ---> setInterval ---> setImmediate ---> I/O --->UI rendeing
+
+# q21 浏览器的重绘和回流
+
+  https://juejin.im/post/5a9923e9518825558251c96a?tdsourcetag=s_pcqq_aiomsg
+  浏览器渲染页面的过程
+  1. 解析HTML，生成DOM树，解析 CSS，生成 CSSOM 树
+  2. 将 DOM 树和 CSSOM 树结合成render树
+  3. 回流，根据生成的render树，进行回流，得到节点的几何信息
+  4. 重绘，根据render树和回流得到的信息，得到节点的绝对像素
+  5. 将像素发给 gpu，展示在页面上
+
+# q22 vue子组件能否修改接收到的props里面的值
+   不能
+  为了保证数据的单项流动，便于数据的追踪，避免数据混乱
+
 # 

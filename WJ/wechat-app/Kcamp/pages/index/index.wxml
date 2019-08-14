@@ -1,0 +1,17 @@
+<view class="wrapper">
+  <view class="group" wx:for="{{articleList}}" wx:for-item="group">
+    {{group.date}}
+    <view class="group-content">
+      <view class="group-content-item {{item.hasVisited ? 'visited':''}}" 
+      data-item="{{item}}"
+      wx:for="{{group.articles}}" bind:tap='showDetail'>
+      <view class="group-content-item-desc">
+        {{item.title}}
+      </view>
+      <image class="group-content-item-img" src="{{item.cover}}" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload="">
+        
+      </image>
+      </view>
+    </view>
+  </view>
+</view>
