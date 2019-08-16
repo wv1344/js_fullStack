@@ -231,4 +231,19 @@ new 实现  promise 实现
    不能
   为了保证数据的单项流动，便于数据的追踪，避免数据混乱
 
-# 
+# q23 for of 
+  用于遍历 可迭代对象   iterator 迭代 
+  比如 Array，Map，Set，String
+  可迭代对象有两个要求
+  1. 存在 Symbol.iterator 属性
+  2. Symbol.iterator 是一个方法，返回一个 next 属性
+    [Symbol.iterator] = () => ({
+      next:() => {
+        return {
+          done:
+          value:
+        }
+      }
+    })
+
+    可以自定义 for of
