@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>for of</title>
+</head>
+<body>
+  <script>
+    function foo(){
+      for(let arg of arguments){
+        console.log('arg--'+arg)
+      }
+    }  
+    foo('a','b','c')
+    var arr = [];
+    var str = 'abc';
+    var map = new Map();
+    var obj = {};   // typeof obj.a === undefined
+    let initIndex = 0,maxIndex = 3;
+    obj[Symbol.iterator] = () =>({
+      next:function(){
+        initIndex++;
+        if(initIndex <= maxIndex){
+          return {
+            done:false,
+            value:initIndex
+          }
+        }else{
+          return {
+            done:true,
+            value:undefined
+          }
+        }
+        
+      }
+    })
+    console.log(
+      typeof arr[Symbol.iterator],
+      typeof str[Symbol.iterator],
+      typeof map[Symbol.iterator],
+      typeof obj[Symbol.iterator],
+    )
+  </script>
+</body>
+</html>
