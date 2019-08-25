@@ -5,12 +5,10 @@
       <view class="group-content-item {{item.hasVisited ? 'visited':''}}" 
       data-item="{{item}}"
       wx:for="{{group.articles}}" bind:tap='showDetail'>
-      <view class="group-content-item-desc">
-        {{item.title}}
-      </view>
-      <image class="group-content-item-img" src="{{item.cover}}" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload="">
-        
-      </image>
+        <view class="group-content-item-desc" data-item="{{item}}">
+          {{item.title}}
+        </view>
+        <image class="group-content-item-img" src="{{item.cover}}" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload=""></image>
       </view>
     </view>
   </view>

@@ -1,5 +1,7 @@
 
 new 实现  promise 实现
+位移运算 >> 1 除二
+promise.all promise.race
 
 # index.js 腾讯面试  
 
@@ -174,7 +176,7 @@ new 实现  promise 实现
 
 # q16 js拖拽功能的实现
 
-# q17 类的创建和继承
+# q17 类的创建和继承+
 
 # q18 click 在 ios 手机上有 300ms 延迟，原因及解决方法
 
@@ -247,3 +249,13 @@ new 实现  promise 实现
     })
 
     可以自定义 for of
+
+
+# q24  e.target  e.currentTarget
+  e.target 触发事件的目标元素
+  e.currentTarget 绑定事件的元素
+
+# js 
+  ECMAScript：规定了 js 的语法
+  DOM：
+  BOM：浏览器相关的 history 窗口的resize

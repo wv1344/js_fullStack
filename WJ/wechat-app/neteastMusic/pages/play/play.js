@@ -8,7 +8,11 @@ Page({
   data: {
     isPlay:false
   },
-
+  togglePlayStatus:function(){
+    this.setData({
+      isPlay:!this.data.isPlay
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -49,9 +53,17 @@ Page({
     bgAudio.coverImgUrl = "";
     bgAudio.src = songInfo.url;
     bgAudio.onPlay()(res=>{
-      this.setData({
-        isPlay:true
-      })
+      // this.setData({
+      //   isPlay:true
+      // })
+      if(this.data.isPlay){
+        bgAudio.stop()
+      }
+    })
+    bgAudio.onPause()(res=>{
+      if(!this.data.isPlay){
+        bgAudio.play()
+      }
     })
   },
 
