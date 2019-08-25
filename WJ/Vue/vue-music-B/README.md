@@ -11,7 +11,7 @@
   npm install
   通过 npm run dev 将项目运行起来
 
-- 项目实现效果
+- 项目实现效果  
   ![sidebar](./img-readme/sidebar.jpg)  
   ![search](./img-readme/search.jpg)
   ![search_1](./img-readme/search_1.jpg)
