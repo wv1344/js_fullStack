@@ -12,9 +12,8 @@
   通过 npm run dev 将项目运行起来
 
 - 项目实现效果  
-  <!-- ![sidebar](./img-readme/sidebar.jpg)   -->
-  <img src="./img-readme/sidebar.jpg" width="100"/>
-  ![search](./img-readme/search.jpg)
-  ![search_1](./img-readme/search_1.jpg)
-  ![footer](./img-readme/footer.jpg)
-  ![play](./img-readme/play.jpg)
+  <img src="./img-readme/sidebar.jpg" width="300"/>
+  <img src="./img-readme/search.jpg" width="300"/>  
+  <img src="./img-readme/search_1.jpg" width="300"/>
+  <img src="./img-readme/footer.jpg" width="300"/>  
+  <img src="./img-readme/play.jpg" width="300"/>
