@@ -12,8 +12,8 @@
   通过 npm run dev 将项目运行起来
 
 - 项目实现效果
-  ![](/img-readme/sidebar.jpg)
-  ![](/img-readme/search.jpg)
-  ![](/img-readme/search_1.jpg)
-  ![](/img-readme/footer.jpg)
-  ![](/img-readme/play.jpg)
+  ![sidebar](/img-readme/sidebar.jpg)
+  ![search](/img-readme/search.jpg)
+  ![search_1](/img-readme/search_1.jpg)
+  ![footer](/img-readme/footer.jpg)
+  ![play](/img-readme/play.jpg)
