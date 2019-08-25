@@ -1,21 +1,16 @@
-# vue-eleme-app
+## 仿饿了么商家页  
 
-> A Vue.js project
+- 数据来自于自己的ease-mock   
 
-## Build Setup
+- 实现了蒙层展示详细信息    
 
-``` bash
-# install dependencies
-npm install
+- 实现左右商品联动  
 
-# serve with hot reload at localhost:8080
-npm run dev
+- 实现评论根据评分展示星星个数  
 
-# build for production with minification
-npm run build
+- 实现效果  
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+  <img src="./img-readme/index.jpg" width="250"/>
+  <img src="./img-readme/mask.jpg" width="250"/>  
+  <img src="./img-readme/cart.jpg" width="250"/>
+  <img src="./img-readme/star.jpg" width="250"/>
