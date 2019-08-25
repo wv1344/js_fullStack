@@ -1,2 +1,9 @@
-<!--pages/detail/index.wxml-->
-<text>pages/detail/index.wxml</text>
+
+<import src="../../lib/wxParse/wxParse.wxml"/>
+<scroll-view class="root-wrap" scroll-y="{{ture}}" >
+  <!-- 正文 -->
+  <view class="content">
+    <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+  </view>
+</scroll-view>
+

@@ -18,6 +18,7 @@ Page({
     if(!visitedID.includes(contentId)){
       visitedID.push(contentId);
     }
+    console.log(contentId)
     wx.setStorageSync('visitedID',visitedID);
     wx.navigateTo({
       url:`../detail/index?contentId=${contentId}`

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>DOM</title>
+  <link rel="stylesheet" href="">
+  <style>
+    *{
+      margin: 0;padding: 0;
+    }
+    body{
+      border: 10px solid #000;
+      height: 30px;
+      padding-left: 11px;
+      margin-left: 12px;
+    }
+  </style>
+</head>
+<body>
+  <img src="" alt="">
+  瓜皮
+  <form action="" name="form1">
+    <input type="text" name="username" id="input" value="hello xx">
+  </form>
+  <script src=""></script>
+  <script>
+    console.log(document.body.clientLeft)
+    console.log(document.body.offsetLeft)
+    console.log(document.body.clientHeight)
+    console.log(document.body.style.border)
+    const val = document.forms['form1']['username'].value
+    console.log(val)
+    console.log(document.images)
+    console.log(document.scripts)
+    console.log(document.all)
+    let htmlNode = document.documentElement;
+    console.log(htmlNode)
+    htmlNode.style.fontSize = `20px`
+    // const ipt = document.getElementById('input').getBoundingClientReact()
+    // console.log(ipt)
+    // console.log(ipt.getBoundingClientReact())
+  </script>
+</body>
+</html>
