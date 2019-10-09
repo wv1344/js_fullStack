@@ -4,15 +4,15 @@ import './App.css';
 import Demo1 from './demo1'
 import Demo2 from './demo2'
 
-function renderStr () {
+function renderStr() {
   return 'String'
 }
 function App() {
   const age = 18;
-  const styObj = {color:'blue'}
+  const styObj = { color: 'blue' }
   const bar = () => {
     console.log('---bar')
-    return function(){
+    return function () {
       console.log('bar')
     }
   }
@@ -24,17 +24,17 @@ function App() {
     <li>2</li>,
     <li>3</li>,
   ]
-  const names =['name1','name2','name3','name4']
-  const namesNodes = names.map((name,index) => {
+  const names = ['name1', 'name2', 'name3', 'name4']
+  const namesNodes = names.map((name, index) => {
     return (<div style={styObj}>{name}</div>)
   })
   return (
     <div>
-      <Demo1 names= {names} from = 'App' onClick={(a) => {
+      <Demo1 names={names} from='App' onClick={(a) => {
         console.log(a)
-      }}/>
-      <Demo2 names={names} from ='App'/>
-      <p style= {{color:'red'}} onClick={() => {
+      }} />
+      <Demo2 names={names} from='App' />
+      <p style={{ color: 'red' }} onClick={() => {
         console.log('red')
       }}>{age}</p>
       <p style={styObj}>{age}</p>
