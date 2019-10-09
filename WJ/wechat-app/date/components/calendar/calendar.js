@@ -139,6 +139,7 @@ Component({
       for(let i = 1;i <= emptyDays;i++){
         emptyGridsBefore.push(preMonthDays - (emptyDays - i))
       }
+      // 下月天数
       let after = (42 - thisMonthDays - emptyDays) - 7 >= 0 ? (42 - thisMonthDays - emptyDays) - 7 : (42 - thisMonthDays - emptyDays);
       for(let i = 1; i <= after;i++){
         emptyGridsAfter.push(i)
