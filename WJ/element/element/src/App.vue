@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <Calendar v-model="value"></Calendar>
+    <Calendar v-model="value" :range="['2019-09-30', '2019-10-20']">
+        <!-- <template v-slot="scope">
+          <div>{{scope.data.month}}-{{scope.data.day >= 10 ? scope.data.day : '0'+scope.data.day}}</div>
+        </template> -->
+    </Calendar>
     <div>{{value}}</div>
   </div>
 </template>
@@ -14,7 +18,7 @@ export default {
   },
   data () {
     return {
-      value: '2019-09-01'
+      value: new Date()
     }
   }
 }

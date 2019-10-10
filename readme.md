@@ -17,4 +17,4 @@
     这个为默认参数, git reset --mixed HEAD^ 和 git reset HEAD^ 效果是一样的。
 
   --hard 删除工作空间改动代码，撤销 commit，撤销 git add . 
-    注意完成这个操作后，就恢复到了上一次的 commit 状态。
+    注意完成这个操作后，就恢复到了上一次的 commit 状态。 
