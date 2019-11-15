@@ -13,14 +13,17 @@
   <script>
     var a = 0;
     new Mypromise((resolve, reject) => {
-      setTimeout(() => {
+      // setTimeout(() => {
         a = 1;
         resolve('ok');
-        reject('not ok'); 
-      }, 1000);
+        console.log('html-resolve')
+        // reject('not ok'); 
+      // }, 1000);
     }).then((e) => {
-      console.log(a);
       console.log(e);
+      return 'not ok'
+    }).then((b)=>{
+      console.log(b)
     })
   </script>
 </body>

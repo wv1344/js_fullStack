@@ -11,6 +11,11 @@ export default new Router({
       path: '/',
       name: 'App',
       component: App
+    },
+    {
+      path: '/calendar',
+      name: '日历',
+      component: () => import('@/components/calendar.vue')
     }
   ]
 })

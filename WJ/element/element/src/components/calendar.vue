@@ -13,13 +13,33 @@
         <div class="item" v-for="(item, index) in weeks" :key="index">{{item}}</div>
       </div>
       <div class="date">
-        <div class="before-empty grid" v-for="(item,index) in beforeEmptyDay" :key="index+'before'" @click="handleBeforeClick(item)">
-          <div class="wrap"><slot :data="item"><div>{{item.day}}</div></slot></div>
+        <div
+        class="before-empty grid"
+        v-for="(item,index) in beforeEmptyDay"
+        :key="index+'before'"
+        @click="handleBeforeClick(item)">
+          <div class="wrap">
+            <slot :data="item">
+              <div>{{item.day}}</div>
+            </slot>
+          </div>
         </div>
-        <div class="this-month-days grid" :class="selectFormat === year+'-'+item.monthFormat+'-'+item.dateFormat ? 'selected' : '' " @click="handleClick(item)"  v-for="(item,index_mo) in thisMonthDays" :key="index_mo">
-          <div class="wrap" :class="format === year+'-'+item.monthFormat+'-'+item.dateFormat ? 'today' : '' "><slot :data="item"><div>{{item.day}}</div></slot></div>
+        <div
+        class="this-month-days grid"
+        :class="selectFormat === year+'-'+item.monthFormat+'-'+item.dateFormat ? 'selected' : '' "
+        @click="handleClick(item)"
+        v-for="(item,index_mo) in thisMonthDays"
+        :key="index_mo">
+          <div class="wrap" :class="format === year+'-'+item.monthFormat+'-'+item.dateFormat ? 'today' : '' ">
+            <slot :data="item">
+              <div>{{item.day}}</div>
+            </slot>
+          </div>
         </div>
-        <div class="after-empty grid" v-for="(item,index) in afterEmptyDay" :key="index+'after'" @click="handleAfterClick(item)">
+        <div
+        class="after-empty grid"
+        v-for="(item,index) in afterEmptyDay" :key="index+'after'"
+        @click="handleAfterClick(item)">
           <div class="wrap">{{item.day}}</div>
         </div>
       </div>
@@ -189,64 +209,76 @@ export default {
 
 </script>
 <style lang='stylus' scoped>
-.header
-  padding 12px 20px
-  display flex
-  align-items center
-  justify-content space-between
-  border-bottom 1px solid #dcdfe6
-  .title
-    display inline-block
-  .control
-    font-size 0
-    display inline-block
-    float right
-  button:focus
-    outline 0!important
-    background-color #f2f8fe
-    color #1989f1
-  button:hover
-    background-color #f2f8fe
-    color #1989f1
-  .button
-    background #fff
-    font-size 12px
-    border 1px solid #dcdfe6
-    padding 7px 15px
-  .bdrs-left
-    border-radius 4px 0 0 4px
-  .bdrs-right
-    border-radius 0 4px 4px 0
-.body
-  padding 12px 20px 35px
-  .week
-    padding 12px 0
-    .item
+.calendar
+  width 100%
+  .header
+    box-sizing border-box
+    height 10%
+    padding 12px 20px
+    display flex
+    align-items center
+    justify-content space-between
+    border-bottom 1px solid #dcdfe6
+    .title
       display inline-block
-      width 14.28571428571429%
-      text-align center
-  .date
-    font-size 0
-    font-weight 400
-    border-left 1px solid #ebeef5
-    border-top 1px solid #ebeef5
-    .today
-      color #1989f1
-    .selected
+    .control
+      font-size 0
+      display inline-block
+      float right
+    button:focus
+      outline 0!important
       background-color #f2f8fe
       color #1989f1
-    .before-empty,.after-empty
-      color #c0c4cc
-    .grid
-      display inline-block
-      width: 14.28571428571429%;
-      .wrap
-        box-sizing border-box
-        height 85px
-        line-height 20px
-        border-right  1px solid #ebeef5
-        border-bottom  1px solid #ebeef5
-        font-size 16px
-        padding 8px
-        list-style 20px
+    button:hover
+      background-color #f2f8fe
+      color #1989f1
+    .button
+      background #fff
+      font-size 12px
+      border 1px solid #dcdfe6
+      padding 7px 15px
+    .bdrs-left
+      border-radius 4px 0 0 4px
+    .bdrs-right
+      border-radius 0 4px 4px 0
+  .body
+    box-sizing border-box
+    padding 12px 20px 0
+    height 90%
+    .week
+      height 10%
+      .item
+        display inline-block
+        width 14.28571428571429%
+        text-align center
+    .date
+      height 90%
+      font-size 0
+      font-weight 400
+      display flex
+      flex-wrap wrap
+      align-content stretch
+      border-left 1px solid #ebeef5
+      border-top 1px solid #ebeef5
+      .today
+        color #1989f1
+      .selected
+        background-color #f2f8fe
+        color #1989f1
+      .before-empty,.after-empty
+        color #c0c4cc
+      .grid
+        display inline-block
+        width: 14.28571428571429%;
+        .wrap
+          box-sizing border-box
+          height 100%
+          line-height 20px
+          border-right  1px solid #ebeef5
+          border-bottom  1px solid #ebeef5
+          font-size 16px
+          padding 8px
+          list-style 20px
 </style>
+325 36  = 361
+40 372 = 412

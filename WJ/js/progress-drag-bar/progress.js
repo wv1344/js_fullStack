@@ -1,6 +1,7 @@
 class Progress {
   constructor(selector,options){
     console.log(selector)
+    console.log(options)
     this.options = options
     this.parentDom = document.querySelector(selector)
     this.initDom()
@@ -29,13 +30,16 @@ class Progress {
     const { disableDrag= false ,onDragStart,onDrag } = this.options
     if(disableDrag) return false;
     this.progressBtnDom.addEventListener('touchStart',(e) => {
+      console.log(e)
       const touch = e.touches[0];
       downX = touch.clientX;
+      console.log(onDragStart)
       if(onDragStart) onDragStart();
     })
     let downX = 0;
     let btnLeft = 0;
     this.progressBtnDom.addEventListener('touchmove',(e) =>{
+
       e.preventDefault();
       const touch = e.touches[0];
       const diffx = touch.clientX - downX;
