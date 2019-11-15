@@ -60,3 +60,8 @@ typings/
 
 # next.js build output
 .next
+
+# image video
+*.mp4
+*.png
+*.jepg
