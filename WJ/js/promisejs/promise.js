@@ -1,4 +1,5 @@
 function Mypromise(callback){
+
   var self = this;
   // 记录状态null为 pending，true 为resolve，false为 reject
   var state = null;
@@ -11,11 +12,12 @@ function Mypromise(callback){
   var asynconFulfilled = null;
   var asynconReject = null;
 
-
+  console.log(callback)
   // 执行并改变promise对象的状态
   callback(resolve,reject)
 
   this.then = function(onFulfilled,onReject){
+    console.log('.then')
     // 返回一个新的promise对象
     return new self.constructor(function(resolve,reject){
       // 判断异步代码是否执行完毕 （是否resolve或者reject）
@@ -25,6 +27,7 @@ function Mypromise(callback){
       }else if (state === false){
         doAsynconRejected(onReject,resolve,reject);
       }else {
+        console.log('this is else')
         nextResolve = resolve;
         nextReject = reject;
         asynconFulfilled = onFulfilled;
@@ -35,14 +38,18 @@ function Mypromise(callback){
 
   // resolve方法
   function resolve(data){
+    console.log('resolve')
     state = true;
     param = data;
+    console.log(nextResolve)
     if (nextResolve){
       doAsynconFulfilled(asynconFulfilled,nextResolve,nextReject);
     }
   }
   // reject方法
   function reject(err){
+    console.log('reject')
+
     state = false;
     param = err;
     if (nextReject){
@@ -50,17 +57,21 @@ function Mypromise(callback){
     }
   }
   function doAsynconFulfilled(onFulfilled,resolve,reject){
+    console.log('doAsynconFullfilled')
     window.setTimeout(function() {
       // 判断onFulfilled是否为function，不是则忽略
       if(typeof onFulfilled === 'function'){
+        console.log('onFullfilled is function')
         // 执行onFulfilled 方法获取返回值promise()
         let promise = onFulfilled(param);
         // 如果promise为undefined 执行if
         // 如果promise为Mypromise对象 执行else if
         // 如果promise为非Mypromise对象 执行else
         if (promise === undefined){
+          console.log('promise is undefined')
           resolve(param)
         }else if (promise.constructor === Mypromise.constructor){
+          console.log('promise.constructor is constructor')
           // 等待传递进来的promise对象执行完毕，然后根据传递过来的promise对象的状态resolve或者是reject
           promise.then(function(param){
             resolve(param)
@@ -72,6 +83,7 @@ function Mypromise(callback){
           resolve(promise)
         }
       }else{
+        console.log('onFullfilled is not function')
         resolve(param);
       }
     },0)

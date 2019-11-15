@@ -18,6 +18,6 @@ http.createServer((req,res) =>{
     res.end('请求方式不对');
   }
   
-}).listen(8080,() => {
-  console.log('server is running 8080');
+}).listen(8083,() => {
+  console.log('server is running 8083');
 })

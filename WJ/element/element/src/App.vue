@@ -1,25 +1,39 @@
 <template>
   <div id="app">
-    <Calendar v-model="value" :range="['2019-09-30', '2019-10-20']">
-        <!-- <template v-slot="scope">
-          <div>{{scope.data.month}}-{{scope.data.day >= 10 ? scope.data.day : '0'+scope.data.day}}</div>
-        </template> -->
-    </Calendar>
-    <div>{{value}}</div>
+    <div class="calendar">
+      <Calendar></Calendar>
+    </div>
+    <div class="input-box">
+      <Input type="text" v-model="con" placeholder="请输入内容" clearable/>
+    </div>
+    <div>{{con}}</div>
   </div>
 </template>
 
 <script>
 import Calendar from '@/components/calendar'
+import Input from '@/components/input'
 export default {
   name: 'App',
   components: {
-    Calendar
+    Calendar,
+    Input
   },
   data () {
     return {
-      value: new Date()
+      value: new Date(),
+      con: 'sldkfj'
     }
   }
 }
 </script>
+
+<style lang="stylus">
+@import '//at.alicdn.com/t/font_1503790_yp9803cj1bg.css'
+
+.calendar
+  height 300px
+  width 400px
+.input-box
+  margin-top 10px
+</style>
