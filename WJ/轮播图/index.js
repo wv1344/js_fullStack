@@ -1,13 +1,27 @@
 
-
+let arr = []
+let id = 0
+function _setInterval (fn,delay){
+  console.log('---')
+  console.log(this)
+  arr.push(this)
+  let temp = setInterval(fn, delay);
+  console.log(arr)
+  this.ttime = temp
+}
+function _clearInterval (val) {
+  clearInterval(val)
+  console.log(arr)
+  arr.splice(arr.indexOf(val),1)
+}
 
 /**
  *  * @param {*} options 
  */
 function Swiper(options) {
-  init(options)
+  this.init(options)
 }
-function init(options) {
+Swiper.prototype.init = function (options) {
   let el = document.querySelector(options.el)
   let wrapper = el.querySelector('.swiper-wrapper')
   let next = document.getElementById('next')
@@ -18,7 +32,7 @@ function init(options) {
   wrapper.insertBefore(list[`${num - 1}`].cloneNode(true), list[0]);  // 头部添加 最后一个 slide
   let totalSlide = num + 2  // 总共slide数量
   let index = 1
-  let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
+  this.delay = options.delay ? options.delay : 3000  // 轮播间隔时间
   let speed = 2   // 过度所用时间
   let startX = 0
   let moveX = 0
@@ -26,6 +40,9 @@ function init(options) {
   let allSlide = wrapper.querySelectorAll('.swiper-slide')  // 所有 slide 列表
   let swiperWidth = el.offsetWidth     // 滑动的宽度  图片宽度  
   document.min_background_timeout_value = 60
+  this._setInterval = _setInterval
+  this._clearInterval = _clearInterval
+  this.id = id++
 
   // 插入 定位点
   let dot = document.createElement('div')
@@ -73,7 +90,7 @@ function init(options) {
   }
 
   // 下一张
-  function nextFn() {
+  this.nextFn = function () {
     if (new Date().getTime() - lastTime <= speed * 1000) return
     if (index >= totalSlide - 1) {  //  到了最后一张
       wrapper.style.transition = 'none'
@@ -97,20 +114,21 @@ function init(options) {
   }
 
   // 设置 自动轮播
-  let timer = setInterval(nextFn, delay)
+  let timer = this._setInterval(this.nextFn, this.delay)
 
   // 点击下一张
   next.addEventListener('click', function () {
-    clearInterval(timer)
+    console.log(this)
+    this._clearInterval(timer)
     nextFn()
-    timer = setInterval(nextFn, delay)
+    timer = this._setInterval(this.nextFn, this.delay)
   })
 
   // 点击上一张
   pre.addEventListener('click', function () {
-    clearInterval(timer)
+    this._clearInterval(timer)
     preFn()
-    timer = setInterval(nextFn, delay)
+    timer = this._setInterval(this.nextFn, this.delay)
   })
 
   // 监听开始点击
@@ -126,7 +144,7 @@ function init(options) {
     }
     startX = e.touches[0].pageX
     offsetX = wrapper.offsetLeft
-    clearInterval(timer)
+    this._clearInterval(timer)
   })
 
   // 监听 滑动时
@@ -148,13 +166,13 @@ function init(options) {
       if (moveX > 0) {
         preFn()  // 上一张
       } else {
-        nextFn()  // 下一张
+        this.nextFn()  // 下一张
       }
     } else {
       wrapper.style.transition = `left ${speed}s`
       wrapper.style.left = (-1) * swiperWidth * index + 'px';
     }
-    timer = setInterval(nextFn, delay)
+    timer = this._setInterval(this.nextFn, this.delay)
   })
 
   // 监听 slide 切换完毕，更新 标记点 
@@ -174,22 +192,25 @@ function init(options) {
   // 监听dot点击
   dotList.forEach((el, de) => {
     el.onclick = function (e) {
-      clearInterval(timer)
+      this._clearInterval(timer)
       index = de
       change()
-      timer = setInterval(nextFn, delay)
+      timer = this._setInterval(this.nextFn, this.delay)
     }
   });
 
-  // document.onvisibilitychange = function () {
-  //   if (document.visibilityState == "visible") {
-  //     timer = setInterval(nextFn, delay);
-  //     console.log('set')
-  //   } else {
-  //     clearInterval(timer);
-  //     console.log('clear')
-  //   }
-  // }
+  document.onvisibilitychange = function () {
+    console.log(arr)
+    if (document.visibilityState == "visible") {
+      arr.forEach((item) => {
+        item._setInterval(item.nextFn,item.delay)
+      })
+    } else {
+      arr.forEach((item) => {
+        item._clearInterval(item.ttime)
+      })
+    }
+  }
 
 }
 
