@@ -33,7 +33,9 @@
       // 闭包 抖掉一些不必要的请求
       // let timeid;
       return function (args) {
+        console.log(args)
         // 句柄
+        console.log(func)
         clearTimeout(func.id);
         func.id = setTimeout(function () {
           func(args);
@@ -47,6 +49,7 @@
       // 要ajax，但是抖一下，
       // ajax(e.target.value);
       // 内部有着ajax的功能，
+      console.log(e.target.value)
       debounceAjax(e.target.value);
     });
   </script>

@@ -25,6 +25,7 @@
       for(let i in oli){
         oli[i].index = Number(i) + 1
         oli[i].onclick = function(){
+          console.log(this)
           console.log(this.innerHTML)
         }
       }

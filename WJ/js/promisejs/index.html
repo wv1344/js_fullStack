@@ -13,12 +13,12 @@
   <script>
     var a = 0;
     new Mypromise((resolve, reject) => {
-      // setTimeout(() => {
+      setTimeout(() => {
         a = 1;
         resolve('ok');
         console.log('html-resolve')
         // reject('not ok'); 
-      // }, 1000);
+      }, 1000);
     }).then((e) => {
       console.log(e);
       return 'not ok'

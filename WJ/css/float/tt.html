@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box1 {
+      width: 400px;
+      height: 400px;
+      background-color: red;
+    }
+    .i-box{
+      width: 100px;
+      height: 100px;
+      /* float: left; */
+      position: absolute;
+      background-color: skyblue;
+      
+    }
+    .i-box2{
+      width: 220px;
+      height: 120px;
+      background-color: orange;
+    }
+    .box2{
+      width: 200px;
+      height: 200px;
+      float: left;
+      background-color: blue;
+    }
+  </style>
+</head>
+<body>
+  <div class="box1">
+    <div class="i-box"></div>
+    <div class="i-box2">afvnjhiughojhoda</div>
+    是指给元素加css属性float：left/right，将元素的排布方式改变，使不能改变高宽的元素可以设定高度和宽度，即是不区分元素的元素类型，使元素脱离原本的文本流，也就是脱离原本的标准流。
+
+但是浮动流有它自身的缺陷，由于脱离了标准流，原本的标准流中下面的元素会弥补浮动流元素原本的位置，可 能会出现围字现象，或者原本标准流的内容被遮挡住。
+
+可以在设置浮动的后一个标签里设置一个clear属性来解决浮动带来的影响
+
+（单指浮动的负面影响）或者给父级加overflow：hidden以及万能的清除浮动方法
+  </div>
+  <div class="box2"></div>
+</body>
+</html>

@@ -17,6 +17,7 @@
     <v-play></v-play>
     <!-- sidebar -->
     <v-sidebar></v-sidebar>
+
   </div>
 </template>
 
@@ -31,7 +32,7 @@ export default {
     'v-header': header,
     'v-tab':tab,
     'v-play':play,
-    'v-sidebar':sidebar
+    'v-sidebar':sidebar,
   }
 }
 </script>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../util/reset.css">
+    <link rel="stylesheet" href="slider.css">
+    <script src="../util/util.js"></script>
+    <script src="slider.js"></script>
+</head>
+<body>
+    <!-- 轮播图 -->
+    <div class="g-body">
+        <div class="g-banner">
+            <!-- g-banner 轮播区域 -->
+            <!-- 轮播组件 m-slider 及对应的 圆点指示器 m-cursor-->
+            <ul class="m-cursor">
+                <li class='cursor'></li>
+                <li class='cursor'></li>
+                <li class='cursor'></li>
+                <li class='cursor'></li>
+                <li class='cursor'></li>
+                <li class='cursor'></li>
+                <li class='cursor'></li>
+                <li class='cursor'></li>
+            </ul>
+            <div class="arrow" id="prev"><</div>
+            <div class="arrow" id="next">></div>
+        </div>
+    </div>
+
+
+    <script>
+    // 轮播图初始化过程
+    let cursors = document.querySelectorAll('.m-cursor .cursor');
+    let prev = document.querySelector('#prev');
+    let next = document.querySelector('#next');
+
+    let slider = new Slider({
+        //视口容器
+        container: document.querySelector('.g-banner'),
+        // 是否允许拖拽
+        drag: true,
+        // 是否自动轮播
+        auto: true,
+        // 设定动画时间0.5s
+        fadeTime: 500,
+        // 图片数量自定义
+        images: [
+            'img/banner1.jpg',
+            'img/banner2.jpg',
+            'img/banner3.jpg',
+            'img/banner4.jpg',
+            'img/banner5.jpg',
+            'img/banner6.jpg',
+            'img/banner7.jpg',
+            'img/banner8.jpg',
+        ]
+    });
+
+    cursors.forEach(function (cursor, index) {
+        cursor.addEventListener('click', function () {
+            slider.nav(index);
+        })
+    });
+
+    prev.addEventListener('click', function () {
+        slider.prev();
+    });
+    next.addEventListener('click', function () {
+        slider.next();
+    });
+
+    // 每次slider图片位置变化，cursor也变化，增加监听处理
+    slider.on('nav', function (event) {
+        let pageIndex = event.pageIndex;
+        cursors.forEach(function (cursor, index) {
+            if (index === pageIndex) {
+                _.addClassName(cursor, 'z-active');
+                cursor.style.backgroundColor = '#5ed0ba';
+            } else {
+                _.delClassName(cursor, 'z-active');
+                cursor.style.backgroundColor = '#dedfdf';
+            }
+        })
+    });
+
+    // 从当前页开始轮播
+    slider.nav(2);
+
+    </script>
+</body>
+</html>

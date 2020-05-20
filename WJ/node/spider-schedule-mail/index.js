@@ -5,10 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const nodemailer = require('nodemailer');
 
-const local = 'jiangxi/qingshanhu-district';
-const weatherUrl = `https://tianqi.moji.com/weather/china/$
-
-{local}`;
+const local = 'zhejiang/jianggan-district';
+const weatherUrl = `https://tianqi.moji.com/weather/china/${local}`;
 const getWeatherTips = function() {
   return new Promise((resolve, reject) => {
     superagent.get(weatherUrl)

@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import Search from '@/components/pages/search'
+import Search from '@/pages/search'
+import Singer from '@/pages/singer'
 
 Vue.use(Router)
 
@@ -16,6 +17,11 @@ export default new Router({
       path:'/search',
       name:'Search',
       component:Search
+    },
+    {
+      path:'/singer',
+      name:'Singer',
+      component: Singer
     }
   ]
 })

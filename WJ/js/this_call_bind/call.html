@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var a = 1;
+    function test(){
+      console.log(this === window);
+      console.log(this.a)
+    }  
+    var obj = {
+      a:2
+    }
+    // test();         
+    // test.call(obj);
+
+    // 模拟 call 实现
+    function Foo () {}
+    Foo.prototype = {}
+
+    // myCall
+    Function.prototype.myCall = function (obj,...rest) {
+      // console.log('call-'+obj)
+      // console.log(this)
+      obj._fn = this
+      // obj._fn === 传入函数
+      let res = obj._fn(...rest)
+      delete obj._fn
+      return res
+    }
+
+    var testObj = {
+      a: 3,
+      test: function(){
+        console.log(this.a)
+      }
+    }
+    // testObj.test();
+
+    var testObj1 = {
+      b : 'b_val',
+    }
+
+    // testObj1._fn()  // this === testObj1
+
+    function testMyCall(a,c) {
+      console.log(this.b)
+      console.log(a)
+      console.log(c)
+    }
+
+    testMyCall.myCall(testObj1,'a_val','c_val')
+
+
+    function test2 (){
+      console.log(this.b)
+    }
+    test2.myCall(testObj1)
+  </script>
+</body>
+</html>

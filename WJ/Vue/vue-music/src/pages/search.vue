@@ -64,6 +64,9 @@ export default {
     'v-search-list':searchlist,
     'v-suggest':suggest,
   },
+  //   computed:{
+  //   ...mapGetters(['searchHistory'])
+  // },
   mixins:[searchMixin],
   methods: {
 
@@ -79,13 +82,14 @@ export default {
 
   created() {
     this._getHotKey();
+    console.log(this.searchHistory)
     // this.$store.dispatch('addSearchHistory',this.query)
   },
 }
 </script>
 
 <style lang="stylus" scoped>
-@import '../../assets/css/function'
+@import '../assets/css/function'
 .search
   overflow hidden
   &-box-wrapper
@@ -127,4 +131,6 @@ export default {
             .icon
               font-size 18px
               color hsla(0,0%,100%,.3)
+  .search-result
+    margin-bottom px2rem(105px)
 </style>

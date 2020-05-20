@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <input type="number" data-bind-123="name" />
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    function DataBinder(object_id){
+      // 使用jQuery对象作为简单的订阅者发布者
+      var pubSub = jQuery({ })
+      
+      // 希望一个data元素可以在表单种指明绑定： data-bind-<object_id>="<property_name>"
+      var data_attr = "bind-" + object_id,
+            message = object_id + ":change";
+      
+      // 使用data-binding属性和代理来监听那个元素上的变化事件，以便变化能够广播到所有关联对象
+
+      jQuery(document).on("change","[data-" + data_attr + "]",function(evt){
+        var input = jQuery(this);
+        pubSub.trigger(message,[$input,data(data_attr),$input.val()])
+      })
+      
+      // pubSub将变化传播到所有的绑定元素，设置input标签的值或者其他标签的html内容
+
+      pubSub.on(message,function(evt,prop_name,new_val){
+        jQuery("[data-" + data_attr + "=" + prop_name + "]").each(function(){
+          var $bound = jQuery(this);
+
+          if($bound.is("input,text area,select")){
+            $bound.val(new_val);
+          }else{
+            $bound.html(new_val);
+          }
+        })
+      })
+      return pubSub
+    }
+
+    function User(uid){
+      var binder = new DataBinder(uid), 
+      user = {
+        attributes: {},
+        // 属性设置器使用数据绑定器 pubSub 来发布变化
+        set: function(attr_name,val){
+          this.attributes[attr_name] = val;
+          binder.trrigger(uid + ":change",[attr_name,val,this])
+        },
+        get: function(attr_name){
+          return this.attributes[attr_name]
+        },
+        _binder:binder
+      }
+      binder.on(uid+ ":change",function(vet,attr_name,new_val,initiator){
+        if(initiator !== user){
+          user.set(attr_name,new_val)
+        }
+      })
+    }
+
+    var user1 = new User(123);
+    console.log(user1)
+    user1.set("name","wolfgang")
+  </script>
+</body>
+</html>

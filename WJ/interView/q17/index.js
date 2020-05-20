@@ -13,7 +13,7 @@ Animal.prototype.eat = function(food){
 // //  原型链的继承
 // function Cat (){}
 
-// Cat.prototype = new Animal();
+// Cat.prototype = new Animal(); //将 Animal 实例赋给Cat.prototype
 // Cat.prototype.name = 'cat'
 
 // let  a = new Cat()

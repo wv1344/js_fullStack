@@ -21,7 +21,7 @@ const mutations = {
   [types.SET_PLAYING] (state,status){
     state.playing = status
   },
-  [types.SAVE_PLAYHISTORY] (state,playload){
+  [types.SAVE_PLAY_HISTORY] (state,playload){
     state.playHistory = playload
   },
   [types.SAVE_FAVORITELIST] (state,playload){
@@ -33,8 +33,11 @@ const actions = {
   selectPlaySong({commit,state},song){
     let playlist = state.playList.slice()
     let currentIndex = state.currentIndex
+
     // 查找当前列表中是否有待插入的歌曲并返回其索引
     let fpIndex = findIndex(playlist,song)
+    console.log(fpIndex)
+
     // 如果已经包含则这首歌
     if(fpIndex > -1){
       currentIndex = fpIndex
@@ -48,7 +51,7 @@ const actions = {
   },
   // 加入播放列表
   addPlayList({commit,state},song){
-    let playlist = [...state.playList.slice(),song]
+    let playlist = [...state.playList.slice(),...song]
     if(playlist.length === 1){
       let currentIndex = state.currentIndex
       currentIndex++ 
@@ -60,8 +63,8 @@ const actions = {
   // 保存播放历史
   savePlayhistory({commit,state},song){
     let playHistory = state.playHistory.slice()
-    playHistory = [...playHistory,song]
-    commit(types.SAVE_PLAYHISTORY,playHistory)
+    playHistory = [...playHistory,...song]
+    commit(types.SAVE_PLAY_HISTORY,playHistory)
   }
 }
 
