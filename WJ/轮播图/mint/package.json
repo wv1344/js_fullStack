@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "element-ui": "^2.13.2",
     "mint-ui": "^2.2.13"
   }
 }
