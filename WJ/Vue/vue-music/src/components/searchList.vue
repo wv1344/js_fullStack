@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   props:{
     searches:{
@@ -19,9 +20,17 @@ export default {
       default:['许嵩']
     }
   },
+
+  mounted(){
+    console.log(this.searches)
+  },
   methods: {
+    ...mapActions(['removeSearchHistory']),
     selectItem(item){
       this.$emit('select',item)
+    },
+    deleteOne(item){
+      this.removeSearchHistory(item)
     }
   }
 }

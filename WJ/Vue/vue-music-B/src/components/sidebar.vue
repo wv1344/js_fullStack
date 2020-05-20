@@ -81,9 +81,9 @@ export default {
     background #040308
     position absolute
     top 0
-    left px2rem(-400px)
-    transform translateZ(0)
-    opacity 0
+    // left px2rem(-400px)
+    // transform translateZ(0)
+    opacity 1
     width px2rem(350px)
     z-index 1002
     height 100%
@@ -92,6 +92,8 @@ export default {
 
     &.showbar 
       transform translateX(px2rem(400px))
+      // width px2rem(350px)
+
       opacity 1
     
     .head 

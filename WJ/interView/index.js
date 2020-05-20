@@ -8,6 +8,10 @@
 // p.__proto__  等于 Person.prototype
 // Person.__proto__ == Function.prototype
 // 实例的__proto__ 等于其构造函数的 prototype
+// 实例为对象 对象由函数生成，对象有__proto__， 对象的 __proto__ 指向 函数的 prototype
+// 函数对象都是由 Function 生成，fn.__proto__ === Function.prototype
+// Object 函数身为函数，生成它的自然是 Function 函数
+// 
 
 // var foo = {}, F = function(){};
 
@@ -59,7 +63,7 @@ Array.prototype.method = function(){
 var myArr = [1,2,3,4,5,6,7]
 
 for  (let index of myArr){
-  // console.log(index)
+  console.log(index)
 }
 myArr.name = 'b'
 for  (let index in myArr){
@@ -102,7 +106,7 @@ let gArr = [1,2,[3,4],5,[2,7,[3,9]]]
 
 function outputArr(arr){
   return arr.reduce(function(pre,item){
-    console.log(pre)
+    // console.log(pre)
     return pre.concat(Array.isArray(item) ? outputArr(item) : item)
   },[])
 }

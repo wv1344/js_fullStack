@@ -49,11 +49,16 @@
         const req = $.ajax(url);
         req.done(data => {
           // 封装一下要用到的数据
+          console.log(data)
           let state = createState($(data));
           console.log(state);
           displayContent(state);
           // 浏览器历史
+          console.log(history)
+
           history.pushState(state,state.title,url);
+          console.log(history)
+          // history对象出于保护隐私隐藏访问过的url
         })
       })
       window.onpopstate = (event) => {

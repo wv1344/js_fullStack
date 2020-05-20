@@ -41,7 +41,7 @@ router.get('/create',async (ctx) => {
   await ctx.render('create');
 })
 router.post('/create',async(ctx) => {
-  console.log(ctx.request.body);
+  // console.log(ctx.request.body);
   const {title,content} = ctx.request.body;
   let id = Date.now();
   user.posts.push({

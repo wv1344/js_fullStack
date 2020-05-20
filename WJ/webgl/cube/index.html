@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <title>cube</title>
+</head>
+
+<body>
+  <!-- <canvas id="canvas"></canvas> -->
+  <script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
+  <script>
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // cube
+    var geometry = new THREE.BoxGeometry(1, 1, 1);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0x00ff00
+    });
+    var cube = new THREE.Mesh(geometry, material);
+
+    // line
+    var lineMaterial = new THREE.LineBasicMaterial({
+      color: 0x0000ff
+    });
+    var lineGeometry = new THREE.Geometry();
+    lineGeometry.vertices.push(new THREE.Vector3(0, 0, 0));
+    lineGeometry.vertices.push(new THREE.Vector3(-2, 2, 0));
+    lineGeometry.vertices.push(new THREE.Vector3(3, 3, 0));
+    var line = new THREE.Line(lineGeometry, lineMaterial);
+
+    // var Kgeometry = new THREE.ParametricBufferGeometry(THREE.ParametricGeometries.klein, 25, 25);
+    // var Kmaterial = new THREE.MeshBasicMaterial({
+    //   color: 0x00ff00
+    // });
+    // var klein = new THREE.Mesh(Kgeometry, Kmaterial);
+    // scene.add(klein);
+
+    var conegeometry = new THREE.ConeGeometry(1, 2, 3);
+    var conematerial = new THREE.MeshBasicMaterial({
+      color: 0xffff00
+    });
+    var cone = new THREE.Mesh(conegeometry, conematerial);
+    scene.add(cone);
+
+    scene.add(line);
+    scene.add(cube);
+
+    cone.position.x = 4
+    camera.position.z = 5;
+
+
+    function animate() {
+      requestAnimationFrame(animate);
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+      cone.rotation.y += 0.01;
+      cone.rotation.x += 0.01;
+      // klein.rotation.y += 0.01;
+      // klein.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>

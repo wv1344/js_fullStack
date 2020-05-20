@@ -16,3 +16,8 @@
   4. 构造函数
   5. 事件回调函数
   6. bind 指定this 返回新的函数
+
+# about this
+  函数作为 普通函数调用时， this === window
+  函数作为 对象的属性 调用时， this === 对象
+  函数作为 用call 来调用， this === call 第一个参数

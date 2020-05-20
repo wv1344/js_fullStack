@@ -126,6 +126,6 @@ body, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset
       overflow: hidden;
       white-space: nowrap;
   }
-  .albums ul li .pic img{
+  .albums ul li .pic .a img{
       width: 170px;
   }

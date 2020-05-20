@@ -34,8 +34,8 @@ export default {
     .tab-link
       padding-bottom 5px
       color hsla(0,0%,100%,0.5)
-    &.active
+    &.router-link-active
       .tab-link
-        color #1a2448
-        border-bottom 2px solid #1a2448
+        color #ea2448
+        border-bottom 2px solid #ea2448
 </style>

@@ -1,4 +1,4 @@
-transparent 清晰的
+transparent 
 
 background-size:cover  
 把背景图像扩展至足够大，以使背景图像全覆盖背景区域。背景图像的某些部分也许无法显示在背景定位区域中。

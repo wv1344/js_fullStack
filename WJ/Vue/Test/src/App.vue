@@ -1,6 +1,34 @@
 <template>
   <div id="app">
-    <div class="header">
+
+    <el-table>
+      <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column label="人员信息">
+      <el-table-column label="姓名"></el-table-column>
+      <el-table-column label="姓名"></el-table-column>
+      <el-table-column label="姓名"></el-table-column>
+      <el-table-column label="姓名"></el-table-column>
+    </el-table-column>
+    <el-table-column label="应发工资">
+      <el-table-column label="姓名"></el-table-column>
+      <el-table-column label="姓名"></el-table-column>
+      <el-table-column label="姓名"></el-table-column>
+      <el-table-column label="姓名"></el-table-column>
+    </el-table-column>
+    <el-table-column label="应扣款项">
+      <el-table-column label="姓名"></el-table-column>
+      <el-table-column label="姓名"></el-table-column>
+      <el-table-column label="姓名"></el-table-column>
+      <el-table-column label="姓名"></el-table-column>
+      <el-table-column label="姓名"></el-table-column>
+    </el-table-column>
+    <el-table-column label="实发金额"></el-table-column>
+    <el-table-column label="备注"></el-table-column>
+    </el-table>
+    <!-- <div class="header">
       <div class="logo">
         <router-link to="/" class="logo-l">计划板</router-link>
       </div>
@@ -21,7 +49,7 @@
       <div class="right">
         <router-view></router-view>
     </div>
-  </div>
+  </div> -->
   <!-- <router-view/> -->
   </div>
 </template>

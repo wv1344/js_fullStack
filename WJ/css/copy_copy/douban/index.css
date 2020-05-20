@@ -1,0 +1,154 @@
+html {
+  color: #111;
+  background: #fff;
+}
+body, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote {
+  margin: 0;
+  padding: 0;
+}
+body, td, th {
+  font: 12px Helvetica,Arial,sans-serif;
+  line-height: 1.62;
+}
+h1,h2,h3,h4,h5,h6{
+  font-size: 100%;
+  font-weight: normal;
+}
+h2{
+  font:15px Arial,Helvetica,sans-serif;
+  color: #007722;
+  margin: 0 0 12px 0;
+  line-height: 150%;
+}
+ul,li{
+  list-style: none;
+}
+input, button, textarea, select, optgroup, option {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+}
+
+input{
+  margin-right: 3px;
+  vertical-align: middle;
+}
+a{
+  cursor: pointer;
+}
+ol{
+  padding: 0 0 0 20px;
+}
+form{
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+a:link{
+  color: #3377aa;
+  text-decoration: none;
+}
+a:visited{
+  color: #666699;
+  text-decoration: none;
+}
+body {
+  padding-top: 30px;
+}
+#anony-nav{
+  width: 1080px;
+  margin: 0 auto 25px;
+}
+#anony-nav .anony-nav-links {
+  float: right;
+  margin-top: 6px;
+}
+
+#anony-nav .anony-nav-links li {
+  display: inline-block;
+  zoom: 1;
+  margin: 0 0 0 17px;
+}
+
+#anony-nav .anony-nav-links li a {
+  display: inline-block;
+  zoom: 1;
+  width: 40px;
+  height: 20px;
+  overflow: hidden;
+  margin: 0;
+  line-height: 20em;
+  outline: none;
+  vertical-align: middle;
+  background: transparent url(https://img3.doubanio.com/f/sns/82c3a65bdec3e60331a8dd5805bb842e76ac0c04/pics/sns/anony_home/anony_nav_logo.png) no-repeat 100% 100%;
+  /* background-image: -webkit-image-set(url(https://img3.doubanio.com/f/sns/82c3a65bdec3e60331a8dd5805bb842e76ac0c04/pics/sns/anony_home/anony_nav_logo.png) 1x,url(https://img3.doubanio.com/f/sns/82c3a65bdec3e60331a8dd5805bb842e76ac0c04/pics/sns/anony_home/anony_nav_logo@2x.png) 2x); */
+  background-image: -webkit-image-set(url(https://img3.doubanio.com/f/sns/82c3a65bdec3e60331a8dd5805bb842e76ac0c04/pics/sns/anony_home/anony_nav_logo.png) 1x, url(https://img3.doubanio.com/f/sns/82c3a65bdec3e60331a8dd5805bb842e76ac0c04/pics/sns/anony_home/anony_nav_logo@2x.png) 2x);
+}
+#anony-nav .anony-nav-links li .ink-book{
+  background-position: 0,0;
+}
+#anony-nav .anony-nav-links li .ink-movie{
+  background-position: -60px 0;
+}
+#anony-nav .anony-nav-links li .ink-music{
+  background-position: -120px 0;
+}
+#anony-nav .anony-nav-links li .ink-group{
+  background-position: -180px 0;
+}
+#anony-nav .anony-nav-links li .ink-events{
+  background-position: -299px 0;
+}
+#anony-nav .anony-nav-links li .ink-fm{
+  background-position: -241px 0;
+}
+#anony-nav h1 {
+  display: inline-block;
+  zoom: 1;
+  vertical-align: middle;
+  width: 160px;
+  height: 34px;
+  margin: 0 20px 0 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: normal;
+  background: url(https://img3.doubanio.com/f/sns/0f9e2dbca60b52f595ddbc02073cb4bb879ed1c9/pics/nav/logo_db@2x.png) no-repeat 0 0;
+  background-image: -webkit-image-set(url(https://img3.doubanio.com/f/sns/0f9e2dbca60b52f595ddbc02073cb4bb879ed1c9/pics/nav/logo_db.png) 1x, url(https://img3.doubanio.com/f/sns/0f9e2dbca60b52f595ddbc02073cb4bb879ed1c9/pics/nav/logo_db@2x.png) 2x);
+  overflow: hidden;
+}
+#anony-nav h1 a {
+  display: block;
+  height: 34px;
+  line-height: 10em;
+}
+#anony-nav .anony-srh {
+  position: relative;
+  display: inline-block;
+  zoom: 1;
+  vertical-align: middle;
+  width: 270px;
+  height: 30px;
+  border: 1px solid #c3c3c3;
+}
+form {
+  margin: 0;
+  padding: 0;
+  border: 0px;
+}
+#anony-nav .anony-srh .inp {
+  display: block;
+  height: 30px;
+  overflow: hidden;
+}
+input {
+  margin-right: 3px;
+  vertical-align: middle;
+}
+#anony-nav .anony-srh .inp input {
+  width: 240px;
+  border: none;
+  font-size: 13px;
+  height: 20px;
+  padding: 5px;
+}

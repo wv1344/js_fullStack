@@ -59,7 +59,8 @@ promise.all promise.race
     3. 执行构造函数  将属性或者方法添加到this引用的对象上
     4. 如果构造函数中没有返回其他对象，那么返回this，即创建的新对象。否则，返回构造函数返回的对象
 
-    ①__proto__和constructor属性是对象所独有的；② prototype属性是函数所独有的。但是由于JS中函数也是一种对象，所以函数也拥有__proto__和constructor属性
+    ①__proto__和constructor属性是对象所独有的；② prototype属性是函数所独有的。
+    但是由于JS中函数也是一种对象，所以函数也拥有__proto__和constructor属性
 
 # q2. call bind apply
   1. b.call(a)  就相当于把 b 里面的作用域强行指向到 a 里面去
@@ -97,6 +98,9 @@ promise.all promise.race
   1. 能够访问函数定义时所在的词法作用域（阻止其被回收）
   2. 私有化变量
   3. 模拟块级作用域
+  通俗的讲就是突破私有函数的作用域，让函数外面能够使用函数里面的变量及方法。
+
+  因为该函数可以访问它被创建时的上下文环境，这被称为闭包。js语言精粹第四章P38
 
 # q5. 数组去重
   1. Set方法
@@ -255,7 +259,130 @@ promise.all promise.race
   e.target 触发事件的目标元素
   e.currentTarget 绑定事件的元素
 
+# q25 垃圾回收
+  - Js 垃圾回收是自动的
+  - 回收内存
+    function  局部变量
+    跨页面时 
+  1. 可达性 做为评判的依据的
+    显而易见，因为一些原因不可被删除
+    - 全局变量  // 不会删除
+    - 当前嵌套调用链上的其他函数的变量和参数
+    这些值称为根
+  2. 如果引用或引用链可以从根访问任何其他值，则认为该值可访问
+
+  let user = {
+    name : "John"
+  }
+  global
+    Object
+  name: "John“
+  user 全局变量，  = 引用式赋值
+  name 基础属性 -> 字符串类型的John 
+
+  user = null;   // 触发一次垃圾回收
+  
+  let user = {
+    name : "John"
+  }
+  let admin = user;
+
+    global 
+  user   admin
+  user = null;   
+
 # js 
   ECMAScript：规定了 js 的语法
   DOM：
   BOM：浏览器相关的 history 窗口的resize
+
+
+# 原型链
+  ```js
+    function Person(name){
+      this.name = name
+      return {}
+    }
+    let p = new Person('wn')
+  ```
+  p.__proto__  等于 Person.prototype
+  实例的__proto__ 等于其构造函数的 prototype
+  Person.__proto__ == Function.prototype
+
+  1.  一般情况
+    对象有__proto__ 属性，函数有 prototype 属性 
+    实例为对象 对象由函数生成，
+    对象的 __proto__ 指向 函数的 prototype
+    
+  2. 函数对象
+    函数也是对象的一种，
+    函数对象都是由 Function 生成，fn.__proto__ === Function.prototype
+    Function 函数本身作为对象时，生成他的函数就是他自身
+    Object 函数身为函数，生成它的自然是 Function 函数
+  
+  3. prototype
+    对象的 __proto__ 属性是从生成它的函数的 prototype 中得来的，prototype 来自哪里呢？
+    一般函数默认的 prototype 是一个类型为 object 的对象，他有两个属性：constructor 和 __proto__ 
+    其中 constructor 属性指向这个函数本身，__proto__ 属性指向 Object.prototype
+    这说明一般函数的 prototype 属性是由 Object 函数生成的
+  
+  4. 特殊情况
+    Object 函数与 Function 函数
+    Object.prototype 
+      { 
+        constructor: ƒ Object()
+        __defineGetter__: ƒ __defineGetter__()
+        __defineSetter__: ƒ __defineSetter__()
+        hasOwnProperty: ƒ hasOwnProperty()
+        __lookupGetter__: ƒ __lookupGetter__()
+        __lookupSetter__: ƒ __lookupSetter__()
+        isPrototypeOf: ƒ isPrototypeOf()
+        propertyIsEnumerable: ƒ propertyIsEnumerable()
+        toString: ƒ toString()
+        valueOf: ƒ valueOf()
+        toLocaleString: ƒ toLocaleString()
+        get __proto__: ƒ __proto__()
+        set __proto__: ƒ __proto__() 
+      }
+    
+    可以看出 Object 函数的 prototype 属性也是一个类型为 object 的对象，但和一般函数的默认 prototype 属性不一样的是，
+    它多了一大堆方法，这些方法都是 JavaScript 对象的系统默认方法。
+    仔细看，好像少了什么，对了，Object 函数的 prototype 属性里没有 __proto__ 属性，
+      Object.prototype.__proto__
+      null
+    这就是 Object 函数的特殊情况了： Object.prototype.__proto__ === null
+    这就是 JavaScript 原型链的终点了
+
+    typeof Object.prototype === "object"
+
+    说明它是一个 Object 对象，如果它由 Object 生成，按通用规则，
+    则应该 Object.prototype.__proto__ === Object.prototype
+    为了让原型链有终点，在原型链的最顶端，JavaScript 规定了 Object.prototype.__proto__ === null 
+
+# this
+  简而言之： this 总是指向调用该函数的对象
+
+
+# js中的堆内存与栈内存
+  - 栈内存
+    栈内存主要用于存储各种基本类型的变量，包括 Boolean、Number、String、Undefined、Null、以及对象变量的指针，
+    这时候栈内存给人的感觉就像一个线性排列的空间，每个小单元大小基本相等。
+    栈内存中的变量一般都是已知大小或者有范围上限的，算作一种简单存储 
+    ! 闭包中的基本数据类型变量不保存在栈内存中，而保存在堆内存中
+
+  - 堆内存
+    堆内存主要负责像对象Object这种变量类型的存储
+    堆内存存储的对象类型数据占据空间大，大小不固定
+    引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。
+    因此当我们要访问堆内存中的引用数据类型时，实际上我们首先是从变量中获取了该对象的地址指针， 然后再从堆内存中取得我们需要的数据。
+  
+  - 栈内存和堆内存的优缺点
+    在JS中，基本数据类型变量大小固定，并且操作简单容易，所以把它们放入栈中存储。
+    引用类型变量大小不固定，所以把它们分配给堆中，让他们申请空间的时候自己确定大小，这样把它们分开存储能够使得程序运行起来占用的内存最小。
+    栈内存由于它的特点，所以它的系统效率较高。
+    堆内存需要分配空间和地址，还要把地址存到栈中，所以效率低于栈。
+
+？ 为什么 const 定义的基本类型不能改变，但是定义的对象类型是可以通过修改对象属性等方法来改变的？
+
+在定义一个const对象的时候，我们说的常量其实是指针，就是const对象对应的堆内存指向是不变的，
+但是堆内存中的数据本身的大小或者属性是可变的。而对于const定义的基础变量而言，有的话就返回错误

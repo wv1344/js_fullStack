@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .active{
+      color: blue
+    }
+  </style>
+</head>
+<body>
+  <div id="test" class="iu">
+    tt
+  </div>
+<script src="./jq.js"></script>
+<script>
+  console.log($('#test').attr('class'))
+  $('#test').addClass('active')
+  console.log($('#tt').addClass())
+</script>
+</body>
+</html>

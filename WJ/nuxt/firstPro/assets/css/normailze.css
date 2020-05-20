@@ -1,0 +1,15 @@
+html {
+  color: red !important
+}
+.test-enter-active, .test-leave-active{
+  transition: opacity 1s;
+}
+
+.test-enter,.test-leave-active{
+  opacity: 0;
+  font-size: 32px;
+}
+
+.page-enter,.page-leave-active{
+  opacity: 0;
+}

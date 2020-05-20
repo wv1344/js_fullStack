@@ -21,9 +21,6 @@ export default {
     } 
   },
   methods: {
-    // addSH(){
-      // this.$store.dispatch('setShowSidebar',false)
-    // },
     clear(){
       this.query = '';
     },
