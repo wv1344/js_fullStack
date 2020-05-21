@@ -17,13 +17,14 @@ function init(options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = 3   // 过度所用时间
+  let speed = .3   // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
   let allSlide = wrapper.querySelectorAll('.swiper-slide')  // 所有 slide 列表
   let swiperWidth = el.offsetWidth     // 滑动的宽度  图片宽度    
   let timer       // 定时器
+  let animation = false
 
   // 创建 定位点
   let dot = document.createElement('div')
@@ -61,6 +62,7 @@ function init(options) {
     if(loop){
       clearInterval(timer)
     }
+    animation = true
     if (index <= 0) {
       wrapper.style.transition = 'none'
       wrapper.style.left = `${(totalSlide - 2) *(-1)* swiperWidth}px`
@@ -80,23 +82,29 @@ function init(options) {
       wrapper.style.left = index * (-1) * swiperWidth + 'px'
     }, 60);
     if(loop){
-      timer = setInterval(change,delay)
+      timer = setInterval(nextClick,delay)
     }
   }
 
   // 设置 自动轮播
   if(loop){
-    timer = setInterval(change, delay)
+    timer = setInterval(nextClick, delay)
+  }
+
+  function nextClick() {
+    if(!animation){
+      change()
+    }
   }
 
   // 点击下一张
-  next.addEventListener('click', function () {
-    change()
-  })
+  next.addEventListener('click',nextClick)
 
   // 点击上一张
   pre.addEventListener('click', function () {
-    change(true)
+    if(!animation){
+      change(true)
+    }
   })
 
   // 监听开始点击
@@ -129,17 +137,25 @@ function init(options) {
   // 监听滑动结束
   wrapper.addEventListener('touchend', function (e) {
     let endTime = Date.now()
-    if (endTime - this.startTime < 300) return;
+    // if (endTime - this.startTime < 300) return;
 
     // if (endTime - this.startTime < speed*1000) return;
     moveX = e.changedTouches[0].clientX - startX
     // 滑动 swiper 宽度的三分之一触发
+    if(animation){
+      if(Math.abs(moveX) > swiperWidth/3){
+        change()
+      } else {
+        wrapper.style.transition = `left ${speed}s`
+        wrapper.style.left = index * (-1) * swiperWidth + 'px'
+      }
+    }
     if (Math.abs(moveX) > swiperWidth / 10) {
       // 小于0图片左滑 大于0图片右滑
       if (moveX > 0) {
         change(true)  // 上一张
       } else {
-        change()  // 下一张
+        nextClick()  // 下一张          
       }
     } else {
       wrapper.style.transition = `left ${speed}s`
@@ -149,6 +165,8 @@ function init(options) {
 
   // 监听 slide 切换完毕，更新 标记点 
   wrapper.addEventListener('transitionend', function () {
+    animation = false
+
     for (let i = 0; i < dotList.length; i++) {
       dotList[i].classList.remove('active')
     }
@@ -166,19 +184,21 @@ function init(options) {
   dotList.forEach((el,de) => {
     el.onclick = function(e){
       index = de
-      change()
+      if(!animation){
+        change()
+      }
     }
   });
 }
 
 new Swiper({
   el: '.swiper1',
-  delay: 5000,
+  delay: 3000,
   loop: true
 })
 
 new Swiper({
   el: '.swiper2',
   delay: 3000,
-  loop: false
+  loop: true
 })

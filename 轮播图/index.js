@@ -1,14 +1,10 @@
-
-
-let id = 0
-
 /**
- *  * @param {*} options 
+ * @param {*} options 
  */
 function Swiper(options) {
-  this.init(options)
+  init(options)
 }
-Swiper.prototype.init = function (options) {
+function init(options) {
   let el = document.querySelector(options.el)
   let wrapper = el.querySelector('.swiper-wrapper')
   let next = document.getElementById('next')
@@ -19,18 +15,17 @@ Swiper.prototype.init = function (options) {
   wrapper.insertBefore(list[`${num - 1}`].cloneNode(true), list[0]);  // 头部添加 最后一个 slide
   let totalSlide = num + 2  // 总共slide数量
   let index = 1
+  let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = .3   // 过度所用时间
+  let speed = 2   // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
   let allSlide = wrapper.querySelectorAll('.swiper-slide')  // 所有 slide 列表
-  let swiperWidth = el.offsetWidth     // 滑动的宽度  图片宽度  
-  document.min_background_timeout_value = 60
+  let swiperWidth = el.offsetWidth     // 滑动的宽度  图片宽度    
+  let timer       // 定时器
 
-  this.id = id++
-
-  // 插入 定位点
+  // 创建 定位点
   let dot = document.createElement('div')
   dot.className = 'pagination'
   for (let i = 0; i < num; i++) {
@@ -47,11 +42,9 @@ Swiper.prototype.init = function (options) {
   }
 
   // 初始化第一张图参数
-  let lastTime = new Date().getTime()
   wrapper.style.width = `${totalSlide * 100}%`
   wrapper.style.left = `-${swiperWidth}px`
   dotList[0].classList.add('active')
-
 
   /**
    * 使用 setTimeout 可以将任务放入任务队列，
@@ -62,9 +55,22 @@ Swiper.prototype.init = function (options) {
    * 
    * JS事件执行顺序    进入宏任务 -> 执行 -> 执行任务队列微任务 -> 执行任务队列宏任务 -> 执行下一个宏任务
    */
+
   // 切换
   function change(left) {
-    setTimeout(() => {
+    if(loop){
+      clearInterval(timer)
+    }
+    if (index <= 0) {
+      wrapper.style.transition = 'none'
+      wrapper.style.left = `${(totalSlide - 2) *(-1)* swiperWidth}px`
+      index = totalSlide-2
+    } else if (index >= totalSlide - 1) {
+      wrapper.style.transition = 'none'
+      wrapper.style.left = `-${swiperWidth}px`
+      index = 1
+    }
+    setTimeout(() => {    
       wrapper.style.transition = `left ${speed}s`
       if (left) {
         index--
@@ -73,66 +79,43 @@ Swiper.prototype.init = function (options) {
       }
       wrapper.style.left = index * (-1) * swiperWidth + 'px'
     }, 60);
-  }
-
-  // 下一张
-  nextFn = function () {
-    if (new Date().getTime() - lastTime <= speed * 1000) return
-    if (index >= totalSlide - 1) {  //  到了最后一张
-      wrapper.style.transition = 'none'
-      wrapper.style.left = `-${swiperWidth}px`
-      index = 1
+    if(loop){
+      timer = setInterval(change,delay)
     }
-    change()
-    lastTime = new Date().getTime()
-  }
-
-  // 上一张
-  function preFn() {
-    if (new Date().getTime() - lastTime <= speed * 1000) return
-    if (index <= 0) {
-      wrapper.style.transition = 'none'
-      wrapper.style.left = `${(totalSlide - 2) * (-1) * swiperWidth}px`
-      index = totalSlide - 2
-    }
-    change(true)
-    lastTime = new Date().getTime()
   }
 
   // 设置 自动轮播
-  let timer = setInterval(nextFn, delay)
+  if(loop){
+    timer = setInterval(change, delay)
+  }
 
   // 点击下一张
   next.addEventListener('click', function () {
-    console.log(this)
-    clearInterval(timer)
-    nextFn()
-    timer = setInterval(nextFn, delay)
+    change()
   })
 
   // 点击上一张
   pre.addEventListener('click', function () {
-    clearInterval(timer)
-    preFn()
-    timer = setInterval(nextFn, delay)
+    change(true)
   })
 
   // 监听开始点击
   wrapper.addEventListener('touchstart', function (e) {
-    console.log(wrapper)
-    console.log(timer)
     if (index <= 0) {
       wrapper.style.transition = 'none'
-      wrapper.style.left = `${(totalSlide - 2) * (-1) * swiperWidth}px`
-      index = totalSlide - 2
+      wrapper.style.left = `${(totalSlide - 2) *(-1)* swiperWidth}px`
+      index = totalSlide-2
     } else if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
       wrapper.style.left = `-${swiperWidth}px`
       index = 1
     }
+    this.startTime = Date.now()
     startX = e.touches[0].pageX
     offsetX = wrapper.offsetLeft
-    clearInterval(timer)
+    if(loop){
+      clearInterval(timer)
+    } 
   })
 
   // 监听 滑动时
@@ -146,21 +129,22 @@ Swiper.prototype.init = function (options) {
   // 监听滑动结束
   wrapper.addEventListener('touchend', function (e) {
     let endTime = Date.now()
-    if (endTime - this.startTime < speed*1000) return;
+    // if (endTime - this.startTime < 300) return;
+
+    // if (endTime - this.startTime < speed*1000) return;
     moveX = e.changedTouches[0].clientX - startX
     // 滑动 swiper 宽度的三分之一触发
-    if (Math.abs(moveX) > swiperWidth / 3) {
+    if (Math.abs(moveX) > swiperWidth / 10) {
       // 小于0图片左滑 大于0图片右滑
       if (moveX > 0) {
-        preFn()  // 上一张
+        change(true)  // 上一张
       } else {
-        nextFn()  // 下一张
+        change()  // 下一张
       }
     } else {
       wrapper.style.transition = `left ${speed}s`
       wrapper.style.left = (-1) * swiperWidth * index + 'px';
     }
-    timer = setInterval(nextFn, delay)
   })
 
   // 监听 slide 切换完毕，更新 标记点 
@@ -175,35 +159,26 @@ Swiper.prototype.init = function (options) {
     } else {
       dotList[index - 1].classList.add('active')
     }
+
   })
 
   // 监听dot点击
-  dotList.forEach((el, de) => {
-    el.onclick = function (e) {
-      clearInterval(timer)
+  dotList.forEach((el,de) => {
+    el.onclick = function(e){
       index = de
       change()
-      timer = setInterval(nextFn, delay)
     }
   });
-
-  document.onvisibilitychange = function () {
-    // console.log(arr)
-    if (document.visibilityState == "visible") {
-
-    } else {
-
-    }
-  }
-
 }
 
 new Swiper({
   el: '.swiper1',
-  delay: 3000
+  delay: 3000,
+  loop: true
 })
 
 new Swiper({
   el: '.swiper2',
-  delay: 3000
+  delay: 3000,
+  loop: true
 })
