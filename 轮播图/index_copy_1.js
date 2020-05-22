@@ -17,7 +17,7 @@ function init(options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = .1           // 过度所用时间
+  let speed = 1           // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
@@ -83,7 +83,7 @@ function init(options) {
       console.log(Date.now())
     }
     setTimeout(() => {
-      console.log('go')  
+      console.log('go')
       console.log(Date.now())
       wrapper.style.transition = `left ${speed}s`
       if (left) {

@@ -17,13 +17,16 @@ function init(options) {
   let totalSlide = num + 2  // 总共slide数量
   let index = 1
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = 2   // 过度所用时间
+  let speed = .3   // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
   let allSlide = wrapper.querySelectorAll('.swiper-slide')  // 所有 slide 列表
   let swiperWidth = el.offsetWidth     // 滑动的宽度  图片宽度  
   document.min_background_timeout_value = 60
+
+  let animation = false
+
 
   // 插入 定位点
   let dot = document.createElement('div')
@@ -48,44 +51,69 @@ function init(options) {
   dotList[0].classList.add('active')
 
 
-  /**
-   * 使用 setTimeout 可以将任务放入任务队列，
-   * 并且可以延迟执行，给没有过度的切换渲染的时间，
-   * 浏览器不能感知到从最后一张切换到在第一张的过程，所以浏览器会渲染从最后一张过渡到第二张
-   * 而不是从第一张过渡到第二张，这就会看起来切换逻辑混乱
-   * setTimeout 中的内容会 在等待延迟时间后放入 事件队列，在执行完所有微任务后，执行其中的宏事件
-   * 
-   * JS事件执行顺序    进入宏任务 -> 执行 -> 执行任务队列微任务 -> 执行任务队列宏任务 -> 执行下一个宏任务
-   */
-  function render() {
-      let left = Number(wrapper.style.left.slice(0,-2))
-      wrapper.style.left = `${left - 5}px`
-      // 六十帧一秒，0.3s走完?
-      console.log(left-5)
-      console.log((index - 1) * (-1) * swiperWidth)
-      console.log(index)
-      if(left-5 > (index - 1) * (-1) * swiperWidth){
-        requestAnimationFrame(render)
+  function rightRender() {
+    animation = true
+    let left = Math.ceil(Number(wrapper.style.left.slice(0, -2)))
+    while((Math.ceil(left)%25)!==0) {
+      left--
+    }
+    // 六十帧一秒，0.3s走完?
+    if (left > index * (-1) * swiperWidth) {
+      wrapper.style.left = `${(left) - 25}px`
+      requestAnimationFrame(rightRender)
+    } else {
+      animation = false
+      for (let i = 0; i < dotList.length; i++) {
+        dotList[i].classList.remove('active')
       }
+      if (index === 0 || index === totalSlide - 2) {
+        dotList[num - 1].classList.add('active')
+      } else if (index === 1 || index === totalSlide - 1) {
+        dotList[0].classList.add('active')
+      } else {
+        dotList[index - 1].classList.add('active')
+      }
+    }
   }
-
+  function leftRender() {
+    animation = true
+    let left = Math.ceil(Number(wrapper.style.left.slice(0, -2)))
+    console.log(Math.ceil(left))
+    while((Math.ceil(left)%25)!==0) {
+      left++
+    }
+    if (left < index * (-1) * swiperWidth) {
+      wrapper.style.left = `${left + 25}px`
+      requestAnimationFrame(leftRender)
+    } else {
+      animation = false
+      for (let i = 0; i < dotList.length; i++) {
+        dotList[i].classList.remove('active')
+      }
+      if (index === 0 || index === totalSlide - 2) {
+        dotList[num - 1].classList.add('active')
+      } else if (index === 1 || index === totalSlide - 1) {
+        dotList[0].classList.add('active')
+      } else {
+        dotList[index - 1].classList.add('active')
+      }
+    }
+  }
   // 切换
   function change(left) {
-    // setTimeout(() => {    
-    // wrapper.style.transition = `left ${speed}s`
     if (left) {
       index--
+      requestAnimationFrame(leftRender)
     } else {
       index++
+      requestAnimationFrame(rightRender)
     }
-    requestAnimationFrame(render)
-    // wrapper.style.left = index * (-1) * swiperWidth + 'px'
-    // }, 60);
+    
   }
 
   // 下一张
   function nextFn() {
-    if (new Date().getTime() - lastTime <= speed * 1000) return
+    if(animation || window.document.hidden) return
     if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
       wrapper.style.left = `-${swiperWidth}px`
@@ -97,7 +125,7 @@ function init(options) {
 
   // 上一张
   function preFn() {
-    if (new Date().getTime() - lastTime <= speed * 1000) return
+    if(animation) return
     if (index <= 0) {
       wrapper.style.transition = 'none'
       wrapper.style.left = `${(totalSlide - 2) * (-1) * swiperWidth}px`
@@ -155,7 +183,7 @@ function init(options) {
     if (endTime - this.startTime < 300) return;
     moveX = e.changedTouches[0].clientX - startX
     // 滑动 swiper 宽度的三分之一触发
-    if (Math.abs(moveX) > swiperWidth / 3) {
+    if (Math.abs(moveX) > swiperWidth / 4) {
       // 小于0图片左滑 大于0图片右滑
       if (moveX > 0) {
         preFn()  // 上一张
@@ -163,25 +191,13 @@ function init(options) {
         nextFn()  // 下一张
       }
     } else {
-      // wrapper.style.transition = `left ${speed}s`
+      wrapper.style.transition = `left ${speed}s`
       wrapper.style.left = (-1) * swiperWidth * index + 'px';
+      // requestAnimationFrame(render)
     }
     timer = setInterval(nextFn, delay)
   })
 
-  // 监听 slide 切换完毕，更新 标记点 
-  wrapper.addEventListener('transitionend', function () {
-    for (let i = 0; i < dotList.length; i++) {
-      dotList[i].classList.remove('active')
-    }
-    if (index === 0 || index === totalSlide - 2) {
-      dotList[num - 1].classList.add('active')
-    } else if (index === 1 || index === totalSlide - 1) {
-      dotList[0].classList.add('active')
-    } else {
-      dotList[index - 1].classList.add('active')
-    }
-  })
 
   // 监听dot点击
   dotList.forEach((el, de) => {
