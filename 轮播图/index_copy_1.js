@@ -17,7 +17,7 @@ function init(options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = .3   // 过度所用时间
+  let speed = .1           // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
@@ -57,8 +57,15 @@ function init(options) {
    * JS事件执行顺序    进入宏任务 -> 执行 -> 执行任务队列微任务 -> 执行任务队列宏任务 -> 执行下一个宏任务
    */
 
+
   // 切换
   function change(left) {
+    // 切换到第一张后（最后一个div），隐藏标签页，js继续运行，
+    // 执行 将跳 推入栈，执行，在1000ms后将 go 推入栈，执行，
+    // 但浏览器标签处于隐藏状态，并不会渲染，
+    // 重新激活浏览器后，浏览器渲染最后的状态？
+    // 
+    console.log(index)
     if(loop){
       clearInterval(timer)
     }
@@ -68,11 +75,16 @@ function init(options) {
       wrapper.style.left = `${(totalSlide - 2) *(-1)* swiperWidth}px`
       index = totalSlide-2
     } else if (index >= totalSlide - 1) {
+      console.warn('>=length')
       wrapper.style.transition = 'none'
       wrapper.style.left = `-${swiperWidth}px`
       index = 1
+      console.log('跳')
+      console.log(Date.now())
     }
-    setTimeout(() => {    
+    setTimeout(() => {
+      console.log('go')  
+      console.log(Date.now())
       wrapper.style.transition = `left ${speed}s`
       if (left) {
         index--
@@ -92,7 +104,9 @@ function init(options) {
   }
 
   function nextClick() {
+    console.log('wuhu')
     if(!animation){
+      console.log(Date.now())
       change()
     }
   }
@@ -193,12 +207,12 @@ function init(options) {
 
 new Swiper({
   el: '.swiper1',
-  delay: 3000,
+  delay: 4000,
   loop: true
 })
 
-new Swiper({
-  el: '.swiper2',
-  delay: 3000,
-  loop: true
-})
+// new Swiper({
+//   el: '.swiper2',
+//   delay: 2000,
+//   loop: true
+// })

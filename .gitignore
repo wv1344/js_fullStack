@@ -64,6 +64,6 @@ typings/
 # image video
 *.mp4
 *.png
-*.jepg
+*.jpeg
 *.jpg
 *.mp3
