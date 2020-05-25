@@ -255,7 +255,7 @@ Swiper.prototype.init = function(options) {
           requestAnimationFrame(rightRender)
         }
         if(index === totalSlide-2 && dIndex === 0) {
-          index = 4
+          index = totalSlide-1
           requestAnimationFrame(rightRender)
         }else {
           index = dIndex+1
