@@ -194,17 +194,17 @@ Swiper.prototype.init = function(options) {
         // 并且 再滑动 四分之一，就直接跳过下一张图片
         if(Math.abs(moveX)>swiperWidth+(swiperWidth/4)) {
           let a = Math.floor(Math.abs(moveX)/swiperWidth)
-          console.log(index)
-          console.log(totalSlide)
-          console.log(a)
+          // console.log(index)
+          // console.log(totalSlide)
+          // console.log(a)
           if(index + a === totalSlide-1){  // 最后一张，回撤
-            wrapper.style.transition = `left .1s`
+            wrapper.style.transition = `left 1s`
             wrapper.style.left = (-1) * swiperWidth * index + 'px';
           } else {
             index = index + a
           }
         } else {  // 不足四分之一，回撤
-          wrapper.style.transition = `left .01s`
+          wrapper.style.transition = `left ${speed}s`
           wrapper.style.left = (-1) * swiperWidth * index + 'px';
         }
       }
@@ -225,26 +225,60 @@ Swiper.prototype.init = function(options) {
   // 监听dot点击
   // 现有问题 -> 点击最后一个下标， 当由是最后一张（倒数第二个div）切换到最后一个div（第一张图片），
   // 会因为是相邻的 div 而导致出现从右往左滑动一张的效果，应该是从左往右由最后一张切换到第一张的
-  dotList.forEach((el, de) => {
+  dotList.forEach((el, dIndex) => {
     el.onclick = function (e) {
       clearInterval(timer)
       // console.log(totalSlide)
-      console.log(index)
-      console.log(de)
-      if (de >= index) {
-        index = de+1
-        requestAnimationFrame(rightRender)
-      } else if (de < index) {
-        if (index >= totalSlide - 1) {
+      console.log('index - '+index)
+      console.log('dIndex - '+dIndex)
+      console.log('-----------')
+      // 下标大于slide
+      if(dIndex >= index) {
+        if(index === 0){
+          wrapper.style.transition = 'none'
+          wrapper.style.left = `${(totalSlide - 2) * (-1) * swiperWidth}px`
+          index = totalSlide - 2
+          requestAnimationFrame(leftRender)
+        } 
+        if(index === 1 && dIndex === num-1){
+          index = 0;
+          requestAnimationFrame(leftRender)
+        } else {
+          index = dIndex+1
+          requestAnimationFrame(rightRender)
+        }
+      } else if(dIndex < index){
+        if(index === totalSlide-1){
           wrapper.style.transition = 'none'
           wrapper.style.left = `-${swiperWidth}px`
-          index = de+1
+          index = 1
           requestAnimationFrame(rightRender)
-        } else {
-          index = de+1
+        }
+        if(index === totalSlide-2 && dIndex === 0) {
+          index = 4
+          requestAnimationFrame(rightRender)
+        }else {
+          index = dIndex+1
           requestAnimationFrame(leftRender)
         }
       }
+
+
+
+      // if (dIndex >= index) {
+      //   index = dIndex+1
+      //   requestAnimationFrame(rightRender)
+      // } else if (dIndex < index) {
+      //   if (index >= totalSlide - 1) {
+      //     wrapper.style.transition = 'none'
+      //     wrapper.style.left = `-${swiperWidth}px`
+      //     index = dIndex+1
+      //     requestAnimationFrame(rightRender)
+      //   } else {
+      //     index = dIndex+1
+      //     requestAnimationFrame(leftRender)
+      //   }
+      // }
       timer = setInterval(nextFn, delay)
     }
   });
