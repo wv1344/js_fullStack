@@ -54,7 +54,7 @@ function init(options) {
   function rightRender() {
     animation = true
     let left = Math.ceil(Number(wrapper.style.left.slice(0, -2)))
-    while((Math.ceil(left)%25)!==0) {
+    while ((Math.ceil(left) % 25) !== 0) {
       left--
     }
     // 六十帧一秒，0.3s走完?
@@ -78,8 +78,7 @@ function init(options) {
   function leftRender() {
     animation = true
     let left = Math.ceil(Number(wrapper.style.left.slice(0, -2)))
-    console.log(Math.ceil(left))
-    while((Math.ceil(left)%25)!==0) {
+    while ((Math.ceil(left) % 25) !== 0) {
       left++
     }
     if (left < index * (-1) * swiperWidth) {
@@ -108,12 +107,12 @@ function init(options) {
       index++
       requestAnimationFrame(rightRender)
     }
-    
+
   }
 
   // 下一张
   function nextFn() {
-    if(animation || window.document.hidden) return
+    if (animation || window.document.hidden) return
     if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
       wrapper.style.left = `-${swiperWidth}px`
@@ -125,7 +124,7 @@ function init(options) {
 
   // 上一张
   function preFn() {
-    if(animation) return
+    if (animation) return
     if (index <= 0) {
       wrapper.style.transition = 'none'
       wrapper.style.left = `${(totalSlide - 2) * (-1) * swiperWidth}px`
@@ -193,31 +192,41 @@ function init(options) {
     } else {
       wrapper.style.transition = `left ${speed}s`
       wrapper.style.left = (-1) * swiperWidth * index + 'px';
-      // requestAnimationFrame(render)
     }
     timer = setInterval(nextFn, delay)
   })
 
 
   // 监听dot点击
+  // 现有问题 -> 点击最后一个下标， 当由是最后一张（倒数第二个div）切换到最后一个div（第一张图片），
+  // 会因为是相邻的 div 而导致出现从右往左滑动一张的效果，应该是从左往右由最后一张切换到第一张的
   dotList.forEach((el, de) => {
     el.onclick = function (e) {
       clearInterval(timer)
-      index = de
-      change()
+      console.log(totalSlide)
+      console.log(index)
+      console.log(de)
+      if (de > index) {
+        // if (index <= 0) {
+        //   wrapper.style.transition = 'none'
+        //   wrapper.style.left = `${(totalSlide - 2) * (-1) * swiperWidth}px`
+        //   index = totalSlide - 2
+        // }
+        index = de+1
+        requestAnimationFrame(rightRender)
+      } else if (de < index) {
+        // if (index >= totalSlide - 1) {
+        //   wrapper.style.transition = 'none'
+        //   wrapper.style.left = `-${swiperWidth}px`
+        //   index = 1
+        // }
+        index = de+1
+        requestAnimationFrame(leftRender)
+      }
       timer = setInterval(nextFn, delay)
     }
   });
 
-  window.onblur = function () {
-    // clearInterval(timer)
-    console.log('886')
-  }
-
-  window.onfocus = function () {
-    // timer = setInterval(nextFn,delay)
-    console.log('come back')
-  }
 }
 
 new Swiper({
@@ -225,7 +234,7 @@ new Swiper({
   delay: 3000
 })
 
-// new Swiper({
-//   el: '.swiper2',
-//   delay: 3000
-// })
+new Swiper({
+  el: '.swiper2',
+  delay: 3000
+})
