@@ -197,12 +197,22 @@ Swiper.prototype.init = function(options) {
           // console.log(index)
           // console.log(totalSlide)
           // console.log(a)
-          if(index + a === totalSlide-1){  // 最后一张，回撤
-            wrapper.style.transition = `left 1s`
-            wrapper.style.left = (-1) * swiperWidth * index + 'px';
+          if(moveX<0){
+            if(index + a === totalSlide-1){  // 最后一张，回撤
+              wrapper.style.transition = `left 1s`
+              wrapper.style.left = (-1) * swiperWidth * index + 'px';
+            } else {
+              index = index + a
+            }
           } else {
-            index = index + a
+            if(index -a ===0){
+              wrapper.style.transition = `left 1s`
+              wrapper.style.left = (-1) * swiperWidth * index + 'px';
+            } else {
+              index = index - a
+            }
           }
+          
         } else {  // 不足四分之一，回撤
           wrapper.style.transition = `left ${speed}s`
           wrapper.style.left = (-1) * swiperWidth * index + 'px';
@@ -262,23 +272,6 @@ Swiper.prototype.init = function(options) {
           requestAnimationFrame(leftRender)
         }
       }
-
-
-
-      // if (dIndex >= index) {
-      //   index = dIndex+1
-      //   requestAnimationFrame(rightRender)
-      // } else if (dIndex < index) {
-      //   if (index >= totalSlide - 1) {
-      //     wrapper.style.transition = 'none'
-      //     wrapper.style.left = `-${swiperWidth}px`
-      //     index = dIndex+1
-      //     requestAnimationFrame(rightRender)
-      //   } else {
-      //     index = dIndex+1
-      //     requestAnimationFrame(leftRender)
-      //   }
-      // }
       timer = setInterval(nextFn, delay)
     }
   });
