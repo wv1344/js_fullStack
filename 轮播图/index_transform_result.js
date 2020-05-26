@@ -2,9 +2,10 @@
  * @param {*} options 
  */
 function Swiper(options) {
-  init(options)
+  this.init(options)
 }
-function init(options) {
+
+Swiper.prototype.init = function(options) {
   let el = document.querySelector(options.el)
   let wrapper = el.querySelector('.swiper-wrapper')
   let next = document.getElementById('next')
@@ -17,7 +18,7 @@ function init(options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = 2          // 过度所用时间
+  let speed = .3          // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
@@ -120,14 +121,14 @@ function init(options) {
   }
 
   // 点击下一张
-  next.addEventListener('click',nextClick)
+  // next.addEventListener('click',nextClick)
 
   // 点击上一张
-  pre.addEventListener('click', function () {
-    if(!animation){
-      change(true)
-    }
-  })
+  // pre.addEventListener('click', function () {
+  //   if(!animation){
+  //     change(true)
+  //   }
+  // })
 
   // 监听开始点击
   wrapper.addEventListener('touchstart', function (e) {
@@ -158,10 +159,6 @@ function init(options) {
 
   // 监听滑动结束
   wrapper.addEventListener('touchend', function (e) {
-    let endTime = Date.now()
-    // if (endTime - this.startTime < 300) return;
-
-    // if (endTime - this.startTime < speed*1000) return;
     moveX = e.changedTouches[0].clientX - startX
     // 滑动 swiper 宽度的三分之一触发
     if(animation){
@@ -219,8 +216,8 @@ new Swiper({
   loop: true
 })
 
-// new Swiper({
-//   el: '.swiper2',
-//   delay: 2000,
-//   loop: true
-// })
+new Swiper({
+  el: '.swiper2',
+  delay: 2000,
+  loop: true
+})

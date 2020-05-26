@@ -2,9 +2,10 @@
  * @param {*} options 
  */
 function Swiper(options) {
-  init(options)
+  this.init(options)
 }
-function init(options) {
+
+Swiper.prototype.init = function(options) {
   let el = document.querySelector(options.el)
   let wrapper = el.querySelector('.swiper-wrapper')
   let next = document.getElementById('next')
@@ -17,7 +18,7 @@ function init(options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = 1           // 过度所用时间
+  let speed = .3          // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
@@ -60,12 +61,11 @@ function init(options) {
 
   // 切换
   function change(left) {
-    // 切换到第一张后（最后一个div），隐藏标签页，js继续运行，
-    // 执行 将跳 推入栈，执行，在1000ms后将 go 推入栈，执行，
-    // 但浏览器标签处于隐藏状态，并不会渲染，
-    // 重新激活浏览器后，浏览器渲染最后的状态？
-    // 
+    // 首先顺序执行 跳 -> setTimeout 延迟 60ms 将go推入栈， 正常执行时，延迟的时间足够执行跳到第一张
+    // 切换浏览器tab或最小化，setTimeout 也会延迟1000ms以上 推入栈， 
+    // 切换回来后，setTimeout中的方法已经推入栈，跳 和 go 将一起执行，导致出现从最后一张过度到第二张的现象
     console.log(index)
+
     if(loop){
       clearInterval(timer)
     }
@@ -75,16 +75,13 @@ function init(options) {
       wrapper.style.left = `${(totalSlide - 2) *(-1)* swiperWidth}px`
       index = totalSlide-2
     } else if (index >= totalSlide - 1) {
-      console.warn('>=length')
       wrapper.style.transition = 'none'
       wrapper.style.left = `-${swiperWidth}px`
       index = 1
       console.log('跳')
-      console.log(Date.now())
     }
     setTimeout(() => {
-      console.log('go')
-      console.log(Date.now())
+      console.log('go')  
       wrapper.style.transition = `left ${speed}s`
       if (left) {
         index--
@@ -93,6 +90,7 @@ function init(options) {
       }
       wrapper.style.left = index * (-1) * swiperWidth + 'px'
     }, 60);
+
     if(loop){
       timer = setInterval(nextClick,delay)
     }
@@ -106,20 +104,19 @@ function init(options) {
   function nextClick() {
     console.log('wuhu')
     if(!animation){
-      console.log(Date.now())
       change()
     }
   }
 
   // 点击下一张
-  next.addEventListener('click',nextClick)
+  // next.addEventListener('click',nextClick)
 
   // 点击上一张
-  pre.addEventListener('click', function () {
-    if(!animation){
-      change(true)
-    }
-  })
+  // pre.addEventListener('click', function () {
+  //   if(!animation){
+  //     change(true)
+  //   }
+  // })
 
   // 监听开始点击
   wrapper.addEventListener('touchstart', function (e) {
@@ -150,7 +147,6 @@ function init(options) {
 
   // 监听滑动结束
   wrapper.addEventListener('touchend', function (e) {
-
     moveX = e.changedTouches[0].clientX - startX
     // 滑动 swiper 宽度的三分之一触发
     if(animation){
@@ -194,7 +190,10 @@ function init(options) {
   // 监听dot点击
   dotList.forEach((el,de) => {
     el.onclick = function(e){
-
+      index = de
+      if(!animation){
+        change()
+      }
     }
   });
 }
