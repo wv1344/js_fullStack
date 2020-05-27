@@ -28,12 +28,31 @@ body {
   position: relative;
 }
 .swiper-wrapper {
-  display: flex;
+  /* display: flex; */
+  width: 100%;
   position: relative;
 }
 .swiper-slide {
-  width: 315px !important;
-  margin: 0 30px;
+  float: left;
+  width: 315px;
+  /* display: none; */
+  transition: transform .3s;
+}
+
+.swiper-slide .item-left{
+  display: block;
+}
+.item-right{
+  display: block;
+}
+.swiper-slide.active {
+  display: block;
+}
+.item-left.active{
+  transform: translateX(100%);
+}
+.item-right.active{
+  transform: translateX(-100%);
 }
 img {
   width: 100%;

@@ -1,0 +1,88 @@
+*{margin: 0;padding: 0}
+/* *{box-sizing: border-box} */
+body p {
+    padding-top: 40px ;
+    text-align: center;
+}
+/* 把图片放在同一栏并且左对齐 */
+.images,.images2 {
+    display: flex;
+    /* flex-start（默认值）：左对齐 */
+    align-items: flex-start;
+    transition: transform 0.5s;
+}
+.images,.images2 img{
+    vertical-align: top;
+}
+/* 设置显示窗口大小 */
+.window,.window2 {
+    width: 960px;
+    overflow: hidden;
+    border: 1px solid red;
+    margin: 30px auto;
+}
+.bnCtrl,.bnCtrl2 {
+    text-align: center;
+}
+.red{
+    color:red;
+}
+
+.window3 {
+    width: 960px;
+    height: 540px;
+    margin: 30px auto;
+    overflow: hidden;
+    border: 1px solid red;
+}
+.images3 {
+    /* display: flex; */
+    position: relative;
+}
+.images3 img {
+    width: 100%;
+    transition: all 0.5s;
+    position: absolute;
+    top: 0;
+}
+
+/* 图片在轮播中的状态 */
+.images3 img.current {
+    left: 0;
+    transform: translateX(0);
+    z-index: 1;
+}
+.images3 img.leave {
+    transform: translateX(-100%);
+    z-index: 1;
+}
+.images3 img.enter {
+    transform: translateX(100%)
+}
+
+/* 轮播4 */
+.window4 {
+    width: 960px;
+    border: 1px solid red;
+    margin: 30px auto;
+    overflow: hidden;
+}
+.images4 {
+    display: flex;
+    transition: all 1s;
+}
+.images4 img{
+    width: 100%;
+}
+.bnCtrl4 {
+    text-align: center;
+}
+.controls{
+    text-align: center;
+}
+.controls button{
+    margin: 5px;
+}
+.bnCtrl4 button{
+    margin: 5px;
+}

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      position: relative;
+      width: 500px;
+      height: 400px;
+      border: 1px solid #fff;
+      margin: 20px auto;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .container .images img {
+      display: block;
+      float: left;
+    }
+
+    .container .dots {
+      position: absolute;
+      margin: 0 auto;
+      left: 0;
+      right: 0;
+      bottom: 10px;
+      background: rgba(255, 255, 255, .3);
+      padding: 5px;
+      border-radius: 20px;
+    }
+
+    .container .dots span {
+      margin: 2px;
+      width: 8px;
+      height: 8px;
+      display: block;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .5);
+      float: left;
+    }
+
+    .container .dots span.active {
+      background: #f40;
+    }
+
+    .container .arrow {
+      display: none;
+    }
+
+    .container:hover .arrow {
+      display: block;
+    }
+
+    .container .arrow .item {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, .5);
+      color: #fff;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      text-align: center;
+      line-height: 40px;
+      font-size: 20px;
+    }
+
+    .container .arrow .leftArrow {
+      left: 0;
+      border-radius: 0 20px 20px 0;
+    }
+
+    .container .arrow .rightArrow {
+      right: 0;
+      border-radius: 20px 0 0 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="images">
+    </div>
+    <div class="dots">
+    </div>
+    <div class="arrow">
+      <div class="item leftArrow">&lt;</div>
+      <div class="item rightArrow">&gt;</div>
+    </div>
+  </div>
+  <script>
+    var config = {
+      imgWidth: 500, //图片宽度
+      dotWidth: 12, //小圆点宽度
+      imageArray: [
+        '../images/5w82r1.jpg',
+        '../images/6k3oox.jpg',
+        '../images/13vym3.jpg',
+      ], //存储图片路径的数组
+      doms: {
+        images: document.querySelector(".images"), //存放图片的dom
+        dots: document.querySelector(".dots"), //圆点的dom
+        leftArrow: document.querySelector(".item.leftArrow"), //左一张的dom
+        rightArrow: document.querySelector(".item.rightArrow") //右一张的dom
+      },
+      currentIndex: 2, //当前展示的图片下标
+      timer: { //计时器配置
+        id: null, //计时器id
+        duration: 16, //每次切换图片，运动的间隔时间
+        totalTime: 1000 //每次切换图片，运动的时间总长
+      }
+    };
+    initImages();
+    initDots();
+
+    //初始化图片元素
+    function initImages() {
+      //创建图片元素
+      config.doms.images.style.width = config.imageArray.length * config.imgWidth + "px";
+      for (var i = 0; i < config.imageArray.length; i++) {
+        var img = document.createElement("img");
+        img.src = config.imageArray[i];
+        config.doms.images.appendChild(img);
+      }
+
+      //展示第一张图片1.jpg
+      config.doms.images.style.marginLeft = -config.imgWidth * config.currentIndex + "px";
+    }
+
+    //创建圆点元素
+    function initDots() {
+      config.doms.dots.style.width = (config.imageArray.length - 2) * config.dotWidth + "px";
+      for (var i = 0; i < config.imageArray.length - 2; i++) {
+        var dot = document.createElement("span");
+        config.doms.dots.appendChild(dot);
+      }
+
+      config.doms.dots.children[config.currentIndex - 1].className = "active";
+    }
+
+    //点击左箭头、右箭头、和圆点
+    config.doms.leftArrow.onclick = config.doms.rightArrow.onclick = config.doms.dots.onclick = function (e) {
+      if (e.target.tagName === "DIV" && e.target.classList.contains("leftArrow")) { //点击左箭头
+        var index = config.currentIndex - 1;//向左跳转图片的下标
+        if (index === 0) {//
+          index = 5;
+        }
+        jumpToImage(index, "left");
+      } else if (e.target.tagName === "DIV" && e.target.classList.contains("rightArrow")) { //点击右箭头
+        var index = config.currentIndex + 1;//向右跳转图片的下标
+        if (index === 6) {//
+          index = 1;
+        }
+        jumpToImage(index, "right");
+      } else if (e.target.tagName === "SPAN" && e.target.parentElement && e.target.parentElement.classList
+        .contains("dots")) { //点击小圆点
+        var index = Array.from(config.doms.dots.children).indexOf(e.target) + 1;
+        jumpToImage(index, (index > config.currentIndex) ? "right" : "left");
+      }
+    }
+
+    //跳转到哪张图片
+    function jumpToImage(index, direction) { //index:下一张图片的下标(1,25);direction方向(1.left:左;2.right:右);
+      if (index === config.currentIndex) { //若要跳转的图片下标和当前下标一样，不执行
+        return;
+      }
+      if (!direction) { //方向默认：为右
+        direction = "right";
+      }
+
+      //要运动到的目标marginLeft
+      var newMarginLeft = -index * config.imgWidth;
+      //图片切换
+      //config.doms.images.style.marginLeft = newMarginLeft + "px";
+      autoPlay();
+      //圆点也自动切换
+      for (var i = 0; i < config.doms.dots.children.length; i++) {
+        config.doms.dots.children[i].classList.remove("active");
+      }
+      config.doms.dots.children[index - 1].className = "active";
+      //切换完成后，改变当前图片下标
+      config.currentIndex = index;
+
+      //图片渐变动画,一点一点的改变marginLeft
+      function autoPlay() {
+        stopPlay(); //在播放轮播图之前，把上次的动画先停掉
+
+        //当前的marginLeft
+        var currentMarginLeft = parseFloat(window.getComputedStyle(config.doms.images).marginLeft);
+        //图片总长度，不能算第一张和最后一张，这两张是额外增加重复的两张
+        var allImagesLength = (config.imageArray.length - 2) * config.imgWidth;
+        //1.计算运动总次数
+        var frequency = Math.ceil(config.timer.totalTime / config.timer.duration);
+        var currentNum = 0; //当前运动的次数
+        //2.计算运动的总距离
+        var allDistance = 0;
+        if (direction == "left") { //向左运动
+          if (newMarginLeft > currentMarginLeft) { //目标marginLeft > 当前marginLeft
+            //总距离 = 目标marginLeft - 当前marginLeft
+            allDistance = newMarginLeft - currentMarginLeft;
+          } else {
+            //总距离 = 图片总长度 - |目标marginLeft - 当前marginLeft|
+            allDistance = allImagesLength - Math.abs(newMarginLeft - currentMarginLeft);
+          }
+        } else { //向右运动
+          if (newMarginLeft < currentMarginLeft) { //目标marginLeft < 当前marginLeft
+            //总距离 = 目标marginLeft - 当前marginLeft
+            allDistance = newMarginLeft - currentMarginLeft;
+          } else { //目标marginLeft > 当前marginLeft
+            //总距离 = -(图片总长度 - |目标marginLeft - 当前marginLeft|)
+            allDistance = -(allImagesLength - Math.abs(newMarginLeft - currentMarginLeft));
+          }
+        }
+        //3.计算每次运动改变的距离
+        var everyDistance = allDistance / frequency; //每次运动距离 = 运动总距离 / 运动总次数
+        config.timer.id = setInterval(function () {
+
+          //改变图片的marginLeft
+          currentMarginLeft += everyDistance;
+          //若图片向右移动到额外的第一张（即数组中最后一张图片)
+          if (direction === "right" && Math.floor(Math.abs(currentMarginLeft)) > allImagesLength) {
+
+            currentMarginLeft += allImagesLength; //图片瞬间挪回第一张图片对应的位置
+          } else if (direction === "left" && Math.ceil(Math.abs(currentMarginLeft)) < config
+            .imgWidth) { //若图片向左移动到额外的最后一张（即数组中第一张图片)
+            currentMarginLeft -= allImagesLength; //图片瞬间挪回最后一张图片对应的位置
+          }
+          config.doms.images.style.marginLeft = currentMarginLeft + "px";
+          currentNum++; //每执行一次，当前运动次数++
+          if (currentNum === frequency) { //达到运动总次数，停止运动
+            stopPlay();
+          }
+        }, config.timer.duration);
+      }
+      //停止播放
+      function stopPlay() {
+        clearInterval(config.timer.id);
+        config.timer.id = null;
+      }
+    }
+  </script>
+</body>
+
+</html>

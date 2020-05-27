@@ -18,7 +18,7 @@ Swiper.prototype.init = function(options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = .3          // 过度所用时间
+  let speed = .6          // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
@@ -26,6 +26,16 @@ Swiper.prototype.init = function(options) {
   let swiperWidth = el.offsetWidth     // 滑动的宽度  图片宽度    
   let timer       // 定时器
   let animation = false
+
+    // 插入按钮
+    this.nextEl = document.createElement('button')
+    this.nextEl.innerHTML = 'next'
+    this.nextEl.className = 'next-btn'
+    el.appendChild(this.nextEl)
+    this.prevEl = document.createElement('button')
+    this.prevEl.innerHTML = 'prev'
+    this.prevEl.className = 'prev-btn'
+    el.appendChild(this.prevEl)
 
   // 创建 定位点
   let dot = document.createElement('div')
@@ -58,13 +68,12 @@ Swiper.prototype.init = function(options) {
    * JS事件执行顺序    进入宏任务 -> 执行 -> 执行任务队列微任务 -> 执行任务队列宏任务 -> 执行下一个宏任务
    */
 
-
   // 切换
   function change(left) {
     // 首先顺序执行 跳 -> setTimeout 延迟 60ms 将go推入栈， 正常执行时，延迟的时间足够执行跳到第一张
     // 切换浏览器tab或最小化，setTimeout 也会延迟1000ms以上 推入栈， 
     // 切换回来后，setTimeout中的方法已经推入栈，跳 和 go 将一起执行，导致出现从最后一张过度到第二张的现象
-    console.log(index)
+    // console.log(index)
 
     if(loop){
       clearInterval(timer)
@@ -76,12 +85,12 @@ Swiper.prototype.init = function(options) {
       index = totalSlide-2
     } else if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
-      wrapper.style.left = `-${swiperWidth}px`
+      setTimeout(()=>{wrapper.style.left = `-${swiperWidth}px`})
       index = 1
-      console.log('跳')
+      // console.log('跳')
     }
     setTimeout(() => {
-      console.log('go')  
+      // console.log('go')  
       wrapper.style.transition = `left ${speed}s`
       if (left) {
         index--
@@ -102,21 +111,21 @@ Swiper.prototype.init = function(options) {
   }
 
   function nextClick() {
-    console.log('wuhu')
+    // console.log('wuhu')
     if(!animation){
       change()
     }
   }
 
   // 点击下一张
-  // next.addEventListener('click',nextClick)
+  this.nextEl.addEventListener('click',nextClick)
 
   // 点击上一张
-  // pre.addEventListener('click', function () {
-  //   if(!animation){
-  //     change(true)
-  //   }
-  // })
+  this.prevEl.addEventListener('click', function () {
+    if(!animation){
+      change(true)
+    }
+  })
 
   // 监听开始点击
   wrapper.addEventListener('touchstart', function (e) {
@@ -151,6 +160,7 @@ Swiper.prototype.init = function(options) {
     // 滑动 swiper 宽度的三分之一触发
     if(animation){
       if(Math.abs(moveX) > swiperWidth/3){
+        console.log('-----')
         change()
       } else {
         wrapper.style.transition = `left ${speed}s`
@@ -172,6 +182,13 @@ Swiper.prototype.init = function(options) {
 
   // 监听 slide 切换完毕，更新 标记点 
   wrapper.addEventListener('transitionend', function () {
+
+    // 判断是否最后一张
+    if (index >= totalSlide - 1) {
+      wrapper.style.transition = 'none'
+      setTimeout(()=>{wrapper.style.left = `-${swiperWidth}px`})
+      index = 1
+    }
     animation = false
 
     for (let i = 0; i < dotList.length; i++) {
@@ -190,10 +207,33 @@ Swiper.prototype.init = function(options) {
   // 监听dot点击
   dotList.forEach((el,de) => {
     el.onclick = function(e){
+      console.log('index  '+index)
+      console.log('de  '+de)
+      if(index === totalSlide-1 && de === 1) {
+        if(!animation){
+          change()
+        }
+        return
+      }
+      if(index === 1 && de === 0) return
+      if(index === 6 && de === 0) return
+      if(index === 2 && de === 0) {
+        if(!animation){
+          change(true)
+        }
+        return
+      }
+      if(index === 0 && de === num -2){
+        if(!animation){
+          change(true)
+        }
+        return
+      }
       index = de
       if(!animation){
         change()
       }
+      
     }
   });
 }
