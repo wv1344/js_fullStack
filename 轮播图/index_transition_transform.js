@@ -16,7 +16,7 @@ Swiper.prototype.init = function (options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = .6             // 过度所用时间
+  let speed = 1.5             // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
@@ -127,6 +127,7 @@ Swiper.prototype.init = function (options) {
     }
     startX = e.touches[0].pageX
     offsetX = getTranslate(wrapper)
+
     if (loop) {
       clearInterval(timer)
     }
