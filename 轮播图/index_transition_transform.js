@@ -16,9 +16,10 @@ Swiper.prototype.init = function (options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = .6          // 过度所用时间
+  let speed = .6             // 过度所用时间
   let startX = 0
   let moveX = 0
+  let offsetX = 0
   let allSlide = wrapper.querySelectorAll('.swiper-slide')  // 所有 slide 列表
   let swiperWidth = el.offsetWidth     // 滑动的宽度  图片宽度    
   let timer       // 定时器
@@ -88,8 +89,6 @@ Swiper.prototype.init = function (options) {
       }
       wrapper.style.transform = `translate(${index * (-1) * swiperWidth}px,0px)`
     }, 60);
-
-
   }
 
   // 设置 自动轮播
@@ -115,26 +114,71 @@ Swiper.prototype.init = function (options) {
 
   // 监听开始点击
   wrapper.addEventListener('touchstart', function (e) {
+    offsetX = getTranslate(wrapper)
+    let h = Math.abs(offsetX+(swiperWidth*num))
     if (index <= 0) {
       wrapper.style.transition = 'none'
       wrapper.style.transform = `translate(${(totalSlide - 2) * (-1) * swiperWidth}px,0px)`
       index = totalSlide - 2
     } else if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
-      wrapper.style.transform = `translate(-${swiperWidth}px,0px)`
+      wrapper.style.transform = `translate(-${swiperWidth-(swiperWidth-h)}px,0px)`
       index = 1
     }
-    this.startTime = Date.now()
     startX = e.touches[0].pageX
+    offsetX = getTranslate(wrapper)
     if (loop) {
       clearInterval(timer)
     }
   })
 
+
+  function getTranslate(el, axis) {
+    if ( axis === void 0 ) axis = 'x';
+
+    var matrix;
+    var curTransform;
+    var transformMatrix;
+
+    var curStyle = window.getComputedStyle(el, null);
+
+    if (window.WebKitCSSMatrix) {
+      curTransform = curStyle.transform || curStyle.webkitTransform;
+      if (curTransform.split(',').length > 6) {
+        curTransform = curTransform.split(', ').map(function (a) { return a.replace(',', '.'); }).join(', ');
+      }
+      // Some old versions of Webkit choke when 'none' is passed; pass
+      // empty string instead in this case
+      transformMatrix = new window.WebKitCSSMatrix(curTransform === 'none' ? '' : curTransform);
+    } else {
+      transformMatrix = curStyle.MozTransform || curStyle.OTransform || curStyle.MsTransform || curStyle.msTransform || curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
+      matrix = transformMatrix.toString().split(',');
+    }
+
+    if (axis === 'x') {
+      // Latest Chrome and webkits Fix
+      if (window.WebKitCSSMatrix) { curTransform = transformMatrix.m41; }
+      // Crazy IE10 Matrix
+      else if (matrix.length === 16) { curTransform = parseFloat(matrix[12]); }
+      // Normal Browsers
+      else { curTransform = parseFloat(matrix[4]); }
+    }
+    if (axis === 'y') {
+      // Latest Chrome and webkits Fix
+      if (window.WebKitCSSMatrix) { curTransform = transformMatrix.m42; }
+      // Crazy IE10 Matrix
+      else if (matrix.length === 16) { curTransform = parseFloat(matrix[13]); }
+      // Normal Browsers
+      else { curTransform = parseFloat(matrix[5]); }
+    }
+    return curTransform || 0;
+  }
+
   // 监听 滑动时
   wrapper.addEventListener('touchmove', function (e) {
     moveX = e.touches[0].pageX - startX;
-    let left = -1 * index * swiperWidth + moveX
+    console.log(index)
+    let left = offsetX + moveX
     wrapper.style.transition = 'none';
     wrapper.style.transform = `translate(${left}px,0px)`;
   })
@@ -144,6 +188,7 @@ Swiper.prototype.init = function (options) {
     moveX = e.changedTouches[0].clientX - startX
     // 滑动 swiper 宽度的三分之一触发
     if (Math.abs(moveX) > swiperWidth / 4) {
+
       // 假如滑动超过一张图片宽度 
       if (Math.abs(moveX) > swiperWidth) {
         // 并且 再滑动 四分之一，就直接跳过下一张图片
@@ -178,7 +223,6 @@ Swiper.prototype.init = function (options) {
     } else {
       wrapper.style.transition = `transform ${speed}s ease-in-out`
       wrapper.style.transform = `translate(${(-1) * swiperWidth * index}px,0px)`;
-      timer = setInterval(nextClick, delay);
     }
   })
 
@@ -249,4 +293,4 @@ new Swiper({
   el: '.swiper2',
   delay: 2000,
   loop: true
-})
+}) 
