@@ -84,13 +84,7 @@ Swiper.prototype.init = function(options) {
       wrapper.style.transition = 'none'
       wrapper.style.left = `${(totalSlide - 2) *(-1)* swiperWidth}px`
       index = totalSlide-2
-    } else if (index >= totalSlide - 1) {
-
-      wrapper.style.transition = 'none'
-      wrapper.style.left = `-${swiperWidth}px`
-      index = 1
-      console.log('跳')
-    }
+    } 
     setTimeout(() => {
       console.log('go')  
       if(wrapper.style.transition === 'none'){
@@ -184,6 +178,7 @@ Swiper.prototype.init = function(options) {
 
   // 监听 slide 切换完毕，更新 标记点 
   wrapper.addEventListener('transitionend', function () {
+
     animation = false
 
     for (let i = 0; i < dotList.length; i++) {

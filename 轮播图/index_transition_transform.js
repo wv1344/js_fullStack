@@ -19,7 +19,6 @@ Swiper.prototype.init = function(options) {
   let speed = .6          // 过度所用时间
   let startX = 0
   let moveX = 0
-  let offsetX = 0
   let allSlide = wrapper.querySelectorAll('.swiper-slide')  // 所有 slide 列表
   let swiperWidth = el.offsetWidth     // 滑动的宽度  图片宽度    
   let timer       // 定时器
@@ -53,7 +52,7 @@ Swiper.prototype.init = function(options) {
 
   // 初始化第一张图参数
   wrapper.style.width = `${totalSlide * 100}%`
-  wrapper.style.left = `-${swiperWidth}px`
+  wrapper.style.transform = `translate(-${swiperWidth}px,0px)`
   dotList[0].classList.add('active')
 
   /**
@@ -79,17 +78,17 @@ Swiper.prototype.init = function(options) {
     animation = true
     if (index <= 0) {
       wrapper.style.transition = 'none'
-      wrapper.style.left = `${(totalSlide - 2) *(-1)* swiperWidth}px`
+      wrapper.style.transform = `translate(${(totalSlide - 2) *(-1)* swiperWidth}px,0px)`
       index = totalSlide-2
     }
     setTimeout(() => {
-      wrapper.style.transition = `left ${speed}s`
+      wrapper.style.transition = `transform ${speed}s`
       if (left) {
         index--
       } else {
         index++
       }
-      wrapper.style.left = index * (-1) * swiperWidth + 'px'
+      wrapper.style.transform = `translate(${index * (-1) * swiperWidth}px,0px)`
     }, 60);
 
     if(loop){
@@ -123,16 +122,15 @@ Swiper.prototype.init = function(options) {
   wrapper.addEventListener('touchstart', function (e) {
     if (index <= 0) {
       wrapper.style.transition = 'none'
-      wrapper.style.left = `${(totalSlide - 2) *(-1)* swiperWidth}px`
+      wrapper.style.transform = `translate(${(totalSlide - 2) *(-1)* swiperWidth}px,0px)`
       index = totalSlide-2
     } else if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
-      wrapper.style.left = `-${swiperWidth}px`
+      wrapper.style.transform = `translate(-${swiperWidth}px,0px)`
       index = 1
     }
     this.startTime = Date.now()
     startX = e.touches[0].pageX
-    offsetX = wrapper.offsetLeft
     if(loop){
       clearInterval(timer)
     } 
@@ -141,9 +139,9 @@ Swiper.prototype.init = function(options) {
   // 监听 滑动时
   wrapper.addEventListener('touchmove', function (e) {
     moveX = e.touches[0].pageX - startX;
-    let left = offsetX + moveX
+    let left = -1*index*swiperWidth + moveX
     wrapper.style.transition = 'none';
-    wrapper.style.left = left + 'px';
+    wrapper.style.transform = `translate(${left}px,0px)`;
   })
 
   // 监听滑动结束
@@ -158,23 +156,23 @@ Swiper.prototype.init = function(options) {
           let a = Math.floor(Math.abs(moveX)/swiperWidth)
           if(moveX<0){
             if(index + a === totalSlide-1){  // 最后一张，回撤
-              wrapper.style.transition = `left ${speed}s`
-              wrapper.style.left = (-1) * swiperWidth * index + 'px';
+              wrapper.style.transition = `transform ${speed}s`
+              wrapper.style.transform = `translate(${(-1) * swiperWidth * index}px,0px)`;
             } else {
               index = index + a
             }
           } else {
             if(index -a ===0){
-              wrapper.style.transition = `left 1s`
-              wrapper.style.left = (-1) * swiperWidth * index + 'px';
+              wrapper.style.transition = `transform ${speed}s`
+              wrapper.style.transform = `translate(${(-1) * swiperWidth * index}px,0px)`;
             } else {
               index = index - a
             }
           }
           
         } else {  // 不足四分之一，回撤
-          wrapper.style.transition = `left ${speed}s`
-          wrapper.style.left = (-1) * swiperWidth * index + 'px';
+          wrapper.style.transition = `transform ${speed}s`
+          wrapper.style.transform = `translate(${(-1) * swiperWidth * index}px,0px)`;
         }
       }
       // 小于0图片左滑 大于0图片右滑
@@ -184,8 +182,8 @@ Swiper.prototype.init = function(options) {
         change()  // 下一张
       }
     } else {
-      wrapper.style.transition = `left ${speed}s`
-      wrapper.style.left = (-1) * swiperWidth * index + 'px';
+      wrapper.style.transition = `transform ${speed}s`
+      wrapper.style.transform = `translate(${(-1) * swiperWidth * index}px,0px)`;
       timer = setInterval(nextClick, delay);
     }
   })
@@ -196,7 +194,7 @@ Swiper.prototype.init = function(options) {
     // 判断是否最后一张
     if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
-      wrapper.style.left = `-${swiperWidth}px`
+      wrapper.style.transform = `translate(-${swiperWidth}px,0px)`
       index = 1
     }
     animation = false
@@ -219,14 +217,13 @@ Swiper.prototype.init = function(options) {
     el.onclick = function(e){
       console.log('index  '+index)
       console.log('de  '+de)
+      if(index === 1 && de === 0 || index === 6 && de === 0 || index === de+1) return
       if(index === totalSlide-1 && de === 1) {
         if(!animation){
           change()
         }
         return
       }
-      if(index === 1 && de === 0) return
-      if(index === 6 && de === 0) return
       if(index === 2 && de === 0) {
         if(!animation){
           change(true)
@@ -238,9 +235,9 @@ Swiper.prototype.init = function(options) {
           change(true)
         }
         return
-      }
-      index = de
+      } 
       if(!animation){
+        index = de
         change()
       }
       
@@ -250,7 +247,7 @@ Swiper.prototype.init = function(options) {
 
 new Swiper({
   el: '.swiper1',
-  delay: 4000,
+  delay: 2000,
   loop: true
 })
 
