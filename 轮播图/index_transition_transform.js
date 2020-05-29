@@ -1,4 +1,9 @@
 /**
+ *  IOS上 translate 闪烁 需要使用 translate3d 配合 -webkit-backface-visibility: hidden;
+ *  https://www.cnblogs.com/gaoxue/p/3753734.html
+ */
+
+/**
  * @param {*} options 
  */
 function Swiper(options) {
@@ -16,7 +21,7 @@ Swiper.prototype.init = function (options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = 1.5             // 过度所用时间
+  let speed = .3             // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
@@ -53,7 +58,7 @@ Swiper.prototype.init = function (options) {
 
   // 初始化第一张图参数
   wrapper.style.width = `${totalSlide * 100}%`
-  wrapper.style.transform = `translate(-${swiperWidth}px,0px)`
+  wrapper.style.transform = `translate3d(-${swiperWidth}px,0px,0px)`
   dotList[0].classList.add('active')
 
   /**
@@ -77,7 +82,7 @@ Swiper.prototype.init = function (options) {
     animation = true
     if (index <= 0) {
       wrapper.style.transition = 'none'
-      wrapper.style.transform = `translate(${(totalSlide - 2) * (-1) * swiperWidth}px,0px)`
+      wrapper.style.transform = `translate3d(${(totalSlide - 2) * (-1) * swiperWidth}px,0px,0px)`
       index = totalSlide - 2
     }
     setTimeout(() => {
@@ -87,7 +92,7 @@ Swiper.prototype.init = function (options) {
       } else {
         index++
       }
-      wrapper.style.transform = `translate(${index * (-1) * swiperWidth}px,0px)`
+      wrapper.style.transform = `translate3d(${index * (-1) * swiperWidth}px,0px,0px)`
     }, 60);
   }
 
@@ -118,19 +123,15 @@ Swiper.prototype.init = function (options) {
     let h = Math.abs(offsetX+(swiperWidth*num))
     if (index <= 0) {
       wrapper.style.transition = 'none'
-      wrapper.style.transform = `translate(${(totalSlide - 2) * (-1) * swiperWidth}px,0px)`
+      wrapper.style.transform = `translate3d(${(totalSlide - 2) * (-1) * swiperWidth}px,0px,0px)`
       index = totalSlide - 2
     } else if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
-      wrapper.style.transform = `translate(-${swiperWidth-(swiperWidth-h)}px,0px)`
+      wrapper.style.transform = `translate3d(-${swiperWidth-(swiperWidth-h)}px,0px,0px)`
       index = 1
     }
     startX = e.touches[0].pageX
-    offsetX = getTranslate(wrapper)
-
-    if (loop) {
-      clearInterval(timer)
-    }
+    // offsetX = getTranslate(wrapper)  // 此处获取 offsetX的意义？？？
   })
 
 
@@ -176,20 +177,28 @@ Swiper.prototype.init = function (options) {
   }
 
   // 监听 滑动时
+  let move = false
+  // touchmove 的时候如何 获取 当时的 offsetX ？？？？？
   wrapper.addEventListener('touchmove', function (e) {
+    if(!move){     // 执行一次，获取刚 开始移动时 的 offsetX
+      offsetX = getTranslate(wrapper)
+      move = true
+    }
     moveX = e.touches[0].pageX - startX;
-    console.log(index)
     let left = offsetX + moveX
     wrapper.style.transition = 'none';
-    wrapper.style.transform = `translate(${left}px,0px)`;
+    wrapper.style.transform = `translate3d(${left}px,0px,0px)`;
+    if (loop) {
+      clearInterval(timer)
+    }
   })
 
   // 监听滑动结束
   wrapper.addEventListener('touchend', function (e) {
+    move = false
     moveX = e.changedTouches[0].clientX - startX
     // 滑动 swiper 宽度的三分之一触发
     if (Math.abs(moveX) > swiperWidth / 4) {
-
       // 假如滑动超过一张图片宽度 
       if (Math.abs(moveX) > swiperWidth) {
         // 并且 再滑动 四分之一，就直接跳过下一张图片
@@ -198,21 +207,21 @@ Swiper.prototype.init = function (options) {
           if (moveX < 0) {
             if (index + a === totalSlide - 1) {  // 最后一张，回撤
               wrapper.style.transition = `transform ${speed}s ease-in-out`
-              wrapper.style.transform = `translate(${(-1) * swiperWidth * index}px,0px)`;
+              wrapper.style.transform = `translate3d(${(-1) * swiperWidth * index}px,0px,0px)`;
             } else {
               index = index + a
             }
           } else {
             if (index - a === 0) {   // 最前面一张，回撤
               wrapper.style.transition = `transform ${speed}s ease-in-out`
-              wrapper.style.transform = `translate(${(-1) * swiperWidth * index}px,0px)`;
+              wrapper.style.transform = `translate3d(${(-1) * swiperWidth * index}px,0px,0px)`;
             } else {
               index = index - a
             }
           }
         } else {  // 不足四分之一，回撤
           wrapper.style.transition = `transform ${speed}s ease-in-out`
-          wrapper.style.transform = `translate(${(-1) * swiperWidth * index}px,0px)`;
+          wrapper.style.transform = `translate3d(${(-1) * swiperWidth * index}px,0px,0px)`;
         }
       }
       // 小于0图片左滑 大于0图片右滑
@@ -223,7 +232,7 @@ Swiper.prototype.init = function (options) {
       }
     } else {
       wrapper.style.transition = `transform ${speed}s ease-in-out`
-      wrapper.style.transform = `translate(${(-1) * swiperWidth * index}px,0px)`;
+      wrapper.style.transform = `translate3d(${(-1) * swiperWidth * index}px,0px,0px)`;
     }
   })
 
@@ -232,7 +241,7 @@ Swiper.prototype.init = function (options) {
     // 判断是否最后一张
     if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
-      wrapper.style.transform = `translate(-${swiperWidth}px,0px)`
+      wrapper.style.transform = `translate3d(-${swiperWidth}px,0px,0px)`
       index = 1
     }
     if (loop) {
@@ -286,12 +295,12 @@ Swiper.prototype.init = function (options) {
 
 new Swiper({
   el: '.swiper1',
-  delay: 2000,
+  delay: 1000,
   loop: true
 })
 
 new Swiper({
   el: '.swiper2',
-  delay: 2000,
+  delay: 1000,
   loop: true
 }) 

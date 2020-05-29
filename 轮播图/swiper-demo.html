@@ -43,14 +43,59 @@
     <!-- 如果需要滚动条 -->
     <div class="swiper-scrollbar"></div>
 </div>
+<div class="swiper-cc">
+  <div class="swiper-wrapper">
+    <div class="pic swiper-slide">
+      <!-- <img src="https://th.wallhaven.cc/small/ym/ymoo2x.jpg" alt=""> -->
+      <img src="./images/ymoo.jpg" alt="">
+    </div>
+    <div class="pic swiper-slide">
+      <!-- <img src="https://th.wallhaven.cc/lg/6k/6k3oox.jpg" alt=""> -->
+      <img src="./images/6k3oox.jpg" alt="">
+    </div>
+    <div class="pic swiper-slide">
+      <!-- <img src="https://th.wallhaven.cc/small/5w/5w82r1.jpg" alt=""> -->
+      <img src="./images/5w82r1.jpg" alt="">
+    </div>
+  </div>
+  <!-- 如果需要分页器 -->
+  <div class="swiper-pagination"></div>
+  
+  <!-- 如果需要导航按钮 -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+  
+  <!-- 如果需要滚动条 -->
+  <div class="swiper-scrollbar"></div>
+</div>
   <script src="https://fe.120yibao.com/common/swiper/4.3.3/swiper.min.js"></script>
   <script>
   var mySwiper = new Swiper ('.swiper-container', {
     // direction: 'vertical', // 垂直切换选项
     loop: true, // 循环模式选项
-    speed:3000,
+    speed:300,
     autoplay : {
-      delay:3000,
+      delay:1000,
+      disableOnInteraction: false
+    },
+    // 如果需要分页器
+    pagination: {
+      el: '.swiper-pagination',
+    },
+    
+    // 如果需要前进后退按钮
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    
+  }) 
+  var SS = new Swiper ('.swiper-cc', {
+    // direction: 'vertical', // 垂直切换选项
+    loop: true, // 循环模式选项
+    speed:300,
+    autoplay : {
+      delay:1000,
       disableOnInteraction: false
     },
     // 如果需要分页器
