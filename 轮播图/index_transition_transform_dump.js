@@ -21,7 +21,7 @@ Swiper.prototype.init = function (options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = .3             // 过度所用时间
+  let speed = .2             // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
@@ -120,7 +120,7 @@ Swiper.prototype.init = function (options) {
   // 监听开始点击
   wrapper.addEventListener('touchstart', function (e) {
     offsetX = getTranslate(wrapper)
-    let h = Math.abs(offsetX+(swiperWidth*num))
+    let h = Math.abs(offsetX + (swiperWidth * num))
     // 判断首尾
     if (index <= 0) {
       wrapper.style.transition = 'none'
@@ -128,7 +128,7 @@ Swiper.prototype.init = function (options) {
       index = totalSlide - 2
     } else if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
-      wrapper.style.transform = `translate3d(-${swiperWidth-(swiperWidth-h)}px,0px,0px)`
+      wrapper.style.transform = `translate3d(-${swiperWidth - (swiperWidth - h)}px,0px,0px)`
       index = 1
     }
     startX = e.touches[0].pageX
@@ -137,7 +137,7 @@ Swiper.prototype.init = function (options) {
 
   // 获取当前 translate 位置
   function getTranslate(el, axis) {
-    if ( axis === void 0 ) axis = 'x';
+    if (axis === void 0) axis = 'x';
 
     var matrix;
     var curTransform;
@@ -181,7 +181,7 @@ Swiper.prototype.init = function (options) {
   let move = false
   // touchmove 的时候如何 获取 当时的 offsetX ？？？？？
   wrapper.addEventListener('touchmove', function (e) {
-    if(!move){     // 执行一次，获取刚 开始移动时 的 offsetX
+    if (!move) {     // 执行一次，获取刚 开始移动时 的 offsetX
       offsetX = getTranslate(wrapper)
       move = true
     }
@@ -241,10 +241,10 @@ Swiper.prototype.init = function (options) {
   wrapper.addEventListener('transitionend', function () {
     // 判断是否最后一张
     if (index <= 0) {
-        wrapper.style.transition = 'none'
-        wrapper.style.transform = `translate3d(${(totalSlide - 2) * (-1) * swiperWidth}px,0px,0px)`
-        index = totalSlide - 2
-      }
+      wrapper.style.transition = 'none'
+      wrapper.style.transform = `translate3d(${(totalSlide - 2) * (-1) * swiperWidth}px,0px,0px)`
+      index = totalSlide - 2
+    }
     if (index >= totalSlide - 1) {
       wrapper.style.transition = 'none'
       wrapper.style.transform = `translate3d(-${swiperWidth}px,0px,0px)`
@@ -270,8 +270,7 @@ Swiper.prototype.init = function (options) {
   // 监听dot点击
   dotList.forEach((el, de) => {
     el.onclick = function (e) {
-      console.log('index  ' + index)
-      console.log('de  ' + de)
+
       if (index === 1 && de === 0 || index === 6 && de === 0 || index === de + 1) return
       if (index === totalSlide - 1 && de === 1) {
         if (!animation) {
@@ -292,8 +291,50 @@ Swiper.prototype.init = function (options) {
         return
       }
       if (!animation) {
-        index = de
-        change()
+        console.log('index  ' + index)
+        console.log('de  ' + de)
+        if (index > de) {
+          console.log(index - de)
+          let a = de
+          let b = index
+          for (let i = b - 1; i >= a + 2; i--) {
+            allSlide[i].style.display = 'none'
+          }
+          wrapper.style.transition = `none`
+          wrapper.style.transform = `translate3d(${(-1) * swiperWidth * (a + 2)}px,0px,0px)`;
+          index = de
+          change()
+          setTimeout(() => {
+            for (let i = b - 1; i >= a + 2; i--) {
+              allSlide[i].style.display = 'block'
+            }
+          }, speed*1000);
+        } else if(de > index){
+          let a = de
+          let b = index
+          for (let i = a; i > b; i--) {
+            console.log(i)
+            allSlide[i].style.display = 'none'
+          }
+          
+          wrapper.style.transition = `transform ${speed}s ease-in-out`
+          wrapper.style.transform = `translate3d(${(-1) * swiperWidth * (b + 1)}px,0px,0px)`;
+          setTimeout(() => {
+            for (let i = a; i > b; i--) {
+              allSlide[i].style.display = 'block'
+            }
+            index = de+1
+            wrapper.style.transition = `none`
+            wrapper.style.transform = `translate3d(${(-1) * swiperWidth * (a+1)}px,0px,0px)`;
+          }, speed*1000);
+          for (let i = 0; i < dotList.length; i++) {
+            dotList[i].classList.remove('active')
+          }
+          dotList[de].classList.add('active')
+        } else {
+          index = de 
+          change()
+        }
       }
     }
   });
@@ -302,11 +343,11 @@ Swiper.prototype.init = function (options) {
 new Swiper({
   el: '.swiper1',
   delay: 1000,
-  loop: true
+  // loop: true
 })
 
 new Swiper({
   el: '.swiper2',
   delay: 1000,
-  loop: true
+  // loop: true
 }) 
