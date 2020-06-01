@@ -1,5 +1,5 @@
 /**
- *  IOS上 translate 闪烁 需要使用 translate3d 配合 -webkit-backface-visibility: hidden;
+ *  IOS上 translate 闪烁 需要使用 translate3d 
  *  https://www.cnblogs.com/gaoxue/p/3753734.html
  */
 
@@ -21,14 +21,14 @@ Swiper.prototype.init = function (options) {
   let index = 1
   let loop = options.loop
   let delay = options.delay ? options.delay : 3000  // 轮播间隔时间
-  let speed = .2             // 过度所用时间
+  let speed = .3             // 过度所用时间
   let startX = 0
   let moveX = 0
   let offsetX = 0
   let allSlide = wrapper.querySelectorAll('.swiper-slide')  // 所有 slide 列表
   let swiperWidth = el.offsetWidth     // 滑动的宽度  图片宽度    
   let timer       // 定时器
-  let animation = false
+  let isMove = false
 
   // 插入按钮
   this.nextEl = document.createElement('button')
@@ -79,12 +79,7 @@ Swiper.prototype.init = function (options) {
     if (loop) {
       clearInterval(timer)
     }
-    animation = true
-    // if (index <= 0) {
-    //   wrapper.style.transition = 'none'
-    //   wrapper.style.transform = `translate3d(${(totalSlide - 2) * (-1) * swiperWidth}px,0px,0px)`
-    //   index = totalSlide - 2
-    // }
+    isMove = true
     setTimeout(() => {
       wrapper.style.transition = `transform ${speed}s ease-in-out`
       if (left) {
@@ -93,6 +88,7 @@ Swiper.prototype.init = function (options) {
         index++
       }
       wrapper.style.transform = `translate3d(${index * (-1) * swiperWidth}px,0px,0px)`
+
     }, 60);
   }
 
@@ -102,7 +98,7 @@ Swiper.prototype.init = function (options) {
   }
 
   function nextClick() {
-    if (!animation) {
+    if (!isMove) {
       change()
     }
   }
@@ -112,13 +108,14 @@ Swiper.prototype.init = function (options) {
 
   // 点击上一张
   this.prevEl.addEventListener('click', function () {
-    if (!animation) {
+    if (!isMove) {
       change(true)
     }
   })
 
   // 监听开始点击
   wrapper.addEventListener('touchstart', function (e) {
+    console.log('start')
     offsetX = getTranslate(wrapper)
     let h = Math.abs(offsetX + (swiperWidth * num))
     // 判断首尾
@@ -185,6 +182,7 @@ Swiper.prototype.init = function (options) {
       offsetX = getTranslate(wrapper)
       move = true
     }
+    console.log(offsetX)
     moveX = e.touches[0].pageX - startX;
     let left = offsetX + moveX
     wrapper.style.transition = 'none';
@@ -239,6 +237,8 @@ Swiper.prototype.init = function (options) {
 
   // 监听 slide 切换完毕
   wrapper.addEventListener('transitionend', function () {
+    isMove = false
+
     // 判断是否最后一张
     if (index <= 0) {
       wrapper.style.transition = 'none'
@@ -253,7 +253,6 @@ Swiper.prototype.init = function (options) {
     if (loop) {
       timer = setInterval(nextClick, delay)
     }
-    animation = false
     // 更新 标记点
     for (let i = 0; i < dotList.length; i++) {
       dotList[i].classList.remove('active')
@@ -270,29 +269,29 @@ Swiper.prototype.init = function (options) {
   // 监听dot点击
   dotList.forEach((el, de) => {
     el.onclick = function (e) {
-
+      console.log('index  ' + index)
+      console.log('de  ' + de)
       if (index === 1 && de === 0 || index === 6 && de === 0 || index === de + 1) return
       if (index === totalSlide - 1 && de === 1) {
-        if (!animation) {
+        if (!isMove) {
           change()
         }
         return
       }
       if (index === 2 && de === 0) {
-        if (!animation) {
+        if (!isMove) {
           change(true)
         }
         return
       }
       if (index === 0 && de === num - 2) {
-        if (!animation) {
+        if (!isMove) {
           change(true)
         }
         return
       }
-      if (!animation) {
-        console.log('index  ' + index)
-        console.log('de  ' + de)
+      if (!isMove) {
+
         if (index > de) {
           console.log(index - de)
           let a = de
@@ -308,31 +307,30 @@ Swiper.prototype.init = function (options) {
             for (let i = b - 1; i >= a + 2; i--) {
               allSlide[i].style.display = 'block'
             }
-          }, speed*1000);
-        } else if(de > index){
+          }, speed * 1000);
+        } else if (de > index) {
           let a = de
           let b = index
           for (let i = a; i > b; i--) {
-            console.log(i)
             allSlide[i].style.display = 'none'
           }
-          
           wrapper.style.transition = `transform ${speed}s ease-in-out`
           wrapper.style.transform = `translate3d(${(-1) * swiperWidth * (b + 1)}px,0px,0px)`;
           setTimeout(() => {
             for (let i = a; i > b; i--) {
               allSlide[i].style.display = 'block'
             }
-            index = de+1
+            index = de + 1
             wrapper.style.transition = `none`
-            wrapper.style.transform = `translate3d(${(-1) * swiperWidth * (a+1)}px,0px,0px)`;
-          }, speed*1000);
+            wrapper.style.transform = `translate3d(${(-1) * swiperWidth * (a + 1)}px,0px,0px)`;
+          }, speed * 1000);
+          // 更新标记点
           for (let i = 0; i < dotList.length; i++) {
             dotList[i].classList.remove('active')
           }
           dotList[de].classList.add('active')
         } else {
-          index = de 
+          index = de
           change()
         }
       }
@@ -342,8 +340,8 @@ Swiper.prototype.init = function (options) {
 
 new Swiper({
   el: '.swiper1',
-  delay: 1000,
-  // loop: true
+  delay: 1500,
+  loop: true
 })
 
 new Swiper({
@@ -351,3 +349,7 @@ new Swiper({
   delay: 1000,
   // loop: true
 }) 
+
+/**
+ * 移动端的
+ */
