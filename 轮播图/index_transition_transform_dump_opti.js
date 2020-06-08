@@ -83,15 +83,15 @@ Swiper.prototype.formatOptions = function (options) {
     this.$error('el挂载点错误')
   }
 
-  _options.loop = Object.prototype.toString.call(!!options.loop) === '[object Boolean]' ? options.loop : this.defaultOptions.loop
+  _options.loop = Object.prototype.toString.call(!!options.loop) === '[object Boolean]' ? !!options.loop : this.defaultOptions.loop
 
-  _options.delay = Object.prototype.toString.call(+options.delay) === '[object Number]' ? options.delay : this.defaultOptions.delay
+  _options.delay = Object.prototype.toString.call(+options.delay) === '[object Number]' ? +options.delay : this.defaultOptions.delay
+  
+  _options.speed = Object.prototype.toString.call(+options.speed) === '[object Number]' ? +options.speed : this.defaultOptions.speed
 
-  _options.speed = Object.prototype.toString.call(+options.speed) === '[object Number]' ? options.speed : this.defaultOptions.speed
+  _options.controlBtn = Object.prototype.toString.call(!!options.controlBtn) === '[object Boolean]' ? !!options.controlBtn : this.defaultOptions.controlBtn
 
-  _options.controlBtn = Object.prototype.toString.call(!!options.controlBtn) === '[object Boolean]' ? options.controlBtn : this.defaultOptions.controlBtn
-
-  _options.dotClick = Object.prototype.toString.call(!!options.dotClick) === '[object Boolean]' ? options.dotClick : this.defaultOptions.dotClick
+  _options.dotClick = Object.prototype.toString.call(!!options.dotClick) === '[object Boolean]' ? !!options.dotClick : this.defaultOptions.dotClick
   return _options
 }
 // 按钮
