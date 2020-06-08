@@ -65,10 +65,11 @@ Swiper.prototype.$error = function(msg){
 }
 // 校验
 Swiper.prototype.formatOptions = function (options) {
+  options ? options : this.$error('请传入参数')
   const _options = Object.create(null)
-  if(Array.isArray(options.urlList)){
+  if(options.urlList && Array.isArray(options.urlList)){
     options.urlList.forEach(item => {
-      if( Object.prototype.toString.call(item) !== '[object String]'){
+      if( !(Object.prototype.toString.call(item) === '[object String]'&& item.length)){
         this.$error('图片传入格式错误')
       }
     })
@@ -76,22 +77,21 @@ Swiper.prototype.formatOptions = function (options) {
   } else {
     this.$error('图片传入格式错误')
   }
-  if(Object.prototype.toString.call(options.el)&& options.el.length&&document.querySelector(options.el)){
+  if(options.el&&Object.prototype.toString.call(options.el)&& options.el.length&&document.querySelector(options.el)){
     _options.el = options.el
   }else {
     this.$error('el挂载点错误')
   }
-  _options.el = Object.prototype.toString.call(options.el) === '[object String]' ? options.el : this.defaultOptions.el
 
-  _options.loop = Object.prototype.toString.call(options.loop) === '[object Boolean]' ? options.loop : this.defaultOptions.loop
+  _options.loop = Object.prototype.toString.call(!!options.loop) === '[object Boolean]' ? options.loop : this.defaultOptions.loop
 
-  _options.delay = Object.prototype.toString.call(options.delay) === '[object Number]' ? options.delay : this.defaultOptions.delay
+  _options.delay = Object.prototype.toString.call(+options.delay) === '[object Number]' ? options.delay : this.defaultOptions.delay
 
-  _options.speed = Object.prototype.toString.call(options.speed) === '[object Number]' ? options.speed : this.defaultOptions.speed
+  _options.speed = Object.prototype.toString.call(+options.speed) === '[object Number]' ? options.speed : this.defaultOptions.speed
 
-  _options.controlBtn = Object.prototype.toString.call(options.controlBtn) === '[object Boolean]' ? options.controlBtn : this.defaultOptions.controlBtn
+  _options.controlBtn = Object.prototype.toString.call(!!options.controlBtn) === '[object Boolean]' ? options.controlBtn : this.defaultOptions.controlBtn
 
-  _options.dotClick = Object.prototype.toString.call(options.dotClick) === '[object Boolean]' ? options.dotClick : this.defaultOptions.dotClick
+  _options.dotClick = Object.prototype.toString.call(!!options.dotClick) === '[object Boolean]' ? options.dotClick : this.defaultOptions.dotClick
   return _options
 }
 // 按钮
@@ -375,30 +375,28 @@ Swiper.prototype.clickDot = function () {
 }
 
 new Swiper({
-  urlList:[
-    './images/md5z28.jpg',
-    './images/13vym3.jpg',
-    './images/g866qq.jpg',
-],
-  el: '.swiper1',
-  delay: 1500,
-  speed: 300,
-  loop: true,
-  dotClick: true,
-  controlBtn: true
-})
-
-new Swiper({
   urlList: [
     './images/md5z28.jpg',
     './images/13vym3.jpg',
     './images/g866qq.jpg'
   ],
-  el: '.swiper2',
-  delay: 1500,
-  speed: 300,
-  loop: true,
-  dotClick: true,
-  controlBtn: true
+  el : '.swiper1',
+  delay: '1000',
+  loop: '1',
+  speed:'300'
 })
+
+// new Swiper({
+//   urlList: [
+//     './images/md5z28.jpg',
+//     './images/13vym3.jpg',
+//     './images/g866qq.jpg'
+//   ],
+//   el: '.swiper2',
+//   delay: 1500,
+//   speed: 300,
+//   loop: true,
+//   dotClick: true,
+//   controlBtn: true
+// })
 
