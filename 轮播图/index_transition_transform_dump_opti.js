@@ -60,11 +60,27 @@ Swiper.prototype.setTransition = function (time, distance) {
   this.wrapper.style.transition = typeof (time) === 'number' ? `transform ${time}ms ease-in-out` : 'none'
   this.wrapper.style.transform = `translate3d(${distance}px,0px,0px)`
 }
+Swiper.prototype.$error = function(msg){
+  throw new Error(msg)
+}
 // 校验
 Swiper.prototype.formatOptions = function (options) {
   const _options = Object.create(null)
-  _options.urlList = Array.isArray(options.urlList) ? options.urlList : this.defaultOptions.urlList
-
+  if(Array.isArray(options.urlList)){
+    options.urlList.forEach(item => {
+      if( Object.prototype.toString.call(item) !== '[object String]'){
+        this.$error('图片传入格式错误')
+      }
+    })
+    options.urlList.length ? _options.urlList = options.urlList : this.$error('图片列表为空')
+  } else {
+    this.$error('图片传入格式错误')
+  }
+  if(Object.prototype.toString.call(options.el)&& options.el.length&&document.querySelector(options.el)){
+    _options.el = options.el
+  }else {
+    this.$error('el挂载点错误')
+  }
   _options.el = Object.prototype.toString.call(options.el) === '[object String]' ? options.el : this.defaultOptions.el
 
   _options.loop = Object.prototype.toString.call(options.loop) === '[object Boolean]' ? options.loop : this.defaultOptions.loop
@@ -359,11 +375,11 @@ Swiper.prototype.clickDot = function () {
 }
 
 new Swiper({
-  urlList: [
+  urlList:[
     './images/md5z28.jpg',
     './images/13vym3.jpg',
-    './images/g866qq.jpg'
-  ],
+    './images/g866qq.jpg',
+],
   el: '.swiper1',
   delay: 1500,
   speed: 300,
