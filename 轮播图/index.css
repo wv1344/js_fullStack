@@ -22,7 +22,12 @@ body {
 .box{
   margin: 0 auto;
 }
-.swiper1 {
+.swiper1  {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.swiper  {
   width: 100%;
   overflow: hidden;
   position: relative;

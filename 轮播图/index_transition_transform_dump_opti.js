@@ -10,7 +10,7 @@ function Swiper(options) {
 
   this.defaultOptions = {
     el: '',
-    urlList: [],
+    urlList: [''],
     delay: 3000,
     loop: false,
     speed: 300,
@@ -30,9 +30,9 @@ function Swiper(options) {
   this.moveX = 0
   this.offsetX = 0
   this.swiperWidth = this.el.offsetWidth
-  this.wrapper = document.createElement('div')
-  this.allSlide
-  this.dotList
+  this.wrapper = null
+  this.allSlide = null
+  this.dotList = null
 
   // 挂载DOM
   this.initDom()
@@ -42,8 +42,8 @@ function Swiper(options) {
     this.initControlBtn()
   }
 
-  // 初始化
-  this.init(options)
+  // 初始化监听
+  this.initListener(options)
 
   // 是否 自动播放
   if (this.options.loop) {
@@ -80,7 +80,7 @@ Swiper.prototype.formatOptions = function (options) {
 }
 // 按钮
 Swiper.prototype.initControlBtn = function () {
-  let that = this
+  let _ = this
   const nextSvg = `<svg width="20" height="40"><polyline points="0,0 20,20 0,40" fill="none" stroke="white" stroke-width="3" /> </svg>`
   const prevSvg = `<svg width="20" height="40"><polyline points="20,0 0,20 20,40" fill="none" stroke="white" stroke-width="3" /> </svg>`
   // 插入按钮
@@ -94,19 +94,21 @@ Swiper.prototype.initControlBtn = function () {
   this.el.appendChild(this.prevEl)
   // 事件监听
   this.nextEl.addEventListener('click', function () {
-    if (!that.isMove) {
-      that.move()
+    if (!_.isMove) {
+      _.move()
     }
   })
   this.prevEl.addEventListener('click', function () {
-    if (!that.isMove) {
-      that.move(true)
+    if (!_.isMove) {
+      _.move(true)
     }
   })
 }
 // 初始化DOM
 Swiper.prototype.initDom = function () {
   // 插入 dom
+  this.el.classList.add('swiper')
+  this.wrapper = document.createElement('div')
   this.wrapper.classList.add('swiper-wrapper')
   this.options.urlList.unshift(this.options.urlList[this.num - 1])
   this.options.urlList.push(this.options.urlList[1])
@@ -147,8 +149,8 @@ Swiper.prototype.move = function (left) {
   }, 60);
 }
 // 监听
-Swiper.prototype.init = function () {
-  let that = this
+Swiper.prototype.initListener = function () {
+  let _ = this
   let isTouchMove = false
 
   // 获取当前 translate 位置
@@ -194,162 +196,162 @@ Swiper.prototype.init = function () {
   }
 
   // 监听开始点击
-  that.wrapper.addEventListener('touchstart', function (e) {
-    that.offsetX = getTranslate(that.wrapper)
-    let h = Math.abs(that.offsetX + (that.swiperWidth * that.num))
+  _.wrapper.addEventListener('touchstart', function (e) {
+    _.offsetX = getTranslate(_.wrapper)
+    let h = Math.abs(_.offsetX + (_.swiperWidth * _.num))
     // 判断首尾
-    if (that.index <= 0) {
-      that.setTransition('none', (that.totalSlide - 2) * (-1) * that.swiperWidth)
-      that.index = totalSlide - 2
-    } else if (that.index >= that.totalSlide - 1) {
-      that.setTransition('none', -(that.swiperWidth - (that.swiperWidth - h)))
-      that.index = 1
+    if (_.index <= 0) {
+      _.setTransition('none', (_.totalSlide - 2) * (-1) * _.swiperWidth)
+      _.index = totalSlide - 2
+    } else if (_.index >= _.totalSlide - 1) {
+      _.setTransition('none', -(_.swiperWidth - (_.swiperWidth - h)))
+      _.index = 1
     }
-    that.startX = e.touches[0].pageX
+    _.startX = e.touches[0].pageX
   })
 
   // 监听 滑动时
-  that.wrapper.addEventListener('touchmove', function (e) {
+  _.wrapper.addEventListener('touchmove', function (e) {
     if (!isTouchMove) {     // 执行一次，获取刚 开始移动时 的 offsetX
-      that.offsetX = getTranslate(that.wrapper)
+      _.offsetX = getTranslate(_.wrapper)
       isTouchMove = true
     }
-    that.moveX = e.touches[0].pageX - that.startX;
-    let left = that.offsetX + that.moveX
-    that.setTransition('none', left)
-    if (that.options.loop) clearInterval(that.timer)
+    _.moveX = e.touches[0].pageX - _.startX;
+    let left = _.offsetX + _.moveX
+    _.setTransition('none', left)
+    if (_.options.loop) clearInterval(_.timer)
   })
 
   // 监听滑动结束
-  that.wrapper.addEventListener('touchend', function (e) {
+  _.wrapper.addEventListener('touchend', function (e) {
     isTouchMove = false
-    that.moveX = e.changedTouches[0].clientX - that.startX
+    _.moveX = e.changedTouches[0].clientX - _.startX
     // 滑动 swiper 宽度的几分之一触发
-    if (Math.abs(that.moveX) > that.swiperWidth / 4) {
+    if (Math.abs(_.moveX) > _.swiperWidth / 4) {
       // 假如滑动超过一张图片宽度 
-      if (Math.abs(that.moveX) > that.swiperWidth) {
+      if (Math.abs(_.moveX) > _.swiperWidth) {
         // 并且 再滑动 四分之一，就直接跳过下一张图片
-        if (Math.abs(that.moveX) > that.swiperWidth + (that.swiperWidth / 4)) {
-          let a = Math.floor(Math.abs(that.moveX) / that.swiperWidth)
-          if (that.moveX < 0) {
-            if (that.index + a === that.totalSlide - 1) {  // 最后一张，回撤
-              that.setTransition(that.options.speed, (-1) * that.swiperWidth * that.index)
+        if (Math.abs(_.moveX) > _.swiperWidth + (_.swiperWidth / 4)) {
+          let a = Math.floor(Math.abs(_.moveX) / _.swiperWidth)
+          if (_.moveX < 0) {
+            if (_.index + a === _.totalSlide - 1) {  // 最后一张，回撤
+              _.setTransition(_.options.speed, (-1) * _.swiperWidth * _.index)
             } else {
-              that.index = that.index + a
+              _.index = _.index + a
             }
           } else {
-            if (that.index - a === 0) {   // 最前面一张，回撤
-              that.setTransition(that.options.speed, (-1) * that.swiperWidth * that.index)
+            if (_.index - a === 0) {   // 最前面一张，回撤
+              _.setTransition(_.options.speed, (-1) * _.swiperWidth * _.index)
             } else {
-              that.index = that.index - a
+              _.index = _.index - a
             }
           }
         } else {  // 不足四分之一，回撤
-          that.setTransition(that.options.speed, (-1) * that.swiperWidth * that.index)
+          _.setTransition(_.options.speed, (-1) * _.swiperWidth * _.index)
         }
       }
       // 小于0图片左滑 大于0图片右滑
-      that.moveX > 0 ? that.move(true) : that.move()
+      _.moveX > 0 ? _.move(true) : _.move()
     } else {
-      that.setTransition(that.options.speed, (-1) * that.swiperWidth * that.index)
+      _.setTransition(_.options.speed, (-1) * _.swiperWidth * _.index)
     }
   })
 
   // 监听 slide 切换完毕
-  that.wrapper.addEventListener('transitionend', function () {
-    that.isMove = false
+  _.wrapper.addEventListener('transitionend', function () {
+    _.isMove = false
     // 判断是否最后一张
-    if (that.index <= 0) {
-      that.setTransition('none', (that.totalSlide - 2) * (-1) * that.swiperWidth)
-      that.index = that.totalSlide - 2
+    if (_.index <= 0) {
+      _.setTransition('none', (_.totalSlide - 2) * (-1) * _.swiperWidth)
+      _.index = _.totalSlide - 2
     }
-    if (that.index >= that.totalSlide - 1) {
-      that.setTransition('none', (-1) * that.swiperWidth)
-      that.index = 1
+    if (_.index >= _.totalSlide - 1) {
+      _.setTransition('none', (-1) * _.swiperWidth)
+      _.index = 1
     }
-    if (that.options.loop) {
-      that.setAutoPlay()
+    if (_.options.loop) {
+      _.setAutoPlay()
     }
     // 更新 标记点
-    for (let i = 0; i < that.dotList.length; i++) {
-      that.dotList[i].classList.remove('active')
+    for (let i = 0; i < _.dotList.length; i++) {
+      _.dotList[i].classList.remove('active')
     }
-    if (that.index === 0 || that.index === that.totalSlide - 2) {
-      that.dotList[that.num - 1].classList.add('active')
-    } else if (that.index === 1 || that.index === that.totalSlide - 1) {
-      that.dotList[0].classList.add('active')
+    if (_.index === 0 || _.index === _.totalSlide - 2) {
+      _.dotList[_.num - 1].classList.add('active')
+    } else if (_.index === 1 || _.index === _.totalSlide - 1) {
+      _.dotList[0].classList.add('active')
     } else {
-      that.dotList[that.index - 1].classList.add('active')
+      _.dotList[_.index - 1].classList.add('active')
     }
   })
 }
 // 自动播放
 Swiper.prototype.setAutoPlay = function () {
-  const that = this
+  let _ = this
   this.timer = setInterval(function () {
-    if (!that.isMove) {
-      that.move()
+    if (!_.isMove) {
+      _.move()
     }
   }, this.options.delay)
 }
 // 下标点击
 Swiper.prototype.clickDot = function () {
-  this.dotList.forEach((el, de) => {
-    let that = this
+  let _ = this
+  _.dotList.forEach((el, de) => {
     el.onclick = function (e) {
-      console.log('index  ' + that.index)
+      console.log('index  ' + _.index)
       console.log('de  ' + de)
-      if (that.index === 1 && de === 0 || that.index === 6 && de === 0 || that.index === de + 1) return
-      if (that.index === that.totalSlide - 1 && de === 1) {
-        if (!that.isMove) {
-          that.move()
+      if (_.index === 1 && de === 0 || _.index === 6 && de === 0 || _.index === de + 1) return
+      if (_.index === _.totalSlide - 1 && de === 1) {
+        if (!_.isMove) {
+          _.move()
         }
         return
       }
-      if (that.index === 2 && de === 0 || that.index === 0 && de === that.num - 2) {
-        if (!that.isMove) {
-          that.move(true)
+      if (_.index === 2 && de === 0 || _.index === 0 && de === _.num - 2) {
+        if (!_.isMove) {
+          _.move(true)
         }
         return
       }
-      if (!that.isMove) {
-        if (that.index > de) {
-          console.log(that.index - de)
+      if (!_.isMove) {
+        if (_.index > de) {
+          console.log(_.index - de)
           let a = de
-          let b = that.index
+          let b = _.index
           for (let i = b - 1; i >= a + 2; i--) {
-            that.allSlide[i].style.display = 'none'
+            _.allSlide[i].style.display = 'none'
           }
-          that.setTransition('none', (-1) * that.swiperWidth * (a + 2))
-          that.index = de
-          that.move()
+          _.setTransition('none', (-1) * _.swiperWidth * (a + 2))
+          _.index = de
+          _.move()
           setTimeout(() => {
             for (let i = b - 1; i >= a + 2; i--) {
-              that.allSlide[i].style.display = 'block'
+              _.allSlide[i].style.display = 'block'
             }
-          }, that.options.speed);
-        } else if (de > that.index) {
+          }, _.options.speed);
+        } else if (de > _.index) {
           let a = de
-          let b = that.index
+          let b = _.index
           for (let i = a; i > b; i--) {
-            that.allSlide[i].style.display = 'none'
+            _.allSlide[i].style.display = 'none'
           }
-          that.setTransition(that.options.speed, (-1) * that.swiperWidth * (b + 1))
+          _.setTransition(_.options.speed, (-1) * _.swiperWidth * (b + 1))
           setTimeout(() => {
             for (let i = a; i > b; i--) {
-              that.allSlide[i].style.display = 'block'
+              _.allSlide[i].style.display = 'block'
             }
-            that.index = de + 1
-            that.setTransition('none', (-1) * that.swiperWidth * (a + 1))
-          }, that.options.speed);
+            _.index = de + 1
+            _.setTransition('none', (-1) * _.swiperWidth * (a + 1))
+          }, _.options.speed);
           // 更新标记点
-          for (let i = 0; i < that.dotList.length; i++) {
-            that.dotList[i].classList.remove('active')
+          for (let i = 0; i < _.dotList.length; i++) {
+            _.dotList[i].classList.remove('active')
           }
-          that.dotList[de].classList.add('active')
+          _.dotList[de].classList.add('active')
         } else {
-          that.index = de
-          that.move()
+          _.index = de
+          _.move()
         }
       }
     }
@@ -364,14 +366,23 @@ new Swiper({
   ],
   el: '.swiper1',
   delay: 1500,
+  speed: 300,
   loop: true,
   dotClick: true,
   controlBtn: true
 })
 
-// new Swiper({
-  // el: '.swiper2',
-  // delay: 1000,
-  // loop: true
-// }) 
+new Swiper({
+  urlList: [
+    './images/md5z28.jpg',
+    './images/13vym3.jpg',
+    './images/g866qq.jpg'
+  ],
+  el: '.swiper2',
+  delay: 1500,
+  speed: 300,
+  loop: true,
+  dotClick: true,
+  controlBtn: true
+})
 
