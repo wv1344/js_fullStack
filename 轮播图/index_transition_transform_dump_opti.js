@@ -63,17 +63,31 @@ Swiper.prototype.setTransition = function (time, distance) {
 Swiper.prototype.$error = function(msg){
   throw new Error(msg)
 }
+Swiper.prototype.typeCheck = function(obj){
+  const typeList = {
+    '[object String]': 'string',
+    '[object Boolean]': 'boolean',
+    '[object Number]': 'number',
+    '[object Array]': 'array',
+    '[object Object]': 'object',
+    '[object Function]': 'function',
+    '[object Math]': 'math',
+    '[object Date]': 'date'
+  }
+  let type = Object.prototype.toString.call(obj)
+  return typeList[type]
+}
 // 校验
 Swiper.prototype.formatOptions = function (options) {
   options ? options : this.$error('请传入参数')
   const _options = Object.create(null)
   if(options.urlList && Array.isArray(options.urlList)){
+    options.urlList.length ? _options.urlList = options.urlList : this.$error('图片列表为空')
     options.urlList.forEach(item => {
-      if( !(Object.prototype.toString.call(item) === '[object String]'&& item.length)){
+      if( !(this.typeCheck(item) === 'string' && item)){
         this.$error('图片传入格式错误')
       }
     })
-    options.urlList.length ? _options.urlList = options.urlList : this.$error('图片列表为空')
   } else {
     this.$error('图片传入格式错误')
   }
@@ -83,15 +97,15 @@ Swiper.prototype.formatOptions = function (options) {
     this.$error('el挂载点错误')
   }
 
-  _options.loop = Object.prototype.toString.call(!!options.loop) === '[object Boolean]' ? !!options.loop : this.defaultOptions.loop
+  _options.loop = this.typeCheck(!!options.loop) === 'boolean' ? !!options.loop : this.defaultOptions.loop
 
-  _options.delay = Object.prototype.toString.call(+options.delay) === '[object Number]' ? +options.delay : this.defaultOptions.delay
-  
-  _options.speed = Object.prototype.toString.call(+options.speed) === '[object Number]' ? +options.speed : this.defaultOptions.speed
+  _options.delay = this.typeCheck(+options.delay) === 'number' ? +options.delay : this.defaultOptions.delay
 
-  _options.controlBtn = Object.prototype.toString.call(!!options.controlBtn) === '[object Boolean]' ? !!options.controlBtn : this.defaultOptions.controlBtn
+  _options.speed = this.typeCheck(+options.speed) === 'number' ? +options.speed : this.defaultOptions.speed
 
-  _options.dotClick = Object.prototype.toString.call(!!options.dotClick) === '[object Boolean]' ? !!options.dotClick : this.defaultOptions.dotClick
+  _options.controlBtn = this.typeCheck(!!options.controlBtn) === 'boolean' ? !!options.controlBtn : this.defaultOptions.controlBtn
+
+  _options.dotClick = this.typeCheck(!!options.dotClick) === 'boolean' ? !!options.dotClick : this.defaultOptions.dotClick
   return _options
 }
 // 按钮
@@ -104,12 +118,20 @@ Swiper.prototype.initControlBtn = function () {
   this.nextEl.innerHTML = nextSvg
   this.nextEl.className = 'next-btn'
   this.el.appendChild(this.nextEl)
+  // this.el.innerHTML += `<span class="next-btn">${nextSvg}</span>`
+  // this.nextEl = this.el.querySelector('.next-btn')
+  // console.log(this.nextEl)
   this.prevEl = document.createElement('span')
   this.prevEl.innerHTML = prevSvg
   this.prevEl.className = 'prev-btn'
   this.el.appendChild(this.prevEl)
+  // this.el.innerHTML += `<span class="prev-btn">${prevSvg}</span>`
+  // this.prevEl = this.el.querySelector('.prev-btn')
+  // console.log(this.prevEl)
   // 事件监听
+
   this.nextEl.addEventListener('click', function () {
+    console.log('sldfj')
     if (!_.isMove) {
       _.move()
     }
@@ -317,46 +339,60 @@ Swiper.prototype.clickDot = function () {
     el.onclick = function (e) {
       console.log('index  ' + _.index)
       console.log('de  ' + de)
-      if (_.index === 1 && de === 0 || _.index === 6 && de === 0 || _.index === de + 1) return
-      if (_.index === _.totalSlide - 1 && de === 1) {
-        if (!_.isMove) {
-          _.move()
-        }
-        return
-      }
-      if (_.index === 2 && de === 0 || _.index === 0 && de === _.num - 2) {
-        if (!_.isMove) {
-          _.move(true)
-        }
-        return
-      }
+      // 实际第一张图片&& 下标第一个点    ||   全部中最后一张图片 &&  下标第一个点   ||  正常对应点
+      if (_.index === 1 && de === 0 || _.index === _.totalSlide && de === 0 || _.index === de + 1) return
+      // 
+      // if (_.index === _.totalSlide - 1 && de === 1) {
+      //   if (!_.isMove) {
+          // _.move()
+      //   }
+      //   return
+      // }
+      // 
+      // if (_.index === 2 && de === 0 || _.index === 0 && de === _.num - 2) {
+      //   if (!_.isMove) {
+      //     _.move(true)
+      //   }
+      //   return
+      // }
       if (!_.isMove) {
+        // 目标 slide 在 当前 slide 左侧
         if (_.index > de) {
           console.log(_.index - de)
           let a = de
           let b = _.index
+          // 从当前 slide 的左侧一张开始，直到目标 slide， 将下标之间 slide 隐藏
+          // 点第一个下标，从第二个 slide 开始隐藏，第二个 slide index 为 第一个下标加2 
           for (let i = b - 1; i >= a + 2; i--) {
             _.allSlide[i].style.display = 'none'
           }
+          // 闪现到 目标 slide 的右侧一张，实际去除 中间 slide 后，就是未移动之前的 slide
           _.setTransition('none', (-1) * _.swiperWidth * (a + 2))
+          // 移动
           _.index = de
           _.move()
+          // 将隐藏 slide 展示， 延迟执行，确保移动结束
           setTimeout(() => {
             for (let i = b - 1; i >= a + 2; i--) {
               _.allSlide[i].style.display = 'block'
             }
           }, _.options.speed);
         } else if (de > _.index) {
+          // 目标 slide 在 当前 slide 右侧 大于 一个（起码间隔一个），相等的情况在 else 中
           let a = de
           let b = _.index
+          // 从目标 slide 开始， 直到 当前 slide ，中间隐藏
           for (let i = a; i > b; i--) {
             _.allSlide[i].style.display = 'none'
           }
+          // 过度到 当前下一张 ，就是省略中间 slide 后的目标 slide
           _.setTransition(_.options.speed, (-1) * _.swiperWidth * (b + 1))
+          // 确保过度完成，  将 隐藏 slide 恢复
           setTimeout(() => {
             for (let i = a; i > b; i--) {
               _.allSlide[i].style.display = 'block'
             }
+            // 恢复后，需悄咪咪 切换回原本顺序
             _.index = de + 1
             _.setTransition('none', (-1) * _.swiperWidth * (a + 1))
           }, _.options.speed);
@@ -366,6 +402,7 @@ Swiper.prototype.clickDot = function () {
           }
           _.dotList[de].classList.add('active')
         } else {
+          // 目标 slide 在 当前 slide 右侧一个
           _.index = de
           _.move()
         }
@@ -378,12 +415,16 @@ new Swiper({
   urlList: [
     './images/md5z28.jpg',
     './images/13vym3.jpg',
+    './images/13vym3.jpg',
+    './images/13vym3.jpg',
     './images/g866qq.jpg'
   ],
-  el : '.swiper1',
-  delay: '1000',
-  loop: '1',
-  speed:'300'
+  el: '.swiper1',
+  delay: 3000,
+  speed: 300,
+  loop: true,
+  dotClick: true,
+  controlBtn: true
 })
 
 // new Swiper({
