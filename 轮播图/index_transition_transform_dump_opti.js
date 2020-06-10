@@ -279,6 +279,7 @@ Swiper.prototype.initListener = function () {
   // 监听 slide 切换完毕
   _.wrapper.addEventListener('transitionend', function () {
     _.isMove = false
+    console.log('end')
     // 判断是否最后一张
     if (_.index <= 0) {
       _.setTransition('none', (_.totalSlide - 2) * (-1) * _.swiperWidth)
@@ -322,7 +323,6 @@ Swiper.prototype.clickDot = function () {
       console.log('index  ' + _.index)
       console.log('de  ' + de)
       clearInterval(this.timer)
-      console.log(_.isMove)
 
       // 实际第一张图片&& 下标第一个点    ||   全部中最后一张图片 &&  下标第一个点   ||  正常对应点
       if (_.index === 1 && de === 0 || _.index === _.totalSlide && de === 0 || _.index === de + 1) {
@@ -362,8 +362,9 @@ Swiper.prototype.clickDot = function () {
           for (let i = a; i > b; i--) {
             _.allSlide[i].style.display = 'none'
           }
+          _.isMove = true
           // 过度到 当前下一张 ，就是省略中间 slide 后的目标 slide
-          _.setTransition(_.options.speed, (-1) * _.swiperWidth * (b + 1))
+          _.setTransition(_.options.speed, (-1) * _.swiperWidth * (b + 1)) 
           // 确保过度完成，  将 隐藏 slide 恢复
           setTimeout(() => {
             for (let i = a; i > b; i--) {
@@ -373,7 +374,9 @@ Swiper.prototype.clickDot = function () {
             _.index = de + 1
             _.setTransition('none', (-1) * _.swiperWidth * (a + 1))
           }, _.options.speed);
-          // _.setAutoPlay()
+          // 因为先进行过度的，随后在设置为none ，所以不会进入 transitionend  函数
+          // 需要 手动 设置自动播放，并且 手动 更新下标
+          _.setAutoPlay()
           _.isMove = false
           // 更新标记点
           for (let i = 0; i < _.dotList.length; i++) {
@@ -384,8 +387,6 @@ Swiper.prototype.clickDot = function () {
           // 目标 slide 在 当前 slide 右侧一个
           _.index = de
           _.move()
-          // _.setAutoPlay()
-
         }
       }
     }
