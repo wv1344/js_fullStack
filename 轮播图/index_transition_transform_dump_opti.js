@@ -55,6 +55,7 @@ function Swiper(options) {
     this.clickDot()
   }
 }
+
 // 设置过度
 Swiper.prototype.setTransition = function (time, distance) {
   this.wrapper.style.transition = typeof (time) === 'number' ? `transform ${time}ms ease-in-out` : 'none'
@@ -279,7 +280,6 @@ Swiper.prototype.initListener = function () {
   // 监听 slide 切换完毕
   _.wrapper.addEventListener('transitionend', function () {
     _.isMove = false
-    console.log('end')
     // 判断是否最后一张
     if (_.index <= 0) {
       _.setTransition('none', (_.totalSlide - 2) * (-1) * _.swiperWidth)

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>message</title>
+    <link rel="stylesheet" href="./index.css">
+    <style>
+        button{
+            display: block;
+            padding: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button id="warning">warning</button>
+    <button id="message">message</button>
+    <button id="success">success</button>
+    <button id="error">error</button>
+
+<script src="./index.js"></script>
+<script>
+    document.getElementById('warning').addEventListener('click',function(){
+        $message({
+            message: 'warningwarningwarningwarning',
+            type: 'warning'
+        })
+    })
+    document.getElementById('message').addEventListener('click',function(){
+        $message({
+            message: 'sjdhg',
+            type: 'message',
+            showClose: true
+        })
+    })
+    document.getElementById('success').addEventListener('click',function(){
+        $message({
+            message: 'successsuccesssuccesssuccess',
+            type: 'success',
+            duration: 1000
+        })
+    })
+    document.getElementById('error').addEventListener('click',function(){
+        // $message('lsdkjflskj')
+        $message('lsdkjflskj')
+    })
+
+
+</script>
+</body>
+</html>
