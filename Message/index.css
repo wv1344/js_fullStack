@@ -43,7 +43,7 @@
   cursor:pointer;
 }
 .move-in {
-  animation: message-move-in .3s ;
+  animation: message-move-in .9s ;
   /* opacity: 1; */
   /* transform: translate(-50%,0); */
 }
@@ -57,7 +57,7 @@
 
 @keyframes message-move-in {
   0% {
-      opacity: 0;
+      opacity: 1;
       transform: translate(-50%,-100%);
   }
   100% {

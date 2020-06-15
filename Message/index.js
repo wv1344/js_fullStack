@@ -9,14 +9,16 @@
       showClose: false,
       duration: 3000
     }
+    // 全局变量
     this.messageEl = {}
     this.height = 0
+    // 校验传入参数
     this.options = this.optiCheck(options)
     // 初始化
     this.init()
-    // 定时移除
+    // 移除
     setTimeout(() => {
-      this.remove()
+      this.remove(this.messageEl.dataset.index)
     }, this.options.duration);
   }
 
@@ -61,7 +63,7 @@
     window.msgIndex && window.msgIndex--
     // 每消失一个，遍历所有 message，使所有 message-box 向上移动
     let list = document.body.querySelectorAll('.message-box')
-    for (let i = index ? index : 0; i < list.length; i++) {
+    for (let i = index; i < list.length; i++) {
       // 调整 受影响的 dataset 
       list[i].dataset.index--
       list[i].lastChild.dataset.index--
