@@ -1,3 +1,4 @@
+
 ; (function (window, document) {
   var Message = function (options) {
     if (!(this instanceof Message)) return new Message(options);
@@ -8,7 +9,6 @@
       showClose: false,
       duration: 3000
     }
-
     this.messageEl = {}
     this.height = 0
     this.options = this.optiCheck(options)
@@ -19,6 +19,7 @@
       this.remove()
     }, this.options.duration);
   }
+
   // 初始化
   Message.prototype.init = function () {
     let icon = {
@@ -27,60 +28,58 @@
       'success': `<svg t="1592117093247" fill="rgb(103,194,58)" class="msg-icon success-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4692" width="200" height="200"><path d="M512 22C241.38 22 22 241.38 22 512s219.38 490 490 490 490-219.38 490-490S782.62 22 512 22z m259.66 369.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" p-id="4693"></path></svg>`,
       'error': `<svg t="1592117122615" fill="rgb(245,108,108)" class="msg-icon error-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5441" width="200" height="200"><path d="M512 959.677019c-247.24715 0-447.677019-200.429869-447.677019-447.677019S264.75285 64.322981 512 64.322981c247.248174 0 447.677019 200.429869 447.677019 447.677019S759.246127 959.677019 512 959.677019L512 959.677019zM719.833489 302.497499l-0.005117 0c-20.952194-20.951171-54.92289-20.951171-75.876108 0L510.980787 435.468976 379.694695 304.176744c-20.8734-20.8734-54.712089-20.8734-75.585489 0l-0.005117 0c-20.86726 20.878516-20.86726 54.717206 0 75.590606L435.390181 511.053442 302.492382 643.959428c-20.957311 20.951171-20.957311 54.913681 0 75.864852l0.005117 0c20.945031 20.956288 54.918797 20.956288 75.876108 0l132.892683-132.887566 132.966361 132.971477c20.877493 20.849864 54.717206 20.849864 75.584466 0l0-0.022513c20.8734-20.8734 20.8734-54.694693 0-75.568093L586.851778 511.345084l132.98171-132.977617C740.785683 357.411179 740.785683 323.44867 719.833489 302.497499L719.833489 302.497499z" p-id="5442"></path></svg>`,
     }
-    let typeStyle = {
-      'message': 'type-message',
-      'warning': 'type-warning',
-      'success': 'type-success',
-      'error': 'type-error'
-    }
-    // 准备 DOM
-    let content = `${icon[this.options.type]}<p>${this.options.message}</p>`
+    // 准备 DOM 元素
     this.messageEl = document.createElement('div')
-    this.messageEl.className += `message-box move-in ${typeStyle[this.options.type]}`
-    this.messageEl.innerHTML = content
+    this.messageEl.className += `message-box move-in type-${this.options.type}`
+    this.messageEl.innerHTML = `${icon[this.options.type]}<p>${this.options.message}</p>`
     // 插入 DOM
     document.body.appendChild(this.messageEl)
-
     this.height = this.messageEl.offsetHeight
     // 多个 message 设置 top，避免重叠
     this.messageEl.style.top = `${(this.height + 20) * window.msgIndex + 20}px`
     // 计数 挂载到 window 
     window.msgIndex ? window.msgIndex++ : window.msgIndex = 1
-    // 每个 设置 index
+    // 每一个 设置 index
     this.messageEl.dataset.index = window.msgIndex
-
-    // 是否需要关闭
-    console.log(this.options.showClose)
+    // 是否支持手动关闭
     if (this.options.showClose) {
-      this.messageEl.insertAdjacentHTML('beforeEnd',`<svg t="1592129837853" class="msg-close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5564" width="200" height="200"><path d="M220.8 812.8l22.4 22.4 272-272 272 272 48-44.8-275.2-272 275.2-272-48-48-272 275.2-272-275.2-22.4 25.6-22.4 22.4 272 272-272 272z" fill="#707070" p-id="5565"></path></svg>`)
+      // 插入元素
+      this.messageEl.insertAdjacentHTML('beforeEnd', `<svg t="1592129837853" data-index="${window.msgIndex}" class="msg-close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5564" width="200" height="200"><path d="M220.8 812.8l22.4 22.4 272-272 272 272 48-44.8-275.2-272 275.2-272-48-48-272 275.2-272-275.2-22.4 25.6-22.4 22.4 272 272-272 272z" fill="#707070" p-id="5565"></path></svg>`)
+      // 添加监听
+      this.messageEl.querySelector('.msg-close-icon').addEventListener('click', (e) => {
+        this.remove(e.currentTarget.dataset.index)
+      })
     }
-    this.messageEl.querySelector('.msg-close-icon').addEventListener('click',() => {
-      this.remove()
-    })
   }
+
   // 移除元素
-  Message.prototype.remove = function () {
+  Message.prototype.remove = function (index) {
     // 消失动画样式
     this.messageEl.classList.remove('move-in')
     this.messageEl.classList.add('move-out')
-    // 消失 计数
+    // 消失后 -> 计数
     window.msgIndex && window.msgIndex--
     // 每消失一个，遍历所有 message，使所有 message-box 向上移动
     let list = document.body.querySelectorAll('.message-box')
-    for (let i = 0; i < list.length; i++) {
+    for (let i = index ? index : 0; i < list.length; i++) {
+      // 调整 受影响的 dataset 
       list[i].dataset.index--
+      list[i].lastChild.dataset.index--
       list[i].style.top = `${(this.height + 20) * (list[i].dataset.index - 1) + 20}px`
     }
-    // 移除 dom了元素
+    // 移除 dom 元素
     this.messageEl.addEventListener('animationend', () => {
       this.messageEl.remove();
     });
   }
-  Message.prototype.error = function (msg) {
-    this.options = this.defaultOpti
-    this.options.message = msg
-    this.options.type = 'error'
-  }
+
+  // 尝试 .error 实现
+  // Message.prototype.error = function (msg) {
+  //   this.options = this.defaultOpti
+  //   this.options.message = msg
+  //   this.options.type = 'error'
+  // }
+
   // 传入参数校验
   Message.prototype.optiCheck = function (options) {
     let type = this.typeCheck(options)
@@ -120,8 +119,4 @@
   }
   window.$message = Message
 })(window, document);
-
-// window.$message = function(rr){
-//   return new Message(rr)
-// }
 

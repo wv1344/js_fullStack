@@ -31,21 +31,25 @@
         $message({
             message: 'sjdhg',
             type: 'message',
-            showClose: true
+            showClose: true,
+            duration: 4000
         })
     })
     document.getElementById('success').addEventListener('click',function(){
         $message({
             message: 'successsuccesssuccesssuccess',
             type: 'success',
-            duration: 1000
+            duration: 5000
         })
     })
     document.getElementById('error').addEventListener('click',function(){
-        // $message('lsdkjflskj')
-        $message('lsdkjflskj')
+        $message({
+            message: 'errorerrorerrorerrorerror',
+            type: 'error',
+            duration: 5000,
+            showClose: true
+        })
     })
-
 
 </script>
 </body>
