@@ -87,7 +87,7 @@
     let opti = {}
     if (optiType === 'object') {
       if (!Object.keys(options).length) this.$error('传入参数为空！')
-      if(this.typeCheck(options.message) === 'string'){
+      if (this.typeCheck(options.message) === 'string') {
         opti.message = options.message
       } else {
         this.$error('message请传入字符串！')
@@ -98,8 +98,10 @@
         this.$error('传入type错误！')
       }
       opti.showClose = this.typeCheck(!!options.showClose) === 'boolean' ? !!options.showClose : this.defaultOpti.showClose
-      if(this.typeCheck(options.duration) === 'number'){
+      if (this.typeCheck(options.duration) === 'number') {
         opti.duration = options.duration
+      } else if (!opti.duration) {
+        opti.duration = this.defaultOpti.duration
       } else {
         this.$error('传入duration类型错误')
       }
@@ -109,7 +111,6 @@
     } else {
       this.$error('传入参数错误！')
     }
-    console.log(opti)
     return opti
   }
   // 类型检测
