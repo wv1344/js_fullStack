@@ -3,16 +3,19 @@
   top: 20px;
   min-width: 300px;
   display: flex;
-  padding: 0 20px;
+  padding: 15px 20px;
   border-radius: 8px;
   align-items: center;
   left: 50%;
-
-  /* left: 0; */
-  /* right: 0; */
   transform: translateX(-50%);
   /* transition: opacity .3s,transform .8s; */
   transition: top .3s;
+}
+.message-box p {
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
 }
 .type-message{
   background-color: #ebeef5;
