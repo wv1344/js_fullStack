@@ -82,20 +82,34 @@
 
   // 传入参数校验
   Message.prototype.optiCheck = function (options) {
-    let type = this.typeCheck(options)
+    let optiType = this.typeCheck(options)
+    let typeList = ['message', 'error', 'success', 'warning']
     let opti = {}
-    if (type === 'object') {
+    if (optiType === 'object') {
       if (!Object.keys(options).length) this.$error('传入参数为空！')
-      opti.message = this.typeCheck(options.message) === 'string' ? options.message : this.defaultOpti.message
-      opti.type = this.typeCheck(options.type) === 'string' ? options.type : this.defaultOpti.type
-      opti.showClose = this.typeCheck(options.showClose) === 'boolean' ? options.showClose : this.defaultOpti.showClose
-      opti.duration = this.typeCheck(options.duration) === 'number' ? options.duration : this.defaultOpti.duration
-    } else if (type === 'string') {
+      if(this.typeCheck(options.message) === 'string'){
+        opti.message = options.message
+      } else {
+        this.$error('message请传入字符串！')
+      }
+      if (this.typeCheck(options.type) === 'string' && typeList.indexOf(options.type) !== -1) {
+        opti.type = options.type
+      } else {
+        this.$error('传入type错误！')
+      }
+      opti.showClose = this.typeCheck(!!options.showClose) === 'boolean' ? !!options.showClose : this.defaultOpti.showClose
+      if(this.typeCheck(options.duration) === 'number'){
+        opti.duration = options.duration
+      } else {
+        this.$error('传入duration类型错误')
+      }
+    } else if (optiType === 'string') {
       opti = this.defaultOpti
       opti.message = options
     } else {
       this.$error('传入参数错误！')
     }
+    console.log(opti)
     return opti
   }
   // 类型检测
