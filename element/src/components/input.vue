@@ -7,8 +7,8 @@
     :type="showPassword ? (passwordVisible ? 'text' : 'password') : type"
     :placeholder="placeholder"
     @input="handleInput"
-    :disabled="disabled" />
-    <span class="clear" v-if="clearShow" @click="clearInput">
+    :disabled="disabled"/>
+    <span class="clear" v-show="clearShow" @click="clearInput">
       <i class="iconfont iconziyuanxhdpi"></i>
     </span>
   </div>
@@ -49,7 +49,6 @@ export default {
   },
   created () {
     if (this.value && this.clearable) { this.clearShow = true }
-    console.log(this.type)
   },
 
   methods: {
@@ -73,6 +72,7 @@ export default {
 .input-content
   display inline-block
   position relative
+  margin 20px 0
   .input-source
     font-size 16px
     height 40px
@@ -89,7 +89,7 @@ export default {
     cursor not-allowed
   .clear
     display none
-
+    cursor pointer
 .input-content:hover .clear
   display block
   position absolute
