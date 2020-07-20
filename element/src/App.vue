@@ -1,43 +1,44 @@
 <template>
   <div id="app">
     <div class="item">
-      {{date}}
-    <div class="calendar">
-      <Calendar v-model="date" :first-day="firstDay">
-        <template v-slot="scope">
-          {{scope.data.month+'-'+scope.data.day}}
-        </template>
-      </Calendar>
-    </div>
+      <p>{{date}}</p>
+      <div class="calendar">
+        <Calendar v-model="date" :first-day="firstDay">
+          <template v-slot="scope">
+            {{scope.data.month+'-'+scope.data.day}}
+          </template>
+        </Calendar>
+      </div>
     </div>
     <div class="item">
       <div class="input-box">
-      <Input type="text" v-model="con" placeholder="请输入内容" clearable />
-    </div>
-    <div>{{con}}</div>
+        <Input type="text" v-model="text" placeholder="请输入内容" clearable />
+      </div>
+      <p>{{text}}</p>
     </div>
     <div class="item">
-      <Collapse>
-      <CollapseItem title="十六客服的结果">
-        <p>sldkjfalskdjflaiwrgoawvr</p>
-        <p>sldkjfalskdjflaiwrgoawvr</p>
-        <p>sldkjfalskdjflaiwrgoawvr</p>
-        <p>sldkjfalskdjflaiwrgoawvr</p>
-        <p>sldkjfalskdjflaiwrgoawvr</p>
-      </CollapseItem>
-      <CollapseItem title="收费的噶">
-        <p>手动阀撒发射点发违法</p>
-        <p>阿嘎尔办法俄铝阿尔高</p>
-      </CollapseItem>
-      <CollapseItem title="爱人哈巴var给">
-        <p>个图巴尔v热热本特纳</p>
-        <p>藤为逃避问题</p>
-      </CollapseItem>
-    </Collapse>
+      <Collapse v-model="activeNames" :accordion="accordion">
+        <CollapseItem title="十六客服的结果" name="1">
+          <p>sldkjfalskdjflaiwrgoawvr</p>
+          <p>sldkjfalskdjflaiwrgoawvr</p>
+          <p>sldkjfalskdjflaiwrgoawvr</p>
+          <p>sldkjfalskdjflaiwrgoawvr</p>
+          <p>sldkjfalskdjflaiwrgoawvr</p>
+        </CollapseItem>
+        <CollapseItem title="收费的噶" name="2">
+          <p>手动阀撒发射点发违法</p>
+          <p>阿嘎尔办法俄铝阿尔高</p>
+          <p>阿嘎尔办法俄铝阿尔高</p>
+        </CollapseItem>
+        <CollapseItem title="爱人哈巴var给" name="3">
+          <p>个图巴尔v热热本特纳</p>
+          <p>藤为逃避问题</p>
+        </CollapseItem>
+      </Collapse>
     </div>
     <div class="item">
       <span>rate：{{rateValue}}</span>
-    <Rate v-model="rateValue"></Rate>
+      <Rate v-model="rateValue"></Rate>
     </div>
 
   </div>
@@ -63,7 +64,9 @@ export default {
       date: '2020 07 17',
       firstDay: 2, // 0~6  => 周日到周六
       rateValue: 2,
-      con: ''
+      text: '',
+      activeNames: ['1', '3'],
+      accordion: true
     }
   }
 }

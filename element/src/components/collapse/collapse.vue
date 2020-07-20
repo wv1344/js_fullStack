@@ -1,6 +1,7 @@
 <template>
   <div class="collapse-container">
-    <slot></slot>
+    {{statusList}}
+    <slot ></slot>
   </div>
 </template>
 
@@ -8,11 +9,19 @@
 export default {
   name: 'Collapse',
   props: {
-    activeNames: Array
+    value: [Array, String],
+    accordion: Boolean
+  },
+  provide () {
+    return {
+      Collapse: this
+    }
   },
   data () {
     return {
-
+      currentIndex: undefined,
+      statusList: [],
+      baseId: 0
     }
   }
 }
@@ -20,5 +29,7 @@ export default {
 
 <style lang="stylus" scoped>
 .collapse-container
-  border-top 1px solid #ccc
+  width 960px
+  &:last-child
+    border-bottom 1px solid #ccc
 </style>

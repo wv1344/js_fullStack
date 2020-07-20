@@ -51,13 +51,7 @@ export default {
       this.show(this.score)
     },
     show (val) {
-      this.startList = [
-        {icon: 'emptystar'},
-        {icon: 'emptystar'},
-        {icon: 'emptystar'},
-        {icon: 'emptystar'},
-        {icon: 'emptystar'}
-      ]
+      this.startList = JSON.parse(JSON.stringify(this.emptyList))
       for (let i = 0; i < val; i++) {
         this.startList[i].icon = 'star1'
       }
