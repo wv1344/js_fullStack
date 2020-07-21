@@ -23,6 +23,19 @@ export default {
       statusList: [],
       baseId: 0
     }
+  },
+  methods: {
+    change (id) {
+      this.$children.forEach(child => {
+        if (child._uid === id) {
+          child.contentShow = !child.contentShow
+        } else {
+          if (this.accordion) {
+            child.contentShow = false
+          }
+        }
+      })
+    }
   }
 }
 </script>

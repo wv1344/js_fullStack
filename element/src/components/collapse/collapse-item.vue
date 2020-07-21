@@ -27,6 +27,7 @@ export default {
           this.Collapse.statusList.forEach(item => {
             if (item.id === this.id) {
               item.status = true
+              this.contentShow = true
             }
           })
         }
@@ -37,6 +38,7 @@ export default {
       this.Collapse.statusList.forEach(item => {
         if (item.id === this.id) {
           item.status = true
+          this.contentShow = true
         }
       })
     }
@@ -44,20 +46,27 @@ export default {
   data () {
     return {
       id: this.Collapse.baseId++,
+      contentShow: false,
       statusList: this.Collapse.statusList,
       contentHeight: 90
     }
   },
-  computed: {
-    contentShow () {
-      return this.Collapse.statusList.filter(item => item.id === this.id)[0].status
-    }
-  },
   watch: {
-
+    contentShow (newVal) {
+      if (newVal) {
+        this.$nextTick(() => {
+          this.$refs.content.style.height = `${this.$refs.content.scrollHeight}px`
+        })
+      } else {
+        this.$nextTick(() => {
+          this.$refs.content.style.height = '0px'
+        })
+      }
+    }
   },
   methods: {
     handleItemClick () {
+      this.Collapse.change(this._uid)
       this.Collapse.statusList.forEach(item => {
         if (item.id === this.id) {
           item.status = !item.status
@@ -89,17 +98,17 @@ export default {
       &.active
         transform rotateZ(90deg)
   .content
-    // max-height 0
     height 0
-    // transform scaleY(0)
-    // display none
     overflow hidden
     transition height .3s ease-in
+    // transition max-height .5s cubic-bezier(0, 1, 0, 1)
+    // transition-delay 0s
     // animation close .3s
-    &.active
+    // &.active
       // max-height 1000px
-      height 90px
-      // transition max-height .3s ease-out
+      // height 90px
+      // transition-delay 0s
+      // transition max-height .5s ease-in-out
       // transform scaleY(1)
 
 </style>
