@@ -1,6 +1,5 @@
 <template>
   <div class="collapse-item">
-
     <div class="title" :class="contentShow ? '' : 'active'" @click="handleItemClick">
       <p>{{title}}{{contentShow}}</p>
       <Icon class="icon" :class="contentShow ? 'active' : ''" icon="zhankai"></Icon>
@@ -20,34 +19,12 @@ export default {
   },
   inject: ['Collapse'],
   created () {
-    this.Collapse.statusList.push({id: this.id, status: false})
-    if (Array.isArray(this.Collapse.value)) {
-      this.Collapse.value.forEach(item => {
-        if (this.name === item) {
-          this.Collapse.statusList.forEach(item => {
-            if (item.id === this.id) {
-              item.status = true
-              this.contentShow = true
-            }
-          })
-        }
-      })
-    }
 
-    if (this.name === this.Collapse.value) {
-      this.Collapse.statusList.forEach(item => {
-        if (item.id === this.id) {
-          item.status = true
-          this.contentShow = true
-        }
-      })
-    }
   },
   data () {
     return {
       id: this.Collapse.baseId++,
       contentShow: false,
-      statusList: this.Collapse.statusList,
       contentHeight: 90
     }
   },
@@ -67,15 +44,6 @@ export default {
   methods: {
     handleItemClick () {
       this.Collapse.change(this._uid)
-      this.Collapse.statusList.forEach(item => {
-        if (item.id === this.id) {
-          item.status = !item.status
-        } else {
-          if (this.Collapse.accordion) {
-            item.status = false
-          }
-        }
-      })
     }
   }
 }

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- 日历 -->
     <div class="item">
       <p>{{date}}</p>
       <div class="calendar">
@@ -10,13 +11,16 @@
         </Calendar>
       </div>
     </div>
+    <!-- input输入框 -->
     <div class="item">
       <div class="input-box">
         <Input type="text" v-model="text" placeholder="请输入内容" clearable />
       </div>
       <p>{{text}}</p>
     </div>
+    <!-- 手风琴 -->
     <div class="item">
+      {{activeNames}}
       <Collapse v-model="activeNames" :accordion="accordion">
         <CollapseItem title="十六客服的结果" name="1">
           <p>sldkjfalskdjflaiwrgoawvr</p>
@@ -36,8 +40,9 @@
         </CollapseItem>
       </Collapse>
     </div>
+    <!-- 星级评分 -->
     <div class="item">
-      <span>rate：{{rateValue}}</span>
+      <span>star：{{rateValue}}</span>
       <Rate v-model="rateValue"></Rate>
     </div>
 
