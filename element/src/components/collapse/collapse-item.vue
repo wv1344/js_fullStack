@@ -53,6 +53,7 @@ export default {
 .collapse-item
   height 100%
   .title
+    width 100%
     min-height 50px
     font-size 14px
     font-weight bold

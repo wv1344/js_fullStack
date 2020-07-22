@@ -69,7 +69,7 @@ export default {
 
 <style lang="stylus" scoped>
 .collapse-container
-  width 960px
+  width 95%
   &:last-child
     border-bottom 1px solid #ccc
 </style>

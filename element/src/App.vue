@@ -45,7 +45,11 @@
       <span>star：{{rateValue}}</span>
       <Rate v-model="rateValue"></Rate>
     </div>
-
+    <div class="item">
+      {{slider}}
+      <button @click="handeAddClick">click</button>
+      <Slider v-model="slider"></Slider>
+    </div>
   </div>
 </template>
 
@@ -55,6 +59,7 @@ import Input from '@/components/input'
 import Collapse from '@/components/collapse/collapse'
 import CollapseItem from '@/components/collapse/collapse-item'
 import Rate from '@/components/rate'
+import Slider from '@/components/slider'
 export default {
   name: 'App',
   components: {
@@ -62,7 +67,8 @@ export default {
     Input,
     Collapse,
     CollapseItem,
-    Rate
+    Rate,
+    Slider
   },
   data () {
     return {
@@ -71,7 +77,13 @@ export default {
       rateValue: 2,
       text: '',
       activeNames: ['1', '3'],
-      accordion: true
+      accordion: true,
+      slider: 30
+    }
+  },
+  methods: {
+    handeAddClick () {
+      this.slider++
     }
   }
 }
