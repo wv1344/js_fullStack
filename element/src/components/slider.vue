@@ -2,6 +2,7 @@
   <div class="slider-container" @click="handleClick">
     <div ref="left" class="left"></div>
     <div class="circle"
+      :class="draging ? 'draging': ''"
       ref="circle"
       @mousedown="handeleMouseDown">
     </div>
@@ -23,7 +24,8 @@ export default {
       startX: undefined,
       moveX: 0,
       beforeVal: 0,
-      nowVal: 0
+      nowVal: 0,
+      draging: false
     }
   },
   mounted () {
@@ -69,6 +71,7 @@ export default {
       this.flag = true
       this.startX = e.clientX
       this.beforeVal = this.nowVal
+      this.draging = true
       console.log('Down')
       console.log(this.nowVal)
       document.onmousemove = (event) => {
@@ -87,6 +90,7 @@ export default {
         this.beforeVal = ((event.clientX - this.startX) / this.sliderWidth * 100) + this.beforeVal
         this.startX = event.clientX
         this.flag = false
+        this.draging = false
       }
     },
     setChange (val) {
@@ -121,6 +125,6 @@ export default {
     border-radius 50%
     background radial-gradient(white 50%, #1e90ff 15%);
     cursor grab
-    &.active
-      cursor grabbing
+    &.draging
+      cursor grabbing !important
 </style>

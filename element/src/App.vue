@@ -47,7 +47,7 @@
     </div>
     <div class="item">
       {{slider}}
-      <button @click="handeAddClick">click</button>
+      <button @click="handeAddClick">Add</button>
       <Slider v-model="slider"></Slider>
     </div>
   </div>
