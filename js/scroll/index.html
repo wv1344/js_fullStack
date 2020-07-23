@@ -15,7 +15,7 @@
     .box {
       height: 500px;
       width: 20px auto;
-      background-color: pink;
+      background-color: skyblue;
     }
   </style>
 </head>
@@ -44,16 +44,18 @@
       const c = document.documentElement.scrollTop || document.body.scrollTop
       // 慢慢滚动呢？
       if (c > 0) {
+        console.log(c)
+        console.log(c-c/8)
         window.requestAnimationFrame(scrollTotop);
-        window.scrollTo(0, c - c / 8);
+        window.scrollTo(0, 0);
 
       }
     }
     if (!isEdge()) {
       document.querySelector('.backA').addEventListener('click', function (event) {
         event.preventDefault();
-        // window.scrollTo(0,0);
-        scrollTotop();
+        window.scrollTo(0,0);
+        // scrollTotop();
 
       })
     }
