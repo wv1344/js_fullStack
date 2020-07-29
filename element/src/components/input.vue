@@ -75,7 +75,7 @@ export default {
   margin 20px 0
   .input-source
     font-size 16px
-    height 40px
+    height 36px
     line-height 40px
     border 1px solid #dcdfe6
     border-radius 4px

@@ -5,9 +5,7 @@
       <p>{{date}}</p>
       <div class="calendar">
         <Calendar v-model="date" :first-day="firstDay">
-          <template v-slot="scope">
-            {{scope.data.month+'-'+scope.data.day}}
-          </template>
+          <template v-slot="scope">{{scope.data.month+'-'+scope.data.day}}</template>
         </Calendar>
       </div>
     </div>
@@ -45,10 +43,22 @@
       <span>star：{{rateValue}}</span>
       <Rate v-model="rateValue"></Rate>
     </div>
+    <!-- 滑块 -->
     <div class="item">
       {{slider}}
       <button @click="handeAddClick">Add</button>
       <Slider v-model="slider"></Slider>
+    </div>
+    <!-- 时间选择框 -->
+    <div class="item">
+      selectedTime: {{time}}
+      <TimePicker v-model="time"></TimePicker>
+    </div>
+    <!-- Popover -->
+    <div class="item">
+      <Popover title="标题" width="200">
+        <button slot="reference">BTN</button>
+      </Popover>
     </div>
   </div>
 </template>
@@ -60,6 +70,9 @@ import Collapse from '@/components/collapse/collapse'
 import CollapseItem from '@/components/collapse/collapse-item'
 import Rate from '@/components/rate'
 import Slider from '@/components/slider'
+import TimePicker from '@/components/timePicker'
+import Popover from '@/components/popover'
+
 export default {
   name: 'App',
   components: {
@@ -68,7 +81,9 @@ export default {
     Collapse,
     CollapseItem,
     Rate,
-    Slider
+    Slider,
+    TimePicker,
+    Popover
   },
   data () {
     return {
@@ -78,7 +93,8 @@ export default {
       text: '',
       activeNames: ['1', '3'],
       accordion: true,
-      slider: 30
+      slider: 30,
+      time: ''
     }
   },
   methods: {
@@ -90,15 +106,20 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '//at.alicdn.com/t/font_1503790_yp9803cj1bg.css'
-.item
-  margin 20px
-  padding 20px
-  box-shadow 0 2px 12px 0 rgba(0,0,0,.1)
-  .calendar
-    height 500px
-    width 600px
-  .input-box
-    margin-top 10px
+@import '//at.alicdn.com/t/font_1503790_yp9803cj1bg.css';
 
+.item {
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+  .calendar {
+    height: 500px;
+    width: 600px;
+  }
+
+  .input-box {
+    margin-top: 10px;
+  }
+}
 </style>
