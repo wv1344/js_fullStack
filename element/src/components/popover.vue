@@ -1,5 +1,5 @@
 <template>
-  <span class="popper-container">
+  <div class="popper-container">
     <transition name="fade">
       <div
         ref="popper"
@@ -7,6 +7,7 @@
         v-show="!!showContent"
         :style="{ width: width+'px'}"
         class="popper"
+        :class="hasPadding? 'add-padding':''"
       >
         <div class="title">{{title}}</div>
         <div class="arrow"></div>
@@ -14,12 +15,10 @@
       </div>
     </transition>
     <slot name="reference"></slot>
-  </span>
+  </div>
 </template>
 
 <script>
-// import Vue from 'vue'
-
 export default {
   name: 'Popover',
   props: {
@@ -36,6 +35,10 @@ export default {
     content: {
       type: String,
       default: ''
+    },
+    hasPadding: {
+      type: Boolean,
+      default: true
     },
     placement: {
       type: String,
@@ -54,31 +57,27 @@ export default {
     }
   },
   mounted () {
-    console.log(this.content)
     let popper = this.$refs.popper
+    let reference = this.$slots.reference[0].elm
+    // 监听 点击事件
     this.$slots.reference[0].elm.addEventListener('click', (e) => {
-      console.log('1111')
+      if (this.showContent && (e.target === reference || reference.contains(e.target))) return
       this.showContent = !this.showContent
+      this.$refs.popper.style.left = this.$slots.reference[0].elm.offsetLeft + 'px'
+      let tt = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+      console.log(reference.offsetHeight)
+      // 相对当前页面 的 top + 网页被卷起的高度 + 触发元素的高度
+      this.$refs.popper.style.top = this.$slots.reference[0].elm.getBoundingClientRect().top + tt + reference.offsetHeight + 'px'
       document.body.appendChild(popper)
     })
-    console.dir(this.$slots.reference[0].elm.offsetParent)
-    console.log(this.$slots.reference[0].elm.getBoundingClientRect().top)
-    this.$refs.popper.style.top =
-      this.$slots.reference[0].elm.getBoundingClientRect().top + 350 + 'px'
-    this.$refs.popper.style.left =
-      this.$slots.reference[0].elm.getBoundingClientRect().left + 'px'
+
     window.onscroll = () => {
-      // console.log(this.$root.$el)
-      // console.log(this.$slots.reference[0].elm.getBoundingClientRect().top)
-      // console.log(this.$slots.reference[0].elm.getBoundingClientRect())
+
     }
     document.addEventListener('mouseup', (e) => {
       let con = this.$refs.popper
-      // console.log(e.target)
-      // console.log(this.$slots.reference[0].elm)
       if (
-        (con !== e.target || !con.contains(e.target)) &&
-        e.target !== this.$slots.reference[0].elm
+        (con !== e.target || !con.contains(e.target)) && e.target !== this.$slots.reference[0].elm
       ) {
         this.showContent = false
       }
@@ -96,14 +95,18 @@ export default {
 <style lang="stylus" scoped>
 .fade-enter {
   opacity: 0;
+  transform-origin: 0 0;
+  transform scaleY(0)
 }
 
 .fade-leave {
-  opacity: 1;
+  opacity: 0;
+  transform-origin: 0 0;
+  transform scaleY(0)
 }
 
 .fade-enter-active, .fade-leave-active {
-  transition: all 0.2s ease;
+  transition: all 0.2s;
 }
 
 .popper {
@@ -114,6 +117,10 @@ export default {
   background: #fff;
   border: 1px solid #ebeef5;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+  &.add-padding {
+    padding: 18px 20px;
+  }
 
   .arrow {
     position: absolute;
@@ -126,6 +133,7 @@ export default {
     &:after {
       content: '';
       top: -6px;
+      left: 20px;
       border-width: 6px;
       position: absolute;
       display: block;

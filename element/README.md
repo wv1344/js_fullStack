@@ -1,21 +1,14 @@
-# element
+## $slots.default
+    获取默认 slot 中的元素
 
-> A Vue.js project
+## $refs.xxx
 
-## Build Setup
+## window.getComputedStyle()
 
-``` bash
-# install dependencies
-npm install
+## offsetParent
+    返回一个指向最近的（指包含层级上的最近）包含该元素的 定位元素 或者最近的 table,td,th,body元素。
 
-# serve with hot reload at localhost:8080
-npm run dev
+## offsetTop
+    坐标左上角（0，0）
+    相对于 offsetParent 坐标的距离
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

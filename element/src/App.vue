@@ -57,7 +57,8 @@
     <!-- Popover -->
     <div class="item">
       <Popover title="标题" width="200">
-        <button slot="reference">BTN</button>
+        <div>12345</div>
+        <button slot="reference">Popover</button>
       </Popover>
     </div>
   </div>
@@ -107,7 +108,10 @@ export default {
 
 <style lang="stylus" scoped>
 @import '//at.alicdn.com/t/font_1503790_yp9803cj1bg.css';
-
+#app
+  // height 5000px
+  overflow hidden
+  height 100%
 .item {
   margin: 20px;
   padding: 20px;

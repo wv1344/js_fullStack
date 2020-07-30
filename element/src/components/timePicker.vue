@@ -1,6 +1,6 @@
 <template>
-  <span ref="timePicker" class="time-picker-container">
-    <Popover>
+  <div ref="timePicker" class="time-picker-container">
+    <Popover :hasPadding="false">
       <template v-if="false" class="select-container">
         <div class="select">
           <div class="line1">
@@ -29,22 +29,21 @@
           >{{item}}</div>
         </div>
       </template>
-      <span slot="reference">
-        <span>
-          <i></i>
-        </span>
-        <input class="input-source" type="text" v-model="selectTime" />
-      </span>
+      <div slot="reference" style="height: 100%; display: inline-block;">
+        <Input class="input-source" type="text" placeholder="" v-model="selectTime"/>
+      </div>
     </Popover>
-  </span>
+  </div>
 </template>
 
 <script>
 import Popover from './popover'
+import Input from './input'
 export default {
   name: 'TimePicker',
   components: {
-    Popover
+    Popover,
+    Input
   },
   props: {
     value: [String, Date],
@@ -94,7 +93,7 @@ export default {
         hour++
       }
     }
-    console.log(this.selectList)
+    // console.log(this.selectList)
   },
   computed: {},
   mounted () {
@@ -120,35 +119,7 @@ export default {
 
 <style lang="stylus" scoped>
 .time-picker-container {
-  position: relative;
-
-  .input-source {
-    font-size: 16px;
-    height: 36px;
-    line-height: 40px;
-    border: 1px solid #dcdfe6;
-    border-radius: 4px;
-    padding: 0 30px 0 15px;
-    outline: none;
-  }
-
-  .single-select {
-    position: absolute;
-    top: 10px;
-    border: 1px solid #eee;
-    padding: 5px;
-
-    .time-item {
-      border-bottom: 1px solid #eeeeee;
-      color: #606266;
-      line-height: 20px;
-      font-size: 14px;
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-  }
+  display inline-block
 }
 </style>
 <style lang="stylus">
