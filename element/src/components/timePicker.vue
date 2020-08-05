@@ -1,17 +1,17 @@
 <template>
   <div ref="timePicker" class="time-picker-container">
     <Popover :hasPadding="false">
-      <template v-if="false" class="select-container">
+      <template v-if="true" class="select-container">
         <div class="select">
-          <div class="line1">
-            <span class="line1-item" v-for="(item, index) in line1List" :key="index"></span>
-          </div>
-          <div class="line2">
-            <span class="line1-item" v-for="(item, index) in line2List" :key="index"></span>
-          </div>
-          <div class="line3">
-            <span class="line1-item" v-for="(item, index) in line3List" :key="index"></span>
-          </div>
+          <ul class="line line1">
+            <li class="line1-item" v-for="(item, index) in line1List" :key="index">{{item}}</li>
+          </ul>
+          <ul class="line line2">
+            <li class="line1-item" v-for="(item, index) in line2List" :key="index">{{item}}</li>
+          </ul>
+          <ul class="line line3">
+            <li class="line1-item" v-for="(item, index) in line3List" :key="index">{{item}}</li>
+          </ul>
         </div>
         <div class="control">
           <span>取消</span>
@@ -62,9 +62,9 @@ export default {
     return {
       selectTime: '',
       selectList: [],
-      line1List: [],
-      line2List: [],
-      line3List: []
+      line1List: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+      line2List: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59],
+      line3List: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]
     }
   },
   created () {
@@ -97,9 +97,7 @@ export default {
   },
   computed: {},
   mounted () {
-    window.onscroll = () => {
-      // console.log(this.$refs.timePicker.getBoundingClientRect().top)
-    }
+
   },
   methods: {
     zero (val) {
@@ -123,24 +121,35 @@ export default {
 }
 </style>
 <style lang="stylus">
-.select-container {
-  max-height: 200px;
-  overflow: scroll;
-
-  .time-select-item {
+.select
+  display flex
+  position relative
+  width 100%
+  .line
+    position relative
+    flex 1
+    margin 0
+    height 260px
+    list-style none
+    overflow scroll
+    padding 0
+    &::-webkit-scrollbar
+      width: 0 !important
+    .line1-item, line2-item, line3-item
+      height 30px
+      text-align center
+  .time-select-item
     line-height: 20px;
     font-size: 14px;
     padding: 8px 10px;
     color: #606266;
 
-    &:hover {
+    &:hover
       background: rgba(0, 0, 0, 0.1);
       cursor: pointer;
-    }
 
-    &.selected {
+    &.selected
       color: #409eff;
-    }
-  }
-}
+.control
+  border-top 1px solid #000
 </style>

@@ -61,6 +61,22 @@
         <button slot="reference">Popover</button>
       </Popover>
     </div>
+    <div class="item">
+      <p>{{date}}</p>
+      <div class="calendar">
+        <Calendar v-model="date" :first-day="firstDay">
+          <template v-slot="scope">{{scope.data.month+'-'+scope.data.day}}</template>
+        </Calendar>
+      </div>
+    </div>
+    <div class="item">
+      <p>{{date}}</p>
+      <div class="calendar">
+        <Calendar v-model="date" :first-day="firstDay">
+          <template v-slot="scope">{{scope.data.month+'-'+scope.data.day}}</template>
+        </Calendar>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -110,7 +126,7 @@ export default {
 @import '//at.alicdn.com/t/font_1503790_yp9803cj1bg.css';
 #app
   // height 5000px
-  overflow hidden
+  overflow auto
   height 100%
 .item {
   margin: 20px;

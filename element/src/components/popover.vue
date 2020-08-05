@@ -62,25 +62,23 @@ export default {
     // 监听 点击事件
     this.$slots.reference[0].elm.addEventListener('click', (e) => {
       if (this.showContent && (e.target === reference || reference.contains(e.target))) return
-      this.showContent = !this.showContent
+      this.showContent = true
       this.$refs.popper.style.left = this.$slots.reference[0].elm.offsetLeft + 'px'
       let tt = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
-      console.log(reference.offsetHeight)
       // 相对当前页面 的 top + 网页被卷起的高度 + 触发元素的高度
-      this.$refs.popper.style.top = this.$slots.reference[0].elm.getBoundingClientRect().top + tt + reference.offsetHeight + 'px'
+      this.$refs.popper.style.top = this.$slots.reference[0].elm.getBoundingClientRect().top + tt + reference.offsetHeight + 15 + 'px'
       document.body.appendChild(popper)
     })
 
-    window.onscroll = () => {
-
-    }
+    this.$root.$el.addEventListener('scroll', () => {
+      let tt = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+      this.$refs.popper.style.top = this.$slots.reference[0].elm.getBoundingClientRect().top + tt + reference.offsetHeight + 15 + 'px'
+    })
     document.addEventListener('mouseup', (e) => {
-      let con = this.$refs.popper
-      if (
-        (con !== e.target || !con.contains(e.target)) && e.target !== this.$slots.reference[0].elm
-      ) {
-        this.showContent = false
-      }
+      if (!(this.$refs.popper === e.target ||
+        this.$refs.popper.contains(e.target) ||
+        e.target === this.$slots.reference[0].elm ||
+        this.$slots.reference[0].elm.contains(e.target))) this.showContent = false
     })
   },
   watch: {},

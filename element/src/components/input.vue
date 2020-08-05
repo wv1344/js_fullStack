@@ -82,7 +82,6 @@ export default {
 .input-content {
   display: inline-block;
   position: relative;
-  margin: 20px 0;
 
   .input-source {
     font-size: 16px;
