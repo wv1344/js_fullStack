@@ -63,9 +63,10 @@ export default {
     this.$slots.reference[0].elm.addEventListener('click', (e) => {
       if (this.showContent && (e.target === reference || reference.contains(e.target))) return
       this.showContent = true
+      this.$emit('input', this.showContent)
       this.$refs.popper.style.left = this.$slots.reference[0].elm.offsetLeft + 'px'
       let tt = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
-      // 相对当前页面 的 top + 网页被卷起的高度 + 触发元素的高度
+      // 相对当前页面 的 top  + 触发元素的高度
       this.$refs.popper.style.top = this.$slots.reference[0].elm.getBoundingClientRect().top + tt + reference.offsetHeight + 15 + 'px'
       document.body.appendChild(popper)
     })
@@ -78,10 +79,17 @@ export default {
       if (!(this.$refs.popper === e.target ||
         this.$refs.popper.contains(e.target) ||
         e.target === this.$slots.reference[0].elm ||
-        this.$slots.reference[0].elm.contains(e.target))) this.showContent = false
+        this.$slots.reference[0].elm.contains(e.target))) {
+        this.showContent = false
+        this.$emit('input', this.showContent)
+      }
     })
   },
-  watch: {},
+  watch: {
+    value (newVal) {
+      this.showContent = newVal
+    }
+  },
   methods: {
     changeVisible () {
       this.visible = !this.visible
@@ -111,6 +119,7 @@ export default {
   position: absolute;
   min-width: 150px;
   border-radius: 4px;
+  // height 200px
   // padding 18px 20px
   background: #fff;
   border: 1px solid #ebeef5;

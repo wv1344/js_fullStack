@@ -52,7 +52,7 @@
     <!-- 时间选择框 -->
     <div class="item">
       selectedTime: {{time}}
-      <TimePicker v-model="time"></TimePicker>
+      <TimePicker v-model="time" selectableRange></TimePicker>
     </div>
     <!-- Popover -->
     <div class="item">
